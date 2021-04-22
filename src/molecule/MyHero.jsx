@@ -10,8 +10,6 @@ const MyHero = (props) => {
             <br/>
             <br/>
             <br/>
-            tes
-            tes lagi
             <Container className="tagline-container justify-content-lg-start justify-content-sm-center ml-lg-5 mt-lg-5">
                 <Row className="my-3">
                     <Col>
