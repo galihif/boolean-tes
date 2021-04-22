@@ -1,0 +1,34 @@
+.hero-container {
+    background-image: url('../assets/img_hero.png');
+    background-size:cover;
+    background-color: transparent !important;
+    height: 700px !important;
+    position: relative;
+    margin: 0px;
+}
+
+
+.tagline-container{
+    h1{
+        font-size: 64px;
+        font-weight: 600;
+    }
+    Button {
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+        height: 48px !important;
+    }
+    .search-form {
+        width: 277px !important;
+        height: 48px !important;
+        border-radius: 8px !important;
+        border: 1px solid rgb(238, 238, 238) !important;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+        margin-right: 20px;
+        border-color: transparent;
+        &:focus {
+            outline: none;
+            box-shadow: none;
+        }
+    }    
+}
+
