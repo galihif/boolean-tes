@@ -1,0 +1,18 @@
+@import '../variables.scss';
+
+.facilities-container{
+    h2{
+    color: $color-primary-orange;
+    margin-bottom: 36px;
+    }
+
+    p{
+        font-size: 24px;
+    }
+
+    .icon {
+        color: $color-primary-orange;
+        width: 40px;
+        height: 40px;
+    }
+}
