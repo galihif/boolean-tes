@@ -1,0 +1,36 @@
+@import '../variables.scss';
+
+.find-container{
+    background-image: url('../assets/find_img.png');
+    background-size:cover;
+    background-color: transparent !important;
+    height: 200px !important;
+    position: relative;
+    margin: 0px;
+    h1{
+        color: white;
+    }
+    .search-form{
+        border-radius: 8px !important;
+    }
+    .btn-my-primary, .search-form{
+        height: 40px !important;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.25);
+    }
+    .search-venues{
+        position: absolute !important;
+        bottom: -20px !important;
+        width: 100% !important;
+    }
+    .btn-my-primary{
+    background-color: $color-primary-orange !important;
+    color: $color-primary-white !important;
+    padding: 8px 36px 8px 36px !important;
+    border-radius: 12px !important;
+    border-color: transparent !important;
+        &:focus {
+            outline: none;
+            box-shadow: none;
+        }
+    }
+}
