@@ -1,0 +1,39 @@
+@import '../variables.scss';
+
+.cat-container {
+    background-color: $color-light-orange !important;
+    margin: 0px !important;
+    overflow: hidden;
+    width: 100% !important;
+    h2 {
+        text-align: center !important;
+        color: white;
+        margin-top: 72px;
+    }
+
+    .my-card-deck1{
+        margin-top: 48px;
+        margin-bottom: 48px;
+        .my-card {
+            border-radius: 20px;
+            box-shadow: 5px 5px 25px rgba(0, 0, 0, 0.2);
+            &:hover{
+                cursor: pointer;
+                transform: scale(1.02);
+                box-shadow: 5px 5px 25px rgba(0, 0, 0, 0.4);
+            }
+            img {
+                border-radius: 20px 20px 0px 0px;
+                max-width: 100% !important;
+                max-height: 100% !important;
+            }
+            .my-card-body{
+                padding: 10px;
+            }
+            p {
+                text-align: center;
+                font-size: 24px;
+            }
+        }
+    }
+}
