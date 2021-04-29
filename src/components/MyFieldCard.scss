@@ -1,0 +1,22 @@
+@import '../variables.scss';
+
+.field-card{
+    .card-horizontal {
+        display: flex;
+        flex: 1 1 auto;
+        .card-body{
+            border-radius: 20px;
+            .btn-my-primary{
+                background-color: $color-primary-orange !important;
+                color: $color-primary-white !important;
+                padding: 8px 36px 8px 36px !important;
+                border-radius: 12px !important;
+                border-color: transparent !important;
+                &:focus {
+                    outline: none;
+                    box-shadow: none;
+                }
+            }
+        }
+    }
+}
