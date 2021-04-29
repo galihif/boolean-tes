@@ -18,7 +18,7 @@ import rating from '../assets/rating_5_5.png'
 const MyFacilities = () => {
 
     return (
-        <div className="facilities-container px-5">
+        <div className="facilities-container px-5 mb-3">
             <Row>
                 <Col lg>
                     <Container className="schedule">

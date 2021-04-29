@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import { Button, Jumbotron, Row, Col, Container } from 'react-bootstrap';
 
 import './VenueDetails.scss'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import rating from '../assets/rating_5_5.png'
 import MyVenueHeader from '../components/MyVenueHeader';
+import MyFacilities from '../components/MyFacilities';
+import MyFieldList from '../components/MyFieldList';
 
 
 const VenueDetails = () => {
@@ -13,6 +13,8 @@ const VenueDetails = () => {
     return(
         <div>
             <MyVenueHeader/>
+            <MyFacilities/>
+            <MyFieldList/>
         </div>
         
     )
