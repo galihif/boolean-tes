@@ -19,24 +19,22 @@ const MyVenueCard = (props) => {
     return (
         <div>
             <Card className="venue-card" onClick={handleClick}>
-                <Card.Img variant="top" src={cat_basketball} />
+                <Card.Img className="venue-image" variant="top" src={props.image} />
                 <Card.ImgOverlay>
                     <Row className="d-flex justify-content-between px-3">
-                        <Badge className="badge-futsal">Futsal</Badge>
+                        <Badge className="badge-futsal">{props.sport_type}</Badge>
                         <img src={rating} />
                     </Row>
-
                 </Card.ImgOverlay>
                 <Card.Body className="p-3">
                     <Card.Title>
-                        Golden Goal
+                        {props.name}
                     </Card.Title>
                     <Card.Subtitle className="mb-2 text-muted">
-                        3 Fields
+                        {props.number_of_fields} Fields
                     </Card.Subtitle>
-                    <Card.Text>
-                        Jl. Pogung Raya No.172, Pogung Baru, Sinduadi, Mlati, Pogung Kidul, Sinduadi,
-                        Kec. Mlati, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55284
+                    <Card.Text className="text-address">
+                        {props.address}
                     </Card.Text>
                 </Card.Body>
             </Card>

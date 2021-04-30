@@ -4,8 +4,12 @@
     &:hover{
         cursor: pointer;
     }
-    img{
+    .venue-image{
         border-radius: 16px 16px 0 0 !important;
+        height: 160px;
+        filter: brightness(66%);
+        -webkit-filter: brightness(66%);
+        -moz-filter: brightness(66%);
     }
     .card-img-overlay{
         padding: 18px !important;
@@ -20,7 +24,13 @@
             right: 0px;
         }
     }
-    p.card-text {
+    .text-address {
         font-size: 12px;
+        word-break: break-word;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3; /* number of lines to show */
+        -webkit-box-orient: vertical;
     }
 }
