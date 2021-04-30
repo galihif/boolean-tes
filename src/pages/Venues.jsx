@@ -53,6 +53,7 @@ class Venues extends Component {
                                                     <MyVenueCard 
                                                         key = {venue.id}
                                                         name = {venue.name}
+                                                        id = {venue.id}
                                                         number_of_fields={venue.number_of_fields}
                                                         address={venue.address}
                                                         sport_type={venue.sport_type}

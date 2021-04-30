@@ -2,8 +2,11 @@
     h1,h6,p {
         color: white;
     }
-    .jumbotron{
-        background-image: url('../assets/find_img.png');
-        background-size: cover;
+    .header-image{
+        height: 300px;
+        object-fit: inherit;
+        filter: brightness(38%);
+        -webkit-filter: brightness(38%);
+        -moz-filter: brightness(38%);
     }
 }

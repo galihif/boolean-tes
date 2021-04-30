@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import firebase from '../config/firebase'
+import { Button, Container, Spinner } from 'react-bootstrap';
 
 import './VenueDetails.scss'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -8,16 +10,66 @@ import MyFacilities from '../components/MyFacilities';
 import MyFieldList from '../components/MyFieldList';
 
 
-const VenueDetails = () => {
+class VenueDetails extends Component{
 
-    return(
-        <div>
-            <MyVenueHeader/>
-            <MyFacilities/>
-            <MyFieldList/>
-        </div>
-        
-    )
+    state = {
+        venue_id: this.props.match.params.id,
+        venue_data: [],
+        isLoading: false
+    }
+
+    getData() {
+        this.setState({
+            isLoading: true
+        })
+        const ref = firebase.firestore().collection("venues").doc(this.state.venue_id)
+        ref.get().then((doc) => {
+            if(doc.exists){
+                console.log(doc.data().name,"1")
+                this.setState({
+                    venue_data: doc.data(),
+                    isLoading: false
+                })
+            }
+        }).catch((error) => {
+            console.log("Error", error)
+        })
+    }
+
+    componentDidMount(){
+        this.getData()
+    }
+
+    render() {
+        let page;
+        const {isLoading, venue_data} = this.state
+        if (isLoading) {
+            page =
+            <Container className="d-flex justify-content-center p-5">
+                <Spinner animation="border" role="status">
+                    <span className="sr-only">Loading...</span>
+                </Spinner>
+            </Container>
+        } else{
+            page =
+                <div>
+                    <MyVenueHeader
+                        name={venue_data.name}
+                        address={venue_data.address}
+                        image={venue_data.image}
+                    />
+                    <MyFacilities />
+                    <MyFieldList />
+                </div>
+        }
+        return (
+            <div>
+                {
+                    page
+                }
+            </div>
+        )
+    }
 }
 
 export default VenueDetails

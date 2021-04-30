@@ -13,7 +13,7 @@ const MyVenueCard = (props) => {
     let history = useHistory()
 
     const handleClick = () => {
-        history.push('/venuedetails') 
+        history.push(`/venuedetails/${props.id}`) 
     }
 
     return (
