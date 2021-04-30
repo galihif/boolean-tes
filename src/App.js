@@ -20,18 +20,10 @@ function App() {
       <div className="">
         <MyNavbar/>
         <Switch>
-          <Route path="/about">
-            <MyAboutUs/>
-          </Route>
-          <Route path="/venues">
-            <Venues/>
-          </Route>
-          <Route path="/venuedetails">
-            <VenueDetails />
-          </Route>
-          <Route path="/">
-            <Home />
-          </Route>
+          <Route path="/" exact component={Home} />
+          <Route path="/venues" component={Venues} />
+          <Route path="/about" component={MyAboutUs}/>
+          <Route path="/venuedetails/:id" exact component={VenueDetails}/>
         </Switch>
         <MyFooter/>
       </div>

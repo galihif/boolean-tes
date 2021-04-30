@@ -34,7 +34,7 @@ const MyNavbar = () => {
                             <Link to="/venues">Venues</Link>
                         </Nav.Link>
                         <Nav.Link className="nav-my-link">
-                            <Link to="" href="">About Us</Link>
+                            <Link to="/about" href="">About Us</Link>
                         </Nav.Link>
                     </Nav>
                     <Nav>
