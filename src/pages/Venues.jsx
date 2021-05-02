@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Card, Badge, Form, Container, Row, Col } from 'react-bootstrap';
+import { Button, Card, Badge, Form, Container, Row, Col, Spinner } from 'react-bootstrap';
 import firebase from '../config/firebase'
 
 import './Venues.scss'
@@ -12,18 +12,21 @@ import MyVenueCard from '../components/MyVenueCard';
 class Venues extends Component {
 
     state = {
-        venues: []
+        venues: [],
+        isLoading: false
     }
 
     getVenues(){
         const ref = firebase.firestore().collection("venues")
+        this.setState({isLoading: true})
         ref.onSnapshot((snapshot) => {
             const items = []
             snapshot.forEach((doc) => {
                 items.push(doc.data())
             })
             this.setState({
-                venues: items
+                venues: items,
+                isLoading: false
             })
             console.log(this.state.venues)
         })
@@ -34,6 +37,8 @@ class Venues extends Component {
     }
 
     render() {
+        const {venues, isLoading} = this.state
+
         return (
             <div>
                 <MyFindField/>
@@ -45,15 +50,26 @@ class Venues extends Component {
                         </Col>
                         <Col lg={10}>
                             <Container className="list-venue-container">
+                                {
+                                    isLoading ? (
+                                        <Row className="d-flex justify-content-center align-items-center">
+                                            <Spinner animation="border" role="status">
+                                                <span className="sr-only">Loading...</span>
+                                            </Spinner>
+                                            <br /><br /><br /><br /><br /><br /><br /><br />
+                                            <br /><br /><br /><br /><br /><br /><br /><br />
+                                        </Row>
+                                    ) : null
+                                }
                                 <Row className="d-flex justify-content-left">
                                     {
-                                        this.state.venues.map((venue) => {
+                                        venues.map((venue) => {
                                             return (
                                                 <Col lg={4} className="px-3 mx-0 mb-3">
-                                                    <MyVenueCard 
-                                                        key = {venue.id}
-                                                        name = {venue.name}
-                                                        id = {venue.id}
+                                                    <MyVenueCard
+                                                        key={venue.id}
+                                                        name={venue.name}
+                                                        id={venue.id}
                                                         number_of_fields={venue.number_of_fields}
                                                         address={venue.address}
                                                         sport_type={venue.sport_type}
@@ -62,6 +78,7 @@ class Venues extends Component {
                                                 </Col>
                                             )
                                         })
+                                        
                                     }
                                 </Row>
                             </Container>
