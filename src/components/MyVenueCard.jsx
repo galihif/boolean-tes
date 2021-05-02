@@ -6,7 +6,6 @@ import {
 
 import './MyVenueCard.scss'
 
-import cat_basketball from '../assets/cat_basketball.png'
 import rating from '../assets/rating_5_5.png'
 
 const MyVenueCard = (props) => {

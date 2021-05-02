@@ -4,8 +4,7 @@ import { Button, Card, Row, Col, Modal, Form } from 'react-bootstrap';
 import './MyFieldCard.scss'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import rating from '../assets/rating_5_5.png'
-import cat_basketball from '../assets/cat_basketball.png'
+import cat_basketball from '../assets/cat/cat_basketball.png'
 
 
 class MyFieldCard extends Component{

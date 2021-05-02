@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
-import { Button, Jumbotron, Row, Col, Container } from 'react-bootstrap';
+import React, {  } from 'react'
+import {Row, Col, Container } from 'react-bootstrap';
 
-import { Icon, InlineIcon } from "@iconify/react";
+import { Icon } from "@iconify/react";
 import toiletIcon from '@iconify-icons/fa-solid/toilet';
 import showerIcon from '@iconify-icons/fa-solid/shower';
 import wifiIcon from '@iconify-icons/fa-solid/wifi';
@@ -12,7 +12,6 @@ import chargingStation from '@iconify-icons/fa-solid/charging-station';
 import './MyFacilities.scss'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import rating from '../assets/rating_5_5.png'
 
 
 const MyFacilities = () => {

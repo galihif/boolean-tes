@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Card, Badge, Form, Container, Row, Col, Spinner } from 'react-bootstrap';
+import {Container, Row, Col, Spinner } from 'react-bootstrap';
 import firebase from '../config/firebase'
 
 import './Venues.scss'

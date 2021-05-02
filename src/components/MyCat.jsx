@@ -3,11 +3,11 @@ import { CardDeck, Card, Container, Row, Col } from 'react-bootstrap';
 
 import './MyCat.scss'
 
-import cat_futsal from '../assets/cat_futsal.png'
-import cat_volley from '../assets/cat_volley.png'
-import cat_basketball from '../assets/cat_basketball.png'
-import cat_badminton from '../assets/cat_badminton.png'
-import cat_tennis from '../assets/cat_tennis.png'
+import cat_futsal from '../assets/cat/cat_futsal.png'
+import cat_badminton from '../assets/cat/cat_badminton.png'
+import cat_basketball from '../assets/cat/cat_basketball.png'
+import cat_tennis from '../assets/cat/cat_tennis.png'
+import cat_volley from '../assets/cat/cat_volley.png'
 
 const MyCat = () => {
     return (
@@ -18,10 +18,10 @@ const MyCat = () => {
                     <Row className="justify-content-md-center my-lg-4">
                         <Col md={3} xs={8} className="mx-lg-0 mx-auto my-2">
                             <Card className="my-card">
-                                <Card.Img variant="top" src={cat_futsal} />
+                                <Card.Img variant="top" src={cat_badminton} />
                                 <Card.Body className="my-card-body">
                                     <Card.Text>
-                                        Futsal
+                                        Badminton
                                     </Card.Text>
                                 </Card.Body>
                             </Card>
@@ -38,10 +38,10 @@ const MyCat = () => {
                         </Col>
                         <Col md={3} xs={8} className="mx-lg-0 mx-auto my-2">
                             <Card className="my-card">
-                                <Card.Img variant="top" src={cat_futsal} />
+                                <Card.Img variant="top" src={cat_basketball} />
                                 <Card.Body className="my-card-body">
                                     <Card.Text>
-                                        Futsal
+                                        Basketball
                                     </Card.Text>
                                 </Card.Body>
                             </Card>
@@ -51,20 +51,20 @@ const MyCat = () => {
                     <Row className="justify-content-md-center my-lg-4">
                         <Col md={3} xs={8} className="mx-lg-0 mx-auto my-2">
                             <Card className="my-card">
-                                <Card.Img variant="top" src={cat_futsal} />
+                                <Card.Img variant="top" src={cat_tennis} />
                                 <Card.Body className="my-card-body">
                                     <Card.Text>
-                                        Futsal
+                                        Tennis
                                     </Card.Text>
                                 </Card.Body>
                             </Card>
                         </Col>
                         <Col md={3} xs={8} className="mx-lg-0 mx-auto my-2">
                             <Card className="my-card">
-                                <Card.Img variant="top" src={cat_futsal} />
+                                <Card.Img variant="top" src={cat_volley} />
                                 <Card.Body className="my-card-body">
                                     <Card.Text>
-                                        Futsal
+                                        Volley
                                     </Card.Text>
                                 </Card.Body>
                             </Card>

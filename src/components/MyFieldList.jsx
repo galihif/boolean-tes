@@ -1,12 +1,10 @@
 
-import React, { Component } from 'react'
-import { Button, Card, Row, Col, Container } from 'react-bootstrap';
+import React, {  } from 'react'
+import {Row, Col } from 'react-bootstrap';
 
 import './MyFieldList.scss'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import rating from '../assets/rating_5_5.png'
-import cat_basketball from '../assets/cat_basketball.png'
 import MyFieldCard from './MyFieldCard';
 
 
