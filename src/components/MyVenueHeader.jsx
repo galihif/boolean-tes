@@ -4,7 +4,7 @@ import { Button, Jumbotron, Row, Col, Container, Card } from 'react-bootstrap';
 import './MyVenueHeader.scss'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import rating from '../assets/rating_5_5.png'
+import rating from '../assets/rating/rating_5_5.png'
 
 
 const MyVenueHeader = (props) => {

@@ -6,7 +6,7 @@ import {
 
 import './MyVenueCard.scss'
 
-import rating from '../assets/rating_5_5.png'
+import rating from '../assets/rating/rating_5_5.png'
 
 const MyVenueCard = (props) => {
     let history = useHistory()
