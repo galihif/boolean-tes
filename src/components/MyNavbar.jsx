@@ -1,9 +1,9 @@
 import React, { } from 'react'
-import { Button, Navbar, Nav } from 'react-bootstrap';
+import { Button, Navbar, Nav, NavDropdown, Form, FormControl } from 'react-bootstrap';
 import {
     BrowserRouter as Router,
     Switch,
-    Route,
+    useHistory,
     Link
 } from "react-router-dom";
 
@@ -12,6 +12,13 @@ import MyButton from '../atom/MyButton';
 import './MyNavbar.scss'
 
 const MyNavbar = () => {
+    let history = useHistory()
+    const pushLogin = () => {
+        history.push('/login')
+    }
+    const pushRegister = () => {
+        history.push('/register')
+    }
     return(
         <div>
             <Navbar collapseOnSelect expand="lg" bg="white" variant="light" className="my-navbar fixed-top">
@@ -38,8 +45,8 @@ const MyNavbar = () => {
                         </Nav.Link>
                     </Nav>
                     <Nav>
-                        <MyButton title="Login" type="btn-my-secondary" theVariant="outline-primary"/>
-                        <MyButton title="Register" type="btn-my-primary" />
+                        <Button onClick={pushLogin} className="btn-my-secondary" variant="outline-primary" >Login</Button>
+                        <Button onClick={pushRegister} className="btn-my-primary" variant="outline-primary" >Register</Button>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
