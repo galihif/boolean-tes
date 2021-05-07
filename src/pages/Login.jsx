@@ -8,9 +8,8 @@ import MyHero from '../components/MyHero';
 import MyCat from '../components/MyCat';
 import MyAboutUs from '../components/MyAboutUs';
 
-class Login extends Component{
-    render(){
-        return(
+const Login = () => {
+    return (
             <Container className="justify-content-center d-flex py-5">
                 <Col lg={6}>
                     <div className="login-card">
@@ -38,8 +37,8 @@ class Login extends Component{
                     </div>
                 </Col>
             </Container>
-        )
-    }
+    )
+    
 }
 
 export default Login
