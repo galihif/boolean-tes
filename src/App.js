@@ -15,6 +15,7 @@ import MyFooter from './components/MyFooter';
 import VenueDetails from './pages/VenueDetails';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="/login" component={Login}/>
           <Route path="/register" component={Register}/>
           <Route path="/venuedetails/:id" exact component={VenueDetails}/>
+          <Route path="/profile" exact component={Profile}/>
         </Switch>
         <MyFooter/>
       </div>

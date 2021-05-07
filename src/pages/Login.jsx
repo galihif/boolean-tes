@@ -4,9 +4,6 @@ import './Login.scss'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Col, Container, Form,Button } from 'react-bootstrap'
 
-import MyHero from '../components/MyHero';
-import MyCat from '../components/MyCat';
-import MyAboutUs from '../components/MyAboutUs';
 
 const Login = () => {
     const [email, setEmail] = useState("");

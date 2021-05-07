@@ -1,0 +1,16 @@
+@import '../variables.scss';
+
+.profile-card{
+        background-color: white;
+        height: 200px;
+        box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+        border-radius: 24px;
+}
+
+.booking-history{
+        height: 200px;
+        thead {
+                background-color: $color-primary-orange;
+                color: white;
+        }
+}
