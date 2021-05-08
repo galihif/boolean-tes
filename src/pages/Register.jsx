@@ -1,12 +1,10 @@
-import React,{ useState } from 'react'
+import React, { useState } from 'react'
+import { Col, Container, Form, Button } from 'react-bootstrap'
 
 import './Register.scss'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Col, Container, Form,Button } from 'react-bootstrap'
 
-import MyHero from '../components/MyHero';
-import MyCat from '../components/MyCat';
-import MyAboutUs from '../components/MyAboutUs';
+import firebase from '../config/firebase'
 
 const Register = () => {
     const [email, setEmail] = useState("");
@@ -30,7 +28,16 @@ const Register = () => {
     }
 
     const handleSubmit = () => {
-        console.log(name,email, password)
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+                var user = userCredential.user
+                console.log(user)
+            })
+            .catch((error) => {
+                var errorCode = error.code
+                var errorMessage = error.message
+                console.log(errorCode, errorMessage)
+            })
     }
     return(
         <Container className="justify-content-center d-flex py-5">
