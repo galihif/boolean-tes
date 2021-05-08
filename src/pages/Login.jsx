@@ -1,9 +1,10 @@
-import React,{ useState } from 'react'
+import React, { useState } from 'react'
+import { Col, Container, Form, Button } from 'react-bootstrap'
 
 import './Login.scss'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Col, Container, Form,Button } from 'react-bootstrap'
 
+import firebase from '../config/firebase'
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -23,7 +24,16 @@ const Login = () => {
     }
 
     const handleSubmit = () => {
-        console.log(email, password)
+        firebase.auth().signInWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+                var user = userCredential.user
+                console.log(user.displayName)
+            })
+            .catch((error) => {
+                var errorCode = error.code
+                var errorMessage = error.message
+                console.log(errorCode, errorMessage)
+            })
     }
     return (
             <Container className="justify-content-center d-flex py-5">
