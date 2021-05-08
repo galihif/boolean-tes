@@ -35,7 +35,7 @@ const Profile = (props) => {
     });
 
     const getProfile = () => {
-        firebase.auth().onAuthStateChanged(function (user) {
+        firebase.auth().onAuthStateChanged((user) => {
             // setLoading(true)
             if (user) {
                 setUserName(user.displayName)

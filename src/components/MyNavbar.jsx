@@ -1,4 +1,4 @@
-import React, { } from 'react'
+import React, { useState, useEffect} from 'react'
 import { Button, Navbar, Nav, NavDropdown, Form, FormControl } from 'react-bootstrap';
 import {
     BrowserRouter as Router,
@@ -6,18 +6,39 @@ import {
     useHistory,
     Link
 } from "react-router-dom";
+import firebase from '../config/firebase'
 
 import logo from '../assets/logo.png';
-import MyButton from '../atom/MyButton';
 import './MyNavbar.scss'
 
 const MyNavbar = () => {
+    const [logged, setLogged] = useState(false)
+    const [userId, setUserId] = useState("")
+    const [userName, setUserName] = useState("")
     let history = useHistory()
+
+    useEffect(() => {
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user){
+                setLogged(true)
+                setUserId(user.uid)
+                setUserName(user.displayName)
+            } else {
+                setLogged(false)
+                setUserId("")
+                setUserName("")
+            }
+        })
+    })
+
     const pushLogin = () => {
         history.push('/login')
     }
     const pushRegister = () => {
         history.push('/register')
+    }
+    const pushProfile = () => {
+        history.push(`/profile/user/${userId}`)
     }
     return(
         <div>
@@ -45,8 +66,15 @@ const MyNavbar = () => {
                         </Nav.Link>
                     </Nav>
                     <Nav>
-                        <Button onClick={pushLogin} className="btn-my-secondary" variant="outline-primary" >Login</Button>
-                        <Button onClick={pushRegister} className="btn-my-primary" variant="outline-primary" >Register</Button>
+                        {
+                            logged ?
+                                <Button onClick={pushProfile} className="btn-my-primary" variant="outline-primary" >{userName}</Button>
+                                : 
+                            <div>
+                                <Button onClick={pushLogin} className="btn-my-secondary" variant="outline-primary" >Login</Button>
+                                <Button onClick={pushRegister} className="btn-my-primary" variant="outline-primary" >Register</Button>
+                            </div>
+                        }
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
