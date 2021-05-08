@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Col, Container, Form, Button } from 'react-bootstrap'
+import { useHistory } from 'react-router-dom'
 
 import './Login.scss'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -9,6 +10,7 @@ import firebase from '../config/firebase'
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    let history = useHistory()
 
     const handleChange = (e) => {
         switch(e.target.id){
@@ -27,7 +29,7 @@ const Login = () => {
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then((userCredential) => {
                 var user = userCredential.user
-                console.log(user.displayName)
+                history.push(`/profile/user/${user.uid}`)
             })
             .catch((error) => {
                 var errorCode = error.code

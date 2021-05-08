@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Col, Container, Form, Button } from 'react-bootstrap'
+import {useHistory} from 'react-router-dom'
 
 import './Register.scss'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -10,6 +11,7 @@ const Register = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
+    let history = useHistory()
 
     const handleChange = (e) => {
         switch (e.target.id) {
@@ -32,9 +34,10 @@ const Register = () => {
             .then((userCredential) => {
                 var user = userCredential.user
                 user.updateProfile({
-                    displayName: name
+                    displayName: name,
+                    photoURL: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTRvKfd48HnQncLYr5SLoflrL62djuidMzF5aempsJqWuQPiWHm"
                 })
-                console.log(user)
+                history.push(`/profile/user/${user.uid}`)
             })
             .catch((error) => {
                 var errorCode = error.code

@@ -29,7 +29,7 @@ function App() {
           <Route path="/login" component={Login}/>
           <Route path="/register" component={Register}/>
           <Route path="/venuedetails/:id" exact component={VenueDetails}/>
-          <Route path="/profile" exact component={Profile}/>
+          <Route path="/profile/user/:id" exact component={Profile}/>
         </Switch>
         <MyFooter/>
       </div>

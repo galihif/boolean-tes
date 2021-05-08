@@ -1,4 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import firebase from '../config/firebase'
+import {useHistory} from 'react-router-dom'
 
 import './Profile.scss'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -14,12 +16,81 @@ import {
     Nav
 } from 'react-bootstrap'
 
-import cat_futsal from '../assets/cat/cat_futsal.png'
 
 
-const Profile = () => {
+
+const Profile = (props) => {
     const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [password, setPassword] = useState("")
+    const [userName, setUserName] = useState("")
+    const [userPhoto, setUserPhoto] = useState("")
+    const [isLoading, setLoading] = useState(false)
+    const [booking_data, setBookingData] = useState([])
+    const userId = props.match.params.id
+    let history = useHistory()
+ 
+    useEffect(() => {
+        getProfile()
+        getBooking()
+    });
+
+    const getProfile = () => {
+        firebase.auth().onAuthStateChanged(function (user) {
+            // setLoading(true)
+            if (user) {
+                setUserName(user.displayName)
+                setUserPhoto(user.photoURL)
+            } else {
+                // No user is signed in.
+            }
+            
+        })
+    }
+
+    const getBooking = () => {
+        const ref = firebase.firestore().collection("booking")
+        ref.onSnapshot((snapshot) => {
+            const items = []
+            snapshot.forEach((doc) => {
+                const booking = doc.data()
+                if(booking.user_id === userId){
+                    items.push(booking)
+                }
+                setBookingData(items)
+            })
+        })
+        console.log(booking_data)
+    }
+
+    const handleChange = (e) => {
+        switch (e.target.id) {
+            case "name":
+                setUserName(e.target.value)
+                break
+            case "password":
+                setPassword(e.target.value)
+                break
+            case "image":
+                let file = e.target.files[0]
+                break
+            default:
+                return null
+        }
+    }
+
+    const handleSubmit = () => {
+
+    }
+
+    const handleLogout = () => {
+        firebase.auth().signOut().then(() => {
+            history.push('/login')
+        }).catch((error) => {
+            // An error happened.
+        });
+    }
+
+    
     return (
         <Container className="py-5">
             <Tab.Container id="left-tabs-example" defaultActiveKey="first">
@@ -27,11 +98,13 @@ const Profile = () => {
                     <Col sm={2} className="profile-card">
                         <Nav variant="pills" className="flex-column">
                             <Row className="px-4 mb-3">
-                                <Col lg={4} className="p-0 d-flex align-items-center justify-content-center">
-                                    <Image src="https://images.tokopedia.net/img/cache/500-square/product-1/2019/9/14/1992273/1992273_df1a3f99-773f-46f0-a751-aca502d65994_732_732.jpg.webp" roundedCircle />
+                                <Col lg className="p-0 d-flex align-items-center justify-content-center">
+                                    <Image src={userPhoto} roundedCircle />
                                 </Col>
-                                <Col lg={8} className="p-0 d-flex align-items-center justify-content-center">
-                                    <h6>Tony Stark</h6>
+                            </Row>
+                            <Row className="px-4 mb-3">
+                                <Col lg className="p-0 d-flex justify-content-center">
+                                    <h6 className="text-center">{userName}</h6>
                                 </Col>
                             </Row>
                             <Nav.Item>
@@ -40,6 +113,7 @@ const Profile = () => {
                             <Nav.Item>
                                 <Nav.Link eventKey="second" className="text-center">Account Settings</Nav.Link>
                             </Nav.Item>
+
                         </Nav>
                     </Col>
                     <Col sm={10}>
@@ -49,7 +123,6 @@ const Profile = () => {
                                     <Table striped bordered hover>
                                         <thead>
                                             <tr>
-                                                <th>No</th>
                                                 <th>Venue - Field</th>
                                                 <th>Date</th>
                                                 <th>Time</th>
@@ -58,22 +131,19 @@ const Profile = () => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Golden Goal - Vinyl</td>
-                                                <td>22/01/2021</td>
-                                                <td>15:00 - 16:00</td>
-                                                <td>Rp. 120.000</td>
-                                                <td>19/01/2021 14:32</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>Marabunta - Sinte</td>
-                                                <td>22/01/2021</td>
-                                                <td>15:00 - 16:00</td>
-                                                <td>Rp. 120.000</td>
-                                                <td>19/01/2021 14:32</td>
-                                            </tr>
+                                            {
+                                                booking_data.map((booking) => {
+                                                    return(
+                                                        <tr>
+                                                            <td>{booking.venue_name} - {booking.field_name}</td>
+                                                            <td>{booking.date}</td>
+                                                            <td>{booking.time}</td>
+                                                            <td>Rp. {booking.price}</td>
+                                                            <td>{booking.book_time}</td>
+                                                        </tr>
+                                                    )
+                                                })
+                                            }
                                         </tbody>
                                     </Table>
                                 </div>
@@ -81,24 +151,16 @@ const Profile = () => {
                             <Tab.Pane eventKey="second">
                                 <div className="account-settings">
                                     <Form>
-                                        <Form.Group controlId="formBasicEmail">
-                                            <Form.Label><b>Tony Stark</b></Form.Label>
-                                            <Form.Control type="name" placeholder="Change name"/>
+                                        <Form.Group controlId="image">
+                                            <Form.Label><b>Change Profile Picture</b></Form.Label>
+                                            <Form.File label="Upload Image" type="file" onChange={handleChange} />
                                         </Form.Group>
-
-                                        <Form.Group controlId="formBasicEmail">
-                                            <Form.Label><b>tony@stark.com</b></Form.Label>
-                                            <Form.Control type="email" placeholder="Change email" />
+                                        <Form.Group controlId="name">
+                                            <Form.Label><b>Name</b></Form.Label>
+                                            <Form.Control type="name" placeholder="Change Name" onChange={handleChange} />
                                         </Form.Group>
-
-                                        <Form.Group controlId="formBasicPassword">
-                                            <Form.Label><b>Password</b></Form.Label>
-                                            <Form.Control type="password" placeholder="Change Password" />
-                                        </Form.Group>
-
-                                        <Button variant="primary" type="">
-                                            Save
-                                        </Button>
+                                        <Button variant="primary" type="">Save</Button>
+                                        <Button variant="danger" onClick={handleLogout}>Log Out</Button>
                                     </Form>
                                 </div>
                             </Tab.Pane>
