@@ -31,19 +31,19 @@ const Login = () => {
                     <div className="login-card">
                         <h3 className="text-center">Login</h3>
                         <Form>
-                            <Form.Group>
+                            <Form.Group controlId="email">
                                 <Form.Label>Email address</Form.Label>
-                                <Form.Control id="email" type="email" placeholder="Enter email" onChange={handleChange}/>
+                                <Form.Control type="email" placeholder="Enter email" onChange={handleChange}/>
                             </Form.Group>
 
-                            <Form.Group>
+                            <Form.Group controlId="password">
                                 <Form.Label>Password</Form.Label>
-                            <Form.Control id="password" type="password" placeholder="Password" onChange={handleChange}/>
+                                <Form.Control type="password" placeholder="Password" onChange={handleChange}/>
                             </Form.Group>
                             <Form.Group controlId="formBasicCheckbox">
                                 <Form.Check type="checkbox" label="Check me out" />
                             </Form.Group>
-                            <Button variant="primary" type="submit" className="btn-block" onClick={handleSubmit}>
+                            <Button variant="primary" type="" className="btn-block" onClick={handleSubmit}>
                                 Submit
                             </Button>
                         </Form>
