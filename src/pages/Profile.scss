@@ -1,10 +1,21 @@
 @import '../variables.scss';
 
 .profile-card{
-        background-color: white;
-        height: 200px;
-        box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
-        border-radius: 24px;
+        img {
+                width: 50px;
+                height: 50px;
+        }
+        
+        .nav-pills .nav-link.active, .nav-pills .show>.nav-link{
+                color: #fff;
+        background-color: #ff7a2f;
+        }
+        a {
+        color: $color-primary-orange;
+        text-decoration: none;
+        background-color: transparent;
+        }
+        
 }
 
 .booking-history{
@@ -14,3 +25,28 @@
                 color: white;
         }
 }
+
+.account-settings{
+        
+        button {
+                background-color: $color-primary-orange !important;
+                border-color: $color-primary-orange !important;
+                outline-color: $color-primary-orange !important;
+                &:hover{
+                        background-color: $color-primary-orange !important;
+                        border-color: $color-primary-orange !important;
+                        outline-color: $color-primary-orange !important;
+                }
+                &:active{
+                        background-color: $color-primary-orange !important;
+                        border-color: $color-primary-orange !important;
+                        outline-color: $color-primary-orange !important;
+                }
+                &:visited{
+                        background-color: $color-primary-orange !important;
+                        border-color: $color-primary-orange !important;
+                        outline-color: $color-primary-orange !important;
+                }
+        }
+}
+
