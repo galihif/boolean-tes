@@ -4,6 +4,9 @@
     .card-horizontal {
         display: flex;
         flex: 1 1 auto;
+        .card-img-top{
+            width: 240px !important;
+        }
         .card-body{
             border-radius: 20px;
             .btn-my-primary{

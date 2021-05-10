@@ -15,6 +15,7 @@ class VenueDetails extends Component{
     state = {
         venue_id: this.props.match.params.id,
         venue_data: [],
+        field_list: [],
         isLoading: false
     }
 
@@ -25,9 +26,9 @@ class VenueDetails extends Component{
         const ref = firebase.firestore().collection("venues").doc(this.state.venue_id)
         ref.get().then((doc) => {
             if(doc.exists){
-                console.log(doc.data().name,"1")
                 this.setState({
                     venue_data: doc.data(),
+                    field_list: doc.data().field_list,
                     isLoading: false
                 })
             }
@@ -41,7 +42,7 @@ class VenueDetails extends Component{
     }
 
     render() {
-        const {isLoading, venue_data} = this.state
+        const {isLoading, venue_data, field_list} = this.state
         return (
             <div>
                 {
@@ -63,7 +64,7 @@ class VenueDetails extends Component{
                                     image={venue_data.image}
                                 />
                                 <MyFacilities />
-                                <MyFieldList />
+                                <MyFieldList field_list={field_list} venue_data={venue_data}/>
                             </div>
                     )
                 }
