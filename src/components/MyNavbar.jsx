@@ -18,8 +18,12 @@ const MyNavbar = () => {
     let history = useHistory()
 
     useEffect(() => {
+        getUser()
+    })
+
+    const getUser = () => {
         firebase.auth().onAuthStateChanged((user) => {
-            if (user){
+            if (user) {
                 setLogged(true)
                 setUserId(user.uid)
                 setUserName(user.displayName)
@@ -29,7 +33,7 @@ const MyNavbar = () => {
                 setUserName("")
             }
         })
-    })
+    }
 
     const pushLogin = () => {
         history.push('/login')
