@@ -72,6 +72,7 @@ const MyFieldCard = (props) => {
 
         }).then(() => {
             console.log('success')
+            toggleDialog()
         }).catch((err) => {
             console.log(err)
         })
