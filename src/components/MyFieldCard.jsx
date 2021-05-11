@@ -1,5 +1,6 @@
 import React, { useEffect,useState } from 'react'
 import { Button, Card, Row, Col, Modal, Form } from 'react-bootstrap';
+import firebase from '../config/firebase'
 
 import './MyFieldCard.scss'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -9,10 +10,14 @@ const MyFieldCard = (props) => {
     const [time1, setTime1] = useState(0)
     const [time2, setTime2] = useState(0)
     const [hours, setHours] = useState(0)
-    const [venueData, setVenueData] = useState(props.venue_data)
+    const [date, setDate] = useState(0)
+    const [userId, setUserId] = useState("")
+    const [timeNow, setTimeNow] = useState("")
 
     useEffect(() => {
-        console.log(time1, time2)
+        getDateTime()
+        getUser()
+        console.log(date,time1,time2)
         if (time1 !== 0 && time2 !== 0){
             var array1 = time1.split(":");
             var seconds1 = (parseInt(array1[0], 10) * 60 * 60) + (parseInt(array1[1], 10) * 60)
@@ -23,7 +28,7 @@ const MyFieldCard = (props) => {
 
             setHours(Math.ceil((seconds2 - seconds1) / 3600))
         }
-    }, [time1,time2,hours])
+    }, [time1,time2,hours,date])
 
     const toggleDialog = () => {
         setShowDialog(!showDialog)
@@ -37,13 +42,57 @@ const MyFieldCard = (props) => {
             case "time2":
                 setTime2(e.target.value)
                 break
+            case "date":
+                setDate(e.target.value)
+                break
             default:
                 return null
         }
     }
 
     const handleSubmit = () => {
-        console.log(venueData)
+        getDateTime()
+        pushBooking()
+    }
+
+    const pushBooking = () => {
+        let ref = firebase.firestore().collection("booking").doc()
+        let bookId = ref.id
+        firebase.firestore().collection("booking").doc(bookId).set({
+            book_time: timeNow,
+            date: date,
+            field_name: props.field_name,
+            isCompleted: false,
+            price: props.price,
+            time: `${time1} - ${time2}`,
+            user_id: userId,
+            venue_id: props.venue_data.id,
+            venue_name: props.venue_data.name,
+            id: bookId
+
+        }).then(() => {
+            console.log('success')
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
+
+    const getDateTime = () => {
+        let date = new Date()
+        let fullDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`
+        setTimeNow(fullDate)
+    }
+
+    const getUser = () => {
+        firebase.auth().onAuthStateChanged((user) => {
+            // setLoading(true)
+            if (user) {
+                setUserId(user.uid)
+            } else {
+                // No user is signed in.
+            }
+
+        })
     }
 
     return (
@@ -91,7 +140,7 @@ const MyFieldCard = (props) => {
                     </Row>
                     <Row>
                         <Col lg={4}><p>Date</p></Col>
-                        <Col><Form.Control id="date" type="date" placeholder="Enter Date" /></Col>
+                        <Col><Form.Control onChange={handleChange} id="date" type="date" placeholder="Enter Date" /></Col>
                     </Row>
                     <Row>
                         <Col lg={4}><p>Time</p></Col>
