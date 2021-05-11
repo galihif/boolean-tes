@@ -48,18 +48,14 @@ const Profile = (props) => {
     }
 
     const getBooking = () => {
-        const ref = firebase.firestore().collection("booking")
+        const ref = firebase.firestore().collection("booking").where("user_id", "==", userId)
         ref.onSnapshot((snapshot) => {
             const items = []
             snapshot.forEach((doc) => {
-                const booking = doc.data()
-                if(booking.user_id === userId){
-                    items.push(booking)
-                }
-                setBookingData(items)
+                items.push(doc.data())
             })
+            setBookingData(items)
         })
-        console.log(booking_data)
     }
 
     const handleChange = (e) => {
