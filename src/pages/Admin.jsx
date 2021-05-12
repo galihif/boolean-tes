@@ -1,14 +1,19 @@
 import React, { useState } from 'react'
-import { Col, Container, Tab, Row,Nav,Image, Card, Form, Button } from 'react-bootstrap'
-import { useHistory } from 'react-router-dom'
+import { Col, Container, Tab, Row, Nav, Image, Card, Table, Button } from 'react-bootstrap'
+import { Switch, useHistory, useRouteMatch, Route } from 'react-router-dom'
 
 import './Admin.scss'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import firebase from '../config/firebase'
+import MyVenuesAdmin from '../components/MyVenuesAdmin';
+import MyDashboardAdmin from '../components/MyDashboardAdmin';
+import MyAddVenueAdmin from '../components/MyAddVenueAdmin';
 
 const Admin = () => {
     let history = useHistory()
+    let {path, url} = useRouteMatch()
+    console.log(path,"admin")
 
     return (
         <Container className="py-5">
@@ -39,53 +44,17 @@ const Admin = () => {
                     <Col sm={10}>
                         <Tab.Content>
                             <Tab.Pane eventKey="first">
-                                <h1>Dashboard</h1>
-                                <Row>
-                                    <Col>
-                                        <Card style={{ }}>
-                                            <Card.Body>
-                                                <Card.Title>Venues</Card.Title>
-                                                <Card.Text>
-                                                    <h1>232</h1>
-                                                </Card.Text>
-                                            </Card.Body>
-                                        </Card>
-                                    </Col>
-                                    <Col>
-                                        <Card style={{ }}>
-                                            <Card.Body>
-                                                <Card.Title>Fields</Card.Title>
-                                                <Card.Text>
-                                                    <h1>532</h1>
-                                                </Card.Text>
-                                            </Card.Body>
-                                        </Card>
-                                    </Col>
-                                    <Col>
-                                        <Card style={{ }}>
-                                            <Card.Body>
-                                                <Card.Title>Users</Card.Title>
-                                                <Card.Text>
-                                                    <h1>98828</h1>
-                                                </Card.Text>
-                                            </Card.Body>
-                                        </Card>
-                                    </Col>
-                                    <Col>
-                                        <Card style={{ }}>
-                                            <Card.Body>
-                                                <Card.Title>Bookings</Card.Title>
-                                                <Card.Text>
-                                                    <h1>762</h1>
-                                                </Card.Text>
-                                            </Card.Body>
-                                        </Card>
-                                    </Col>
-                                </Row>
+                                <MyDashboardAdmin/>
                             </Tab.Pane>
                             <Tab.Pane eventKey="second">
-                                <h1>Venues</h1>
-                                
+                                <Switch>
+                                    <Route path={`${path}/add-venue`}>
+                                        <MyAddVenueAdmin />
+                                    </Route>
+                                    <Route path={path}>
+                                        <MyVenuesAdmin />
+                                    </Route>
+                                </Switch>
                             </Tab.Pane>
                             <Tab.Pane eventKey="third">
                                 <h1>Users</h1>
