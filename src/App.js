@@ -5,7 +5,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
 } from "react-router-dom";
 import MyAboutUs from './components/MyAboutUs';
 import Home from './pages/Home';
@@ -16,6 +15,7 @@ import VenueDetails from './pages/VenueDetails';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
+import Admin from './pages/Admin';
 
 function App() {
   return (
@@ -27,6 +27,7 @@ function App() {
           <Route path="/venues" component={Venues} />
           <Route path="/about" component={MyAboutUs}/>
           <Route path="/login" component={Login}/>
+          <Route path="/admin" component={Admin}/>
           <Route path="/register" component={Register}/>
           <Route path="/venuedetails/:id" exact component={VenueDetails}/>
           <Route path="/profile/user/:id" exact component={Profile}/>

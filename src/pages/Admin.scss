@@ -1,0 +1,20 @@
+@import '../variables.scss';
+
+.login-card{
+        box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.18);
+        border-radius: 23px;
+        padding: 48px;
+        h3{
+                color: $color-primary-orange;
+        }
+        button {
+                background-color: $color-primary-orange;
+                border-color: $color-primary-orange;
+                &:hover{
+                        background-color: $color-primary-orange;
+                }
+                &:active{
+                        background-color: $color-primary-orange;
+                }
+        }
+}
