@@ -1,11 +1,12 @@
 import React, { useEffect, useState} from 'react'
 import { Col, Form, Modal, Row, Nav, Image, Card, Table, Button, FormGroup, FormControl } from 'react-bootstrap'
 import { useHistory, useRouteMatch } from 'react-router-dom'
-import firebase from '../config/firebase'
+import firebase,{storage,firestore} from '../config/firebase'
 import MyFieldCard from './MyFieldCard'
 
 const MyAddVenueAdmin = () => {
     const [showDialog, setShowDialog] = useState(false)
+    const [venueId, setVenueId] = useState(new Date().getTime().toString())
     const [venueName, setVenueName] = useState("")
     const [venueAddress, setVenueAddress] = useState("")
     const [venueAddressURL, setVenueAddressURL] = useState("")
@@ -56,43 +57,51 @@ const MyAddVenueAdmin = () => {
         } else {
             facilities.splice(facilities.indexOf(e.target.id),1)
         }
-        console.log(facilities)
     }
 
-    const handleChangeImage = (e) => {
+    const handleChangeVenueImage = (e) => {
         const venueImage = e.target.files[0]
-        const ref = firebase.storage().ref(`venueImages/${venueName}`).put(venueImage)
-        ref.on(
+        const uploadImage = storage.ref(`venueImage/${venueId}/${venueName}`).put(venueImage)
+        uploadImage.on(
             "state_changed",
-            snapshot => { },
-            error => { console.log(error) },
+            snapshot => {},
+            error => {console.log(error)},
             () => {
-                firebase.storage()
-                    .ref("venueImages")
+                storage
+                    .ref(`venueImage/${venueId}`)
                     .child(venueName)
                     .getDownloadURL()
                     .then(url => {
                         setVenueImageURL(url)
-                        console.log("upload image success")
+                        console.log(url)
                     })
             }
         )
     }
 
     const handleSubmitVenue = () => {
+        const time = new Date()
         let bundle = {
-            venueId: "",
+            venueId: venueId,
             venueName: venueName,
             venueAddress: venueAddress,
             venueAddressURL: venueAddressURL,
             venuePhone: venuePhone,
             venueSportType: venueSportType,
+            venueOpenTime: dayOpenTime,
+            venueFacilities: facilities,
             fieldList: fieldList,
             venueImage: venueImageURL,
             numberOfFields: fieldList.length,
             venueRating: "0.0",
+            joinedAt: `${time.getDate()}/${time.getMonth()+1}/${time.getFullYear()}`
         }
+        pushVenue(bundle)
         console.log(bundle)
+    }
+
+    const pushVenue = (bundle) => {
+        firebase.firestore().collection("venues").doc(venueId).set(bundle)
     }
 
     const handleChangeField = (e) => {
@@ -105,9 +114,29 @@ const MyAddVenueAdmin = () => {
         }
     }
 
+    const handleChangeFieldImage = (e) => {
+        const fieldImage = e.target.files[0]
+        const uploadImage = storage.ref(`venueImage/${venueId}/${field.fieldName}`).put(fieldImage)
+        uploadImage.on(
+            "state_changed",
+            snapshot => { },
+            error => { console.log(error) },
+            () => {
+                storage
+                    .ref(`venueImage/${venueId}`)
+                    .child(field.fieldName)
+                    .getDownloadURL()
+                    .then(url => {
+                        field["fieldImage"] = url
+                        console.log(url)
+                    })
+            }
+        )
+    }
+
     const handleAddField = () => {
         fieldList.push(field)
-        console.log(fieldList.length)
+        console.log(field)
         toggleDialog()
         setField([])
     }
@@ -307,7 +336,7 @@ const MyAddVenueAdmin = () => {
                     <p>Add Photo</p>
                 </Col>
                 <Col lg={6}>
-                    <Form.File label="Upload Image" type="file" onChange={handleChangeImage} />
+                    <Form.File label="Upload Image" type="file" onChange={handleChangeVenueImage} />
                 </Col>
             </Row>
             <Row className="my-3">
@@ -367,7 +396,7 @@ const MyAddVenueAdmin = () => {
                     </Row>
                     <Row>
                         <Col lg={3}><p>Photo</p></Col>
-                        <Col><Form.File label="Upload Image" type="file"/></Col>
+                        <Col><Form.File label="Upload Image" type="file" onChange={handleChangeFieldImage}/></Col>
                     </Row>
                 </Modal.Body>
                 <Modal.Footer>
