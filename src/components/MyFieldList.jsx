@@ -8,7 +8,7 @@ import MyFieldCard from './MyFieldCard';
 
 
 const MyFieldList = (props) => {
-    const [fieldList, setFieldList] = useState(props.field_list);
+    const [fieldList, setFieldList] = useState(props.fieldList);
     console.log(fieldList)
 
     return (
@@ -20,13 +20,13 @@ const MyFieldList = (props) => {
                         return (
                             <Col lg={8} className="my-2">
                                 <MyFieldCard
-                                    field_name={field.field_name}
-                                    sport_type={field.sport_type}
-                                    field_type={field.field_type}
-                                    floor_type={field.floor_type}
-                                    price={field.price}
-                                    image={field.image}
-                                    venue_data={props.venue_data}
+                                    field_name={field.fieldName}
+                                    sport_type={field.sportType}
+                                    field_type={field.fieldType}
+                                    floor_type={field.floorType}
+                                    price={field.fieldPrice}
+                                    image={field.fieldImage}
+                                    venue_data={props.venueData}
                                 />
                             </Col>
                         )
