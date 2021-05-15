@@ -1,38 +1,31 @@
 import React, { useEffect, useState} from 'react'
 import { Col, Form, Modal, Row, Nav, Image, Card, Table, Button, FormGroup, FormControl } from 'react-bootstrap'
 import { useHistory, useRouteMatch } from 'react-router-dom'
-import MyButton from '../atom/MyButton'
+import firebase from '../config/firebase'
 import MyFieldCard from './MyFieldCard'
 
 const MyAddVenueAdmin = () => {
     const [showDialog, setShowDialog] = useState(false)
     const [venueName, setVenueName] = useState("")
     const [venueAddress, setVenueAddress] = useState("")
-    const [venueURL, setVenueURL] = useState("")
+    const [venueAddressURL, setVenueAddressURL] = useState("")
     const [venuePhone, setVenuePhone] = useState("")
+    const [venueSportType, setVenueSportType] = useState("")
+    const [venueImageURL, setVenueImageURL] = useState()
     const [dayOpenTime, setDayOpenTime] = useState({})
     const [facilities, setFacilities] = useState([])
     const [fieldList, setFieldList] = useState([])
     const [field, setField] = useState({})
-
-    const [bundle, setBundle] = useState({
-        
-    })
+    const [bundle, setBundle] = useState()
 
     let history = useHistory()
     let { path, url } = useRouteMatch()
 
     useEffect(() => {
-        
-    }, [venueName, venueAddress, venueURL, venuePhone])
-
-    const handelOpenTimeChange = (e) => {
-        dayOpenTime[e.target.id] = e.target.value
-        console.log(dayOpenTime)
-    }
+    }, [venueName, venueAddress, venueAddressURL, venuePhone, bundle, venueSportType])
 
     const handleChange = (e) => {
-        switch(e.target.id){
+        switch (e.target.id) {
             case "venueName":
                 setVenueName(e.target.value)
                 break
@@ -40,14 +33,21 @@ const MyAddVenueAdmin = () => {
                 setVenueAddress(e.target.value)
                 break
             case "venueURL":
-                setVenueURL(e.target.value)
+                setVenueAddressURL(e.target.value)
                 break
             case "venuePhone":
                 setVenuePhone(e.target.value)
                 break
+            case "sportType":
+                setVenueSportType(e.target.value)
+                break
             default:
                 break
         }
+    }
+
+    const handelOpenTimeChange = (e) => {
+        dayOpenTime[e.target.id] = e.target.value
     }
 
     const handleChangeFacilities = (e) => {
@@ -59,25 +59,61 @@ const MyAddVenueAdmin = () => {
         console.log(facilities)
     }
 
+    const handleChangeImage = (e) => {
+        const venueImage = e.target.files[0]
+        const ref = firebase.storage().ref(`venueImages/${venueName}`).put(venueImage)
+        ref.on(
+            "state_changed",
+            snapshot => { },
+            error => { console.log(error) },
+            () => {
+                firebase.storage()
+                    .ref("venueImages")
+                    .child(venueName)
+                    .getDownloadURL()
+                    .then(url => {
+                        setVenueImageURL(url)
+                        console.log("upload image success")
+                    })
+            }
+        )
+    }
+
+    const handleSubmitVenue = () => {
+        let bundle = {
+            venueId: "",
+            venueName: venueName,
+            venueAddress: venueAddress,
+            venueAddressURL: venueAddressURL,
+            venuePhone: venuePhone,
+            venueSportType: venueSportType,
+            fieldList: fieldList,
+            venueImage: venueImageURL,
+            numberOfFields: fieldList.length,
+            venueRating: "0.0",
+        }
+        console.log(bundle)
+    }
+
     const handleChangeField = (e) => {
         field[e.target.id] = e.target.value
     }
+
     const handleChangeFieldType = (e) => {
-        if(e.target.checked){
+        if (e.target.checked) {
             field["fieldType"] = e.target.value
         }
     }
 
-    const toggleDialog = () => {
-        setShowDialog(!showDialog)
-    }
-
-    const handleSubmitVenue = () => {
-        console.log(dayOpenTime)
-    }
     const handleAddField = () => {
         fieldList.push(field)
-        console.log(fieldList)
+        console.log(fieldList.length)
+        toggleDialog()
+        setField([])
+    }
+
+    const toggleDialog = () => {
+        setShowDialog(!showDialog)
     }
     return(
         <div>
@@ -112,6 +148,23 @@ const MyAddVenueAdmin = () => {
                 </Col>
                 <Col lg={6}>
                     <Form.Control onChange={handleChange} id="venuePhone" type="number" placeholder="Enter Phone" />
+                </Col>
+            </Row>
+            <Row className="my-3">
+                <Col lg={3}>
+                    <p>Sport Type</p>
+                </Col>
+                <Col lg={6}>
+                    <Form.Group>
+                        <Form.Control onChange={handleChange} id="sportType" as="select">
+                            <option>Futsal</option>
+                            <option>Basket</option>
+                            <option>Volley</option>
+                            <option>Tennis</option>
+                            <option>Badminton</option>
+                            <option>Mix</option>
+                        </Form.Control>
+                    </Form.Group>  
                 </Col>
             </Row>
             <Row className="my-3">
@@ -254,7 +307,7 @@ const MyAddVenueAdmin = () => {
                     <p>Add Photo</p>
                 </Col>
                 <Col lg={6}>
-                    <Form.File label="Upload Image" type="file" />
+                    <Form.File label="Upload Image" type="file" onChange={handleChangeImage} />
                 </Col>
             </Row>
             <Row className="my-3">
@@ -322,7 +375,7 @@ const MyAddVenueAdmin = () => {
                         Cancel
                     </Button>
                     <Button variant="primary" onClick={handleAddField}>
-                        Book
+                        Add
                     </Button>
                 </Modal.Footer>
             </Modal>

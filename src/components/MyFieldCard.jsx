@@ -17,7 +17,6 @@ const MyFieldCard = (props) => {
     useEffect(() => {
         getDateTime()
         getUser()
-        console.log(date,time1,time2)
         if (time1 !== 0 && time2 !== 0){
             var array1 = time1.split(":");
             var seconds1 = (parseInt(array1[0], 10) * 60 * 60) + (parseInt(array1[1], 10) * 60)
