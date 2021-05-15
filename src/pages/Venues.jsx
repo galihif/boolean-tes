@@ -68,12 +68,12 @@ class Venues extends Component {
                                                 <Col lg={4} className="px-3 mx-0 mb-3">
                                                     <MyVenueCard
                                                         key={venue.id}
-                                                        name={venue.name}
-                                                        id={venue.id}
-                                                        number_of_fields={venue.number_of_fields}
-                                                        address={venue.address}
-                                                        sport_type={venue.sport_type}
-                                                        image={venue.image}
+                                                        name={venue.venueName}
+                                                        id={venue.venueId}
+                                                        number_of_fields={venue.numberOfFields}
+                                                        address={venue.venueAddress}
+                                                        sport_type={venue.venueSportType}
+                                                        image={venue.venueImage}
                                                     />
                                                 </Col>
                                             )
