@@ -13,9 +13,9 @@ import MyFieldList from '../components/MyFieldList';
 class VenueDetails extends Component{
 
     state = {
-        venue_id: this.props.match.params.id,
-        venue_data: [],
-        field_list: [],
+        venueId: this.props.match.params.id,
+        venueData: [],
+        fieldList: [],
         isLoading: false
     }
 
@@ -23,12 +23,12 @@ class VenueDetails extends Component{
         this.setState({
             isLoading: true
         })
-        const ref = firebase.firestore().collection("venues").doc(this.state.venue_id)
+        const ref = firebase.firestore().collection("venues").doc(this.state.venueId)
         ref.get().then((doc) => {
             if(doc.exists){
                 this.setState({
-                    venue_data: doc.data(),
-                    field_list: doc.data().field_list,
+                    venueData: doc.data(),
+                    fieldList: doc.data().fieldList,
                     isLoading: false
                 })
             }
@@ -42,7 +42,8 @@ class VenueDetails extends Component{
     }
 
     render() {
-        const {isLoading, venue_data, field_list} = this.state
+        const {isLoading, venueData, fieldList} = this.state
+        console.log(venueData,"vd")
         return (
             <div>
                 {
@@ -59,12 +60,12 @@ class VenueDetails extends Component{
                     ) : (
                             <div>
                                 <MyVenueHeader
-                                    name={venue_data.name}
-                                    address={venue_data.address}
-                                    image={venue_data.image}
+                                    name={venueData.venueName}
+                                    address={venueData.venueAddress}
+                                    image={venueData.venueImage}
                                 />
                                 <MyFacilities />
-                                <MyFieldList field_list={field_list} venue_data={venue_data}/>
+                                <MyFieldList fieldList={fieldList} venueData={venueData}/>
                             </div>
                     )
                 }
