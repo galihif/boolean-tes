@@ -19,7 +19,7 @@ const MyVenueHeader = (props) => {
                         <p>
                             {props.address}
                             <br />
-                            <a href="https://goo.gl/maps/zU7epfsu7uob7WEX7" target="_blank">Open in map</a>
+                            <a href={props.addressURL} target="_blank">Open in map</a>
                         </p>
                         <h6>081234567890</h6>
                         <img src={rating} />
