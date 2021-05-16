@@ -1,7 +1,41 @@
-import React from 'react'
+import React,{useState, useEffect} from 'react'
 import { Col, Container, Tab, Row, Nav, Image, Card, Table, Button } from 'react-bootstrap'
+import firebase, { firestore } from '../config/firebase'
 
 const MyDashboardAdmin = () => {
+    const [venues, setVenues] = useState(0)
+    const [fields, setFields] = useState(0)
+    const [users, setUsers] = useState(0)
+    const [bookings, setBookings] = useState(0)
+
+    useEffect(() => {
+        getVenues()
+        getFields()
+    })
+
+    const getVenues = () => {
+        const ref = firebase.firestore().collection("venues")
+        ref.onSnapshot((snapshot) => {
+            const items = []
+            snapshot.forEach((doc) => {
+                items.push(doc.data())
+            })
+            setVenues(items.length)
+        })
+    }
+    const getFields = () => {
+        const ref = firebase.firestore().collection("venues")
+        ref.onSnapshot((snapshot) => {
+            const items = []
+            snapshot.forEach((doc) => {
+                const venue = doc.data()
+                venue.fieldList.forEach((field) => {
+                    items.push(field)
+                })
+            })
+            setFields(items.length)
+        })
+    }
     return(
         <div>
 
@@ -12,7 +46,7 @@ const MyDashboardAdmin = () => {
                         <Card.Body>
                             <Card.Title>Venues</Card.Title>
                             <Card.Text>
-                                <h1>232</h1>
+                                <h1>{venues}</h1>
                             </Card.Text>
                         </Card.Body>
                     </Card>
@@ -22,7 +56,7 @@ const MyDashboardAdmin = () => {
                         <Card.Body>
                             <Card.Title>Fields</Card.Title>
                             <Card.Text>
-                                <h1>532</h1>
+                                <h1>{fields}</h1>
                             </Card.Text>
                         </Card.Body>
                     </Card>
