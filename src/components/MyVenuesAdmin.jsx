@@ -12,7 +12,7 @@ const MyVenuesAdmin = () => {
         getVenues()
     })
 
-    const getVenues = async () => {
+    const getVenues = () => {
         const ref = firebase.firestore().collection("venues")
         ref.onSnapshot((snapshot) => {
             const items = []
