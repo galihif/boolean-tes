@@ -58,15 +58,15 @@ const MyFieldCard = (props) => {
         let ref = firebase.firestore().collection("booking").doc()
         let bookId = ref.id
         firebase.firestore().collection("booking").doc(bookId).set({
-            book_time: timeNow,
+            bookTime: timeNow,
             date: date,
-            field_name: props.field_name,
+            fieldName: props.fieldName,
             isCompleted: false,
-            price: props.price,
+            fieldPrice: props.fieldPrice,
             time: `${time1} - ${time2}`,
-            user_id: userId,
-            venue_id: props.venue_data.id,
-            venue_name: props.venue_data.name,
+            userId: userId,
+            venueId: props.venueData.venueId,
+            venueName: props.venueData.venueName,
             id: bookId
 
         }).then(() => {
@@ -100,27 +100,27 @@ const MyFieldCard = (props) => {
             <Card class="card">
                 <div class="card-horizontal">
                     <div class="img-square-wrapper">
-                        <Card.Img variant="top" src={props.image} />
+                        <Card.Img variant="top" src={props.fieldImage} />
                     </div>
                     <Card.Body className="p-4">
                         <Row className="d-flex justify-content-lg-between">
                             <Col lg={4}>
                                 <Card.Title>
-                                    {props.field_name}
+                                    {props.fieldName}
                                             </Card.Title>
                                 <Card.Subtitle className="mb-2 text-muted">
-                                    Sport : {props.sport_type}
+                                    Sport : {props.sportType}
                                             </Card.Subtitle>
                                 <Card.Subtitle className="mb-2 text-muted">
-                                    Field : {props.field_type}
+                                    Field : {props.fieldType}
                                             </Card.Subtitle>
                                 <Card.Subtitle className="mb-2 text-muted">
-                                    Floor : {props.floor_type}
+                                    Floor : {props.floorType}
                                             </Card.Subtitle>
                             </Col>
                             <Col lg={4}>
                                 <Card.Title className="align-self-start">
-                                    Rp. {props.price}/hour
+                                    Rp. {props.fieldPrice}/hour
                                             </Card.Title>
                                 <Button onClick={toggleDialog} className="btn-my-primary align-self-end" variant="primary" >Book</Button>
                             </Col>
@@ -136,7 +136,7 @@ const MyFieldCard = (props) => {
                 <Modal.Body>
                     <Row>
                         <Col lg={4}><p>Field</p></Col>
-                        <Col><p>{props.field_name}</p></Col>
+                        <Col><p>{props.fieldName}</p></Col>
                     </Row>
                     <Row>
                         <Col lg={4}><p>Date</p></Col>
@@ -150,7 +150,7 @@ const MyFieldCard = (props) => {
                     </Row>
                     <Row>
                         <Col lg={4}><p>Price</p></Col>
-                        <Col><h4>Rp {hours*(props.price)}</h4></Col>
+                        <Col><h4>Rp {hours*(props.fieldPrice)}</h4></Col>
                     </Row>
                 </Modal.Body>
                 <Modal.Footer>

@@ -20,13 +20,13 @@ const MyFieldList = (props) => {
                         return (
                             <Col lg={8} className="my-2">
                                 <MyFieldCard
-                                    field_name={field.fieldName}
-                                    sport_type={field.sportType}
-                                    field_type={field.fieldType}
-                                    floor_type={field.floorType}
-                                    price={field.fieldPrice}
-                                    image={field.fieldImage}
-                                    venue_data={props.venueData}
+                                    fieldName={field.fieldName}
+                                    sportType={field.sportType}
+                                    fieldType={field.fieldType}
+                                    floorType={field.floorType}
+                                    fieldPrice={field.fieldPrice}
+                                    fieldImage={field.fieldImage}
+                                    venueData={props.venueData}
                                 />
                             </Col>
                         )
