@@ -16,9 +16,6 @@ import {
     Nav
 } from 'react-bootstrap'
 
-
-
-
 const Profile = (props) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("")

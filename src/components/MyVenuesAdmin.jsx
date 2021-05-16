@@ -1,15 +1,31 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import { Col, Container, Tab, Row, Nav, Image, Card, Table, Button } from 'react-bootstrap'
 import { useHistory, useRouteMatch } from 'react-router-dom'
+import firebase,{firestore} from '../config/firebase'
 
 const MyVenuesAdmin = () => {
+    const [venues, setVenues] = useState([])
     let history = useHistory()
     let { path, url } = useRouteMatch()
+
+    useEffect(() => {
+        getVenues()
+    })
+
+    const getVenues = async () => {
+        const ref = firebase.firestore().collection("venues")
+        ref.onSnapshot((snapshot) => {
+            const items = []
+            snapshot.forEach((doc) => {
+                items.push(doc.data())
+            })
+            setVenues(items)
+        })
+    }
 
     const handleAddVenue = () => {
         history.push(`${url}/add-venue`)
     }
-    console.log(url,"venue admin")
     return(
         <div>
             <h1 className="mb-3">Venues</h1>
@@ -27,17 +43,25 @@ const MyVenuesAdmin = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>0</td>
-                            <td>Golden Goal</td>
-                            <td>Futsal</td>
-                            <td>4</td>
-                            <td>2021-01-01</td>
-                            <td>
-                                <Button variant="primary" type="">Edit</Button>{' '}
-                                <Button variant="danger">Delete</Button>
-                            </td>
-                        </tr>
+                        {
+                            venues.length > 0 ? (
+                                venues.map((venue) => {
+                                    return(
+                                        <tr>
+                                            <td>{venue.venueId}</td>
+                                            <td>{venue.venueName}</td>
+                                            <td>{venue.venueSportType}</td>
+                                            <td>{venue.numberOfFields}</td>
+                                            <td>{venue.joinedAt}</td>
+                                            <td>
+                                                <Button variant="primary" type="">Edit</Button>{' '}
+                                                <Button variant="danger">Delete</Button>
+                                            </td>
+                                        </tr>
+                                    )
+                                })
+                            ) : null
+                        }
                     </tbody>
                 </Table>
             </div>

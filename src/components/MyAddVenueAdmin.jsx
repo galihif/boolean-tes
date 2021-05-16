@@ -22,6 +22,7 @@ const MyAddVenueAdmin = () => {
     let history = useHistory()
     let { path, url } = useRouteMatch()
 
+
     useEffect(() => {
     }, [venueName, venueAddress, venueAddressURL, venuePhone, bundle, venueSportType])
 
@@ -71,9 +72,9 @@ const MyAddVenueAdmin = () => {
                     .ref(`venueImage/${venueId}`)
                     .child(venueName)
                     .getDownloadURL()
-                    .then(url => {
-                        setVenueImageURL(url)
-                        console.log(url)
+                    .then(imageURL => {
+                        setVenueImageURL(imageURL)
+                        console.log(imageURL)
                     })
             }
         )
@@ -97,7 +98,7 @@ const MyAddVenueAdmin = () => {
             joinedAt: `${time.getDate()}/${time.getMonth()+1}/${time.getFullYear()}`
         }
         pushVenue(bundle)
-        console.log(bundle)
+        history.push('/admin')
     }
 
     const pushVenue = (bundle) => {
@@ -126,9 +127,9 @@ const MyAddVenueAdmin = () => {
                     .ref(`venueImage/${venueId}`)
                     .child(field.fieldName)
                     .getDownloadURL()
-                    .then(url => {
-                        field["fieldImage"] = url
-                        console.log(url)
+                    .then(imageURL => {
+                        field["fieldImage"] = imageURL
+                        console.log(imageURL)
                     })
             }
         )
@@ -138,7 +139,7 @@ const MyAddVenueAdmin = () => {
         fieldList.push(field)
         console.log(field)
         toggleDialog()
-        setField([])
+        setField({})
     }
 
     const toggleDialog = () => {
