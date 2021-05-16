@@ -45,7 +45,7 @@ const Profile = (props) => {
     }
 
     const getBooking = () => {
-        const ref = firebase.firestore().collection("booking").where("user_id", "==", userId)
+        const ref = firebase.firestore().collection("booking").where("userId", "==", userId)
         ref.onSnapshot((snapshot) => {
             const items = []
             snapshot.forEach((doc) => {
@@ -128,11 +128,11 @@ const Profile = (props) => {
                                                 booking_data.map((booking) => {
                                                     return(
                                                         <tr>
-                                                            <td>{booking.venue_name} - {booking.field_name}</td>
+                                                            <td>{booking.venueName} - {booking.fieldName}</td>
                                                             <td>{booking.date}</td>
                                                             <td>{booking.time}</td>
-                                                            <td>Rp. {booking.price}</td>
-                                                            <td>{booking.book_time}</td>
+                                                            <td>Rp. {booking.fieldPrice}</td>
+                                                            <td>{booking.bookTime}</td>
                                                         </tr>
                                                     )
                                                 })
