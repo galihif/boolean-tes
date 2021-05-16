@@ -5,7 +5,6 @@ import { Switch, useHistory, useRouteMatch, Route } from 'react-router-dom'
 import './Admin.scss'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import firebase from '../config/firebase'
 import MyVenuesAdmin from '../components/MyVenuesAdmin';
 import MyDashboardAdmin from '../components/MyDashboardAdmin';
 import MyAddVenueAdmin from '../components/MyAddVenueAdmin';
@@ -13,7 +12,7 @@ import MyAddVenueAdmin from '../components/MyAddVenueAdmin';
 const Admin = () => {
     let history = useHistory()
     let {path, url} = useRouteMatch()
-    console.log(path,"admin")
+    
 
     return (
         <Container className="py-5">
