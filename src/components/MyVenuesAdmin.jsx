@@ -65,6 +65,8 @@ const MyVenuesAdmin = () => {
                     </tbody>
                 </Table>
             </div>
+            <br />
+            <br />
         </div>
     )
 }

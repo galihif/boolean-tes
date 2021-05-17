@@ -52,6 +52,8 @@ const Admin = () => {
                                     </Route>
                                     <Route path={path}>
                                         <MyVenuesAdmin />
+                                        <br/>
+                                        <br/>
                                     </Route>
                                 </Switch>
                             </Tab.Pane>
