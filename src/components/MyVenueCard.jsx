@@ -12,28 +12,28 @@ const MyVenueCard = (props) => {
     let history = useHistory()
 
     const handleClick = () => {
-        history.push(`/venuedetails/${props.id}`) 
+        history.push(`/venuedetails/${props.venueId}`)
     }
 
     return (
         <div>
             <Card className="venue-card" onClick={handleClick}>
-                <Card.Img className="venue-image" variant="top" src={props.image} />
+                <Card.Img className="venue-image" variant="top" src={props.venueImage} />
                 <Card.ImgOverlay>
                     <Row className="d-flex justify-content-between px-3">
-                        <Badge className="badge-futsal">{props.sport_type}</Badge>
+                        <Badge className="badge-futsal">{props.venueSportType}</Badge>
                         <img src={rating} />
                     </Row>
                 </Card.ImgOverlay>
                 <Card.Body className="p-3">
                     <Card.Title>
-                        {props.name}
+                        {props.venueName}
                     </Card.Title>
                     <Card.Subtitle className="mb-2 text-muted">
-                        {props.number_of_fields} Fields
+                        {props.numberOfFields} Fields
                     </Card.Subtitle>
                     <Card.Text className="text-address">
-                        {props.address}
+                        {props.venueAddress}
                     </Card.Text>
                 </Card.Body>
             </Card>
