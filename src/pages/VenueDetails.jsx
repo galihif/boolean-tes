@@ -64,6 +64,7 @@ class VenueDetails extends Component{
                                     image={venueData.venueImage}
                                     addressURL={venueData.venueAddressURL}
                                     phone={venueData.venuePhone}
+                                    venueRating={venueData.venueRating}
                                 />
                                 <MyFacilities 
                                     venueOpenTime={venueData.venueOpenTime}
