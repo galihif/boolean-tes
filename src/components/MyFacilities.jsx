@@ -1,4 +1,4 @@
-import React, {  } from 'react'
+import React, { useState,useEffect } from 'react'
 import {Row, Col, Container } from 'react-bootstrap';
 
 import { Icon } from "@iconify/react";
@@ -14,8 +14,27 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 
-const MyFacilities = () => {
-
+const MyFacilities = (props) => {
+    const [time, setTime] = useState({
+        time1Friday: "nn:nn",
+        time1Monday: "07:00",
+        time1Saturday: "07:00",
+        time1Sunday: "07:00",
+        time1Thursday: "07:00",
+        time1Tuesday: "07:00",
+        time1Wednesday: "07:00",
+        time2Friday: "22:00",
+        time2Monday: "22:00",
+        time2Saturday: "22:00",
+        time2Sunday: "22:00",
+        time2Thursday: "22:00",
+        time2Tuesday: "22:00",
+        time2Wednesday: "22:00"
+    })
+    useEffect(() => {
+        setTime(props.venueOpenTime)
+    })
+    console.log(time)
     return (
         <div className="facilities-container px-5 mb-3">
             <Row>
@@ -30,7 +49,7 @@ const MyFacilities = () => {
                             </Col>
                             <Col>
                                 <p>
-                                    08.00 - 23.00
+                                    {`${time.time1Monday} - ${time.time2Monday}`}
                                 </p>
                             </Col>
                         </Row>
@@ -42,7 +61,7 @@ const MyFacilities = () => {
                             </Col>
                             <Col>
                                 <p>
-                                    08.00 - 23.00
+                                    {`${time.time1Tuesday} - ${time.time2Tuesday}`}
                                 </p>
                             </Col>
                         </Row>
@@ -54,7 +73,7 @@ const MyFacilities = () => {
                             </Col>
                             <Col>
                                 <p>
-                                    08.00 - 23.00
+                                    {`${time.time1Wednesday} - ${time.time2Wednesday}`}
                                 </p>
                             </Col>
                         </Row>
@@ -66,7 +85,7 @@ const MyFacilities = () => {
                             </Col>
                             <Col>
                                 <p>
-                                    08.00 - 23.00
+                                    {`${time.time1Thursday} - ${time.time2Thursday}`}
                                 </p>
                             </Col>
                         </Row>
@@ -78,7 +97,7 @@ const MyFacilities = () => {
                             </Col>
                             <Col>
                                 <p>
-                                    08.00 - 23.00
+                                    {`${time.time1Friday} - ${time.time2Friday}`}
                                 </p>
                             </Col>
                         </Row>
@@ -90,7 +109,7 @@ const MyFacilities = () => {
                             </Col>
                             <Col>
                                 <p>
-                                    08.00 - 23.00
+                                    {`${time.time1Saturday} - ${time.time2Saturday}`}
                                 </p>
                             </Col>
                         </Row>
@@ -102,7 +121,7 @@ const MyFacilities = () => {
                             </Col>
                             <Col>
                                 <p>
-                                    08.00 - 23.00
+                                    {`${time.time1Sunday} - ${time.time2Sunday}`}
                                 </p>
                             </Col>
                         </Row>

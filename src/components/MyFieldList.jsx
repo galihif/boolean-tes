@@ -9,7 +9,6 @@ import MyFieldCard from './MyFieldCard';
 
 const MyFieldList = (props) => {
     const [fieldList, setFieldList] = useState(props.fieldList);
-    console.log(fieldList)
 
     return (
         <div className="field-list px-5">

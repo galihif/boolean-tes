@@ -43,7 +43,6 @@ class VenueDetails extends Component{
 
     render() {
         const {isLoading, venueData, fieldList} = this.state
-        console.log(venueData,"vd")
         return (
             <div>
                 {
@@ -66,7 +65,8 @@ class VenueDetails extends Component{
                                     addressURL={venueData.venueAddressURL}
                                     phone={venueData.venuePhone}
                                 />
-                                <MyFacilities />
+                                <MyFacilities 
+                                    venueOpenTime={venueData.venueOpenTime}/>
                                 <MyFieldList fieldList={fieldList} venueData={venueData}/>
                             </div>
                     )

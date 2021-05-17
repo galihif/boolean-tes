@@ -28,7 +28,6 @@ class Venues extends Component {
                 venues: items,
                 isLoading: false
             })
-            console.log(this.state.venues)
         })
     }
 
