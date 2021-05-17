@@ -17,6 +17,7 @@ const MyAddVenueAdmin = () => {
     const [facilities, setFacilities] = useState([])
     const [fieldList, setFieldList] = useState([])
     const [field, setField] = useState({})
+    const [fieldImageURL, setFieldImageURL] = useState()
     const [bundle, setBundle] = useState()
 
     let history = useHistory()
@@ -129,7 +130,7 @@ const MyAddVenueAdmin = () => {
                     .getDownloadURL()
                     .then(imageURL => {
                         field["fieldImage"] = imageURL
-                        console.log(imageURL)
+                        setFieldImageURL(imageURL)
                     })
             }
         )
@@ -319,12 +320,12 @@ const MyAddVenueAdmin = () => {
                             fieldList.map((field) => {
                                 return(
                                     <MyFieldCard
-                                        image="https://www.mecreeled.com/wp-content/uploads/2019/03/futsal-field-led-lighting.jpg"
-                                        field_name={field.fieldName}
-                                        sport_type={field.sportType}
-                                        field_type={field.fieldType}
-                                        floor_type={field.floorType}
-                                        price={field.fieldPrice}
+                                        fieldImage={fieldImageURL}
+                                        fieldName={field.fieldName}
+                                        sportType={field.sportType}
+                                        fieldType={field.fieldType}
+                                        floorType={field.floorType}
+                                        fieldPrice={field.fieldPrice}
                                     />
                                 )
                             })
