@@ -1,5 +1,6 @@
 import React, { useState,useEffect } from 'react'
-import {Row, Col, Container } from 'react-bootstrap';
+import { Row, Col, Container } from 'react-bootstrap';
+
 
 import { Icon } from "@iconify/react";
 import toiletIcon from '@iconify-icons/fa-solid/toilet';
@@ -7,6 +8,7 @@ import showerIcon from '@iconify-icons/fa-solid/shower';
 import wifiIcon from '@iconify-icons/fa-solid/wifi';
 import parkingIcon from '@iconify-icons/fa-solid/parking';
 import chargingStation from '@iconify-icons/fa-solid/charging-station';
+import futbolIcon from '@iconify-icons/fa-solid/futbol';
 
 
 import './MyFacilities.scss'
@@ -15,6 +17,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 const MyFacilities = (props) => {
+    const [fac, setFac] = useState(["toilets","bathroom"])
     const [time, setTime] = useState({
         time1Friday: "nn:nn",
         time1Monday: "07:00",
@@ -33,8 +36,58 @@ const MyFacilities = (props) => {
     })
     useEffect(() => {
         setTime(props.venueOpenTime)
+        setFac(props.venueFacilities)
     })
-    console.log(time)
+
+    const getIcon = (id) => {
+        switch(id){
+            case "wifi":
+                return wifiIcon
+                break
+            case "parking":
+                return parkingIcon
+                break
+            case "charging":
+                return chargingStation
+                break
+            case "toilets":
+                return toiletIcon
+                break
+            case "shoesRent":
+                return futbolIcon
+                break
+            case "bathroom":
+                return showerIcon
+                break
+            default:
+                break
+        }
+    }
+    const getDesc = (id) => {
+        switch(id){
+            case "wifi":
+                return "Free Wi-Fi"
+                break
+            case "parking":
+                return "Parking Space"
+                break
+            case "charging":
+                return "Charging Port"
+                break
+            case "toilets":
+                return "Toilet"
+                break
+            case "shoesRent":
+                return "Shoes Rental"
+                break
+            case "bathroom":
+                return "Bathroom"
+                break
+            default:
+                break
+        }
+    }
+    console.log(fac)
     return (
         <div className="facilities-container px-5 mb-3">
             <Row>
@@ -130,30 +183,18 @@ const MyFacilities = (props) => {
                 <Col lg>
                     <h2>Facilities</h2>
                     <Row className="d-flex justify-content-lg-between">
-                        <Col className="pr-0">
-                            <Row>
-                                <Col lg={2}><Icon icon={toiletIcon} className="icon"/></Col>
-                                <Col lg={10}><p>Toilets</p></Col>
-                            </Row>
-                            <Row>
-                                <Col lg={2}><Icon icon={showerIcon} className="icon"/></Col>
-                                <Col lg={10}><p>Bathroom</p></Col>
-                            </Row>
-                            <Row>
-                                <Col lg={2}><Icon icon={wifiIcon} className="icon"/></Col>
-                                <Col lg={10}><p>Wifi</p></Col>
-                            </Row>
-                        </Col>
-                        <Col>
-                            <Row>
-                                <Col lg={2}><Icon icon={parkingIcon} className="icon"/></Col>
-                                <Col lg={10}><p>Parking Space</p></Col>
-                            </Row>
-                            <Row>
-                                <Col lg={2}><Icon icon={chargingStation} className="icon"/></Col>
-                                <Col lg={10}><p>Charging Port</p></Col>
-                            </Row>
-                        </Col>
+                        {
+                            fac.map((fac) => {
+                                return (
+                                    <Col lg={6} className="pr-0 mb-3">
+                                        <Row>
+                                            <Col lg={2}><Icon icon={getIcon(fac)} className="icon" /></Col>
+                                            <Col lg={10}><p className="">{getDesc(fac)}</p></Col>
+                                        </Row>
+                                    </Col>
+                                )
+                            })
+                        }
                     </Row>
                 </Col>
             </Row>

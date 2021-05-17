@@ -66,7 +66,8 @@ class VenueDetails extends Component{
                                     phone={venueData.venuePhone}
                                 />
                                 <MyFacilities 
-                                    venueOpenTime={venueData.venueOpenTime}/>
+                                    venueOpenTime={venueData.venueOpenTime}
+                                    venueFacilities={venueData.venueFacilities}/>
                                 <MyFieldList fieldList={fieldList} venueData={venueData}/>
                             </div>
                     )
