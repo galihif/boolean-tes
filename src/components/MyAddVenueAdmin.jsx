@@ -10,6 +10,7 @@ const MyAddVenueAdmin = () => {
     const [venueName, setVenueName] = useState("")
     const [venueAddress, setVenueAddress] = useState("")
     const [venueAddressURL, setVenueAddressURL] = useState("")
+    const [venueRating, setVenueRating] = useState(0)
     const [venuePhone, setVenuePhone] = useState("")
     const [venueSportType, setVenueSportType] = useState("")
     const [venueImageURL, setVenueImageURL] = useState()
@@ -37,6 +38,9 @@ const MyAddVenueAdmin = () => {
                 break
             case "venueURL":
                 setVenueAddressURL(e.target.value)
+                break
+            case "venueRating":
+                setVenueRating(e.target.value)
                 break
             case "venuePhone":
                 setVenuePhone(e.target.value)
@@ -95,7 +99,7 @@ const MyAddVenueAdmin = () => {
             fieldList: fieldList,
             venueImage: venueImageURL,
             numberOfFields: fieldList.length,
-            venueRating: "0.0",
+            venueRating: venueRating,
             joinedAt: `${time.getDate()}/${time.getMonth()+1}/${time.getFullYear()}`
         }
         pushVenue(bundle)
@@ -171,6 +175,14 @@ const MyAddVenueAdmin = () => {
                 </Col>
                 <Col lg={6}>
                     <Form.Control onChange={handleChange} id="venueURL" type="text" placeholder="Enter URL" />
+                </Col>
+            </Row>
+            <Row className="my-3">
+                <Col lg={3}>
+                    <p>Rating</p>
+                </Col>
+                <Col lg={6}>
+                    <Form.Control onChange={handleChange} id="venueRating" type="number" step="0.5" placeholder="Enter Rating" />
                 </Col>
             </Row>
             <Row className="my-3">
