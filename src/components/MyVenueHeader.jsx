@@ -21,7 +21,7 @@ const MyVenueHeader = (props) => {
                             <br />
                             <a href={props.addressURL} target="_blank">Open in map</a>
                         </p>
-                        <h6>081234567890</h6>
+                        <h6>{props.phone}</h6>
                         <img src={rating} />
                     </Col>
                 </Card.ImgOverlay>
