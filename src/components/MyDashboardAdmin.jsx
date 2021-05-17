@@ -11,16 +11,13 @@ const MyDashboardAdmin = () => {
     useEffect(() => {
         getVenues()
         getFields()
+        getBookings()
     })
 
     const getVenues = () => {
         const ref = firebase.firestore().collection("venues")
         ref.onSnapshot((snapshot) => {
-            const items = []
-            snapshot.forEach((doc) => {
-                items.push(doc.data())
-            })
-            setVenues(items.length)
+            setVenues(snapshot.size)
         })
     }
     const getFields = () => {
@@ -34,6 +31,12 @@ const MyDashboardAdmin = () => {
                 })
             })
             setFields(items.length)
+        })
+    }
+    const getBookings = () => {
+        const ref = firebase.firestore().collection("booking")
+        ref.onSnapshot((snapshot) => {
+            setBookings(snapshot.size)
         })
     }
     return(
@@ -76,7 +79,7 @@ const MyDashboardAdmin = () => {
                         <Card.Body>
                             <Card.Title>Bookings</Card.Title>
                             <Card.Text>
-                                <h1>762</h1>
+                                <h1>{bookings}</h1>
                             </Card.Text>
                         </Card.Body>
                     </Card>
