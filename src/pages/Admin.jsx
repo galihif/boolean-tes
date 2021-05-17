@@ -65,6 +65,11 @@ const Admin = () => {
                     </Col>
                 </Row>
             </Tab.Container>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
         </Container>
     )
 
