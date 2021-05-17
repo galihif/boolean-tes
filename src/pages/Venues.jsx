@@ -73,6 +73,7 @@ class Venues extends Component {
                                                         venueAddress={venue.venueAddress}
                                                         venueSportType={venue.venueSportType}
                                                         venueImage={venue.venueImage}
+                                                        venueRating={venue.venueRating}
                                                     />
                                                 </Col>
                                             )

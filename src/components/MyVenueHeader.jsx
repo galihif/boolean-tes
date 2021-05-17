@@ -4,7 +4,7 @@ import { Button, Jumbotron, Row, Col, Container, Card } from 'react-bootstrap';
 import './MyVenueHeader.scss'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import rating from '../assets/rating/rating_5_5.png'
+import rating5 from '../assets/rating/rating5.png'
 
 
 const MyVenueHeader = (props) => {
@@ -22,7 +22,7 @@ const MyVenueHeader = (props) => {
                             <a href={props.addressURL} target="_blank">Open in map</a>
                         </p>
                         <h6>{props.phone}</h6>
-                        <img src={rating} />
+                        <img src={rating5} />
                     </Col>
                 </Card.ImgOverlay>
             </Card>

@@ -6,7 +6,7 @@ import {
 
 import './MyVenueCard.scss'
 
-import rating from '../assets/rating/rating_5_5.png'
+import rating5 from '../assets/rating/rating5.png'
 
 const MyVenueCard = (props) => {
     let history = useHistory()
@@ -22,7 +22,7 @@ const MyVenueCard = (props) => {
                 <Card.ImgOverlay>
                     <Row className="d-flex justify-content-between px-3">
                         <Badge className="badge-futsal">{props.venueSportType}</Badge>
-                        <img src={rating} />
+                        <img src={rating5} />
                     </Row>
                 </Card.ImgOverlay>
                 <Card.Body className="p-3">
