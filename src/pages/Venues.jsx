@@ -12,35 +12,84 @@ import MyVenueCard from '../components/MyVenueCard';
 const Venues = () => {
     const [venues, setVenues] = useState([])
     const [isLoading, setLoading] = useState(false)
-    const [catFilter, setCatFilter] = useState([])
+    const [sportFilter, setSportFilter] = useState([])
+    const [floorFilter, setFloorFilter] = useState([])
 
     useEffect(() => {
         getVenues()
     }, [])
 
-    const handleChangeCategory = (e) => {
+    const handleChangeSport = (e) => {
         if (e.target.checked) {
-            catFilter.push(e.target.id)
+            sportFilter.push(e.target.id)
         } else {
-            catFilter.splice(catFilter.indexOf(e.target.id), 1)
+            sportFilter.splice(sportFilter.indexOf(e.target.id), 1)
         }
-        console.log(catFilter)
+        getVenues()
+    }
+    const handleChangeFloor = (e) => {
+        if (e.target.checked) {
+            floorFilter.push(e.target.id)
+        } else {
+            floorFilter.splice(floorFilter.indexOf(e.target.id), 1)
+        }
+        getVenues()
     }
 
     const getVenues = () => {
-        const ref = firebase.firestore().collection("venues")
+        const items = []
         setLoading(true)
-        ref.onSnapshot((snapshot) => {
-            const items = []
-            snapshot.forEach((doc) => {
-                items.push(doc.data())
+        const ref = firebase.firestore().collection("venues")
+        if(sportFilter.length === 0 && floorFilter.length === 0){
+            ref.onSnapshot((snapshot) => {
+                snapshot.forEach((doc) => {
+                    items.push(doc.data())
+                })
+                setLoading(false)
             })
-            setVenues(items)
-            setLoading(false)
-        })
+            console.log(items)
+        } else if (sportFilter.length !== 0 && floorFilter.length === 0) {
+            ref
+                .where("venueSportType", "in", sportFilter)
+                .onSnapshot((snapshot) => {
+                    snapshot.forEach((doc) => {
+                        items.push(doc.data())
+                    })
+                    setLoading(false)
+                })
+            console.log(items)
+        } else if (sportFilter.length === 0 && floorFilter.length !== 0) {
+            ref
+                .where("fieldFloorTypeSearch", "array-contains-any", floorFilter)
+                .onSnapshot((snapshot) => {
+                    snapshot.forEach((doc) => {
+                        items.push(doc.data())
+                    })
+                    setLoading(false)
+                })
+            console.log(items)
+        } else if (sportFilter.length !== 0 && floorFilter.length !== 0) {
+            ref
+                .where("venueSportType", "in", sportFilter)
+                .where("fieldFloorTypeSearch", "array-contains-any", floorFilter)
+                .onSnapshot((snapshot) => {
+                    snapshot.forEach((doc) => {
+                        items.push(doc.data())
+                    })
+                    setLoading(false)
+                })
+            ref
+                .where("fieldFloorTypeSearch", "array-contains-any", floorFilter)
+                .onSnapshot((snapshot) => {
+                    snapshot.forEach((doc) => {
+                        items.push(doc.data())
+                    })
+                    setLoading(false)
+                })
+            console.log(items)
+        }
+        setVenues(items)
     }
-
-
     return (
         <div>
             <MyFindField/>
@@ -54,15 +103,15 @@ const Venues = () => {
                                     <h3>Filter</h3>
                                 </Row>
                                 <Row className="pl-3 pr-3">
-                                    <h5>Category</h5>
+                                    <h5>Sport</h5>
                                 </Row>
                                 <Row className="pl-3 pr-3">
-                                    <Form.Group controlId="category">
-                                        <Form.Check type="checkbox" label="Futsal" id="Futsal" onChange={handleChangeCategory} />
-                                        <Form.Check type="checkbox" label="Basket" id="Basket" onChange={handleChangeCategory} />
-                                        <Form.Check type="checkbox" label="Volley" id="Volley" onChange={handleChangeCategory} />
-                                        <Form.Check type="checkbox" label="Tennis" id="Tennis" onChange={handleChangeCategory} />
-                                        <Form.Check type="checkbox" label="Badminton" id="Badminton" onChange={handleChangeCategory} />
+                                    <Form.Group controlId="sport">
+                                        <Form.Check type="checkbox" label="Futsal" id="Futsal" onChange={handleChangeSport} />
+                                        <Form.Check type="checkbox" label="Basket" id="Basket" onChange={handleChangeSport} />
+                                        <Form.Check type="checkbox" label="Volley" id="Volley" onChange={handleChangeSport} />
+                                        <Form.Check type="checkbox" label="Tennis" id="Tennis" onChange={handleChangeSport} />
+                                        <Form.Check type="checkbox" label="Badminton" id="Badminton" onChange={handleChangeSport} />
                                     </Form.Group>
                                 </Row>
                                 <Row className="pl-3 pr-3">
@@ -70,11 +119,11 @@ const Venues = () => {
                                 </Row>
                                 <Row className="pl-3 pr-3">
                                     <Form.Group controlId="floor">
-                                        <Form.Check type="checkbox" label="Vinyl" />
-                                        <Form.Check type="checkbox" label="Synthetic Grass" />
-                                        <Form.Check type="checkbox" label="Cement" />
-                                        <Form.Check type="checkbox" label="Parquette" />
-                                        <Form.Check type="checkbox" label="Taraflex" />
+                                        <Form.Check type="checkbox" label="Vinyl" id="Vinyl" onChange={handleChangeFloor}/>
+                                        <Form.Check type="checkbox" label="Synthetic Grass" id="Synthetic Grass" onChange={handleChangeFloor}/>
+                                        <Form.Check type="checkbox" label="Cement" id="Cement" onChange={handleChangeFloor}/>
+                                        <Form.Check type="checkbox" label="Parquette" id="Parquette" onChange={handleChangeFloor}/>
+                                        <Form.Check type="checkbox" label="Taraflex" id="Taraflex" onChange={handleChangeFloor}/>
                                     </Form.Group>
                                 </Row>
                             </Container>
