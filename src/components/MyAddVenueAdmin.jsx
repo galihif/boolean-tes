@@ -19,6 +19,7 @@ const MyAddVenueAdmin = () => {
     const [dayOpenTime, setDayOpenTime] = useState({})
     const [facilities, setFacilities] = useState([])
     const [fieldList, setFieldList] = useState([])
+    const [fieldFloorTypeSearch, setFieldFloorTypeSearch] = useState([])
     const [field, setField] = useState({})
     const [fieldImageURL, setFieldImageURL] = useState()
     const [bundle, setBundle] = useState()
@@ -101,6 +102,7 @@ const MyAddVenueAdmin = () => {
             venueOpenTime: dayOpenTime,
             venueFacilities: facilities,
             fieldList: fieldList,
+            fieldFloorTypeSearch: fieldFloorTypeSearch,
             venueImage: venueImageURL,
             numberOfFields: fieldList.length,
             venueRating: venueRating,
@@ -116,6 +118,9 @@ const MyAddVenueAdmin = () => {
 
     const handleChangeField = (e) => {
         field[e.target.id] = e.target.value
+        if (e.target.id === "floorType"){
+            fieldFloorTypeSearch.push(e.target.value)
+        }
     }
 
     const handleChangeFieldType = (e) => {
