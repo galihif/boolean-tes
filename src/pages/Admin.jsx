@@ -37,7 +37,6 @@ const Admin = () => {
                             <Nav.Item>
                                 <Nav.Link eventKey="fourth" className="text-center">Bookings</Nav.Link>
                             </Nav.Item>
-
                         </Nav>
                     </Col>
                     <Col sm={10}>
