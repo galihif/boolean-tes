@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Container, Row, Col, Spinner, Form } from 'react-bootstrap';
+import { Container, Row, Col, Spinner, Form, Jumbotron, Button } from 'react-bootstrap';
 import firebase from '../config/firebase'
 
 import './Venues.scss'
@@ -14,6 +14,7 @@ const Venues = () => {
     const [isLoading, setLoading] = useState(false)
     const [sportFilter, setSportFilter] = useState([])
     const [floorFilter, setFloorFilter] = useState([])
+    const [searchKeyword, setSearchKeyword] = useState("")
 
     useEffect(() => {
         getVenues()
@@ -36,14 +37,37 @@ const Venues = () => {
         getVenues()
     }
 
+    const handleChangeSearch = (e) => {
+        setSearchKeyword(e.target.value)
+    }
+
+    const handleSearch = () => {
+        console.log(searchKeyword)
+        getVenues()
+    }
+
     const getVenues = () => {
         const items = []
         setLoading(true)
         const ref = firebase.firestore().collection("venues")
-        if(sportFilter.length === 0 && floorFilter.length === 0){
+        if (searchKeyword !== ""){
+            ref.onSnapshot((snapshot) => {
+                snapshot.forEach((doc) => {
+                    const venueName = doc.data().venueName
+                    const venueAddress = doc.data().venueAddress
+                    if(venueName.includes(searchKeyword) || venueAddress.includes(searchKeyword)){
+                        items.push(doc.data())
+                    }
+                })
+                setLoading(false)
+            })
+        }
+        else if(sportFilter.length === 0 && floorFilter.length === 0){
             ref.onSnapshot((snapshot) => {
                 snapshot.forEach((doc) => {
                     items.push(doc.data())
+                    const venueName = doc.data().venueName
+                    console.log(venueName.includes("Futsal"))
                 })
                 setLoading(false)
             })
@@ -92,7 +116,23 @@ const Venues = () => {
     }
     return (
         <div>
-            <MyFindField/>
+            <Jumbotron className="find-container pl-lg-5">
+                <Container className="">
+                    <Row>
+                        <h1 className="">
+                            Find Your Favourite Venues
+                    </h1>
+                    </Row>
+                    <Row className="search-venues justify-content-left justify-content-xs-center">
+                        <Col lg={3} className="p-0 mr-3">
+                            <Form.Control onChange={handleChangeSearch} type="text" id="searchKeyword" placeholder="Where do you want to play?" className="search-form" />
+                        </Col>
+                        <Col lg={3} className="p-0 align-items-center">
+                            <Button onClick={handleSearch} className="btn-my-primary mx-auto align-self-center" variant="primary" >Search</Button>
+                        </Col>
+                    </Row>
+                </Container>
+            </Jumbotron>
                 
             <Container className="mt-5">
                 <Row className="justify-content-center d-flex">
