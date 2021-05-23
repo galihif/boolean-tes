@@ -29,7 +29,11 @@ const Login = () => {
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then((userCredential) => {
                 var user = userCredential.user
-                history.push(`/profile/user/${user.uid}`)
+                if(user.email === 'admin@boolean.com'){
+                    history.push(`/admin`)
+                } else {
+                    history.push(`/profile/user/${user.uid}`)
+                }
             })
             .catch((error) => {
                 var errorCode = error.code

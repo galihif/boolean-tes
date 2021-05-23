@@ -37,7 +37,12 @@ const Register = () => {
                     displayName: name,
                     photoURL: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
                 })
-                history.push(`/profile/user/${user.uid}`)
+                
+                if (user.email === 'admin@boolean.com') {
+                    history.push(`/admin`)
+                } else {
+                    history.push(`/profile/user/${user.uid}`)
+                }
                 pushUser(user)
             })
             .catch((error) => {

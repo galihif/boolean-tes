@@ -11,17 +11,18 @@ const MyDashboardAdmin = () => {
     useEffect(() => {
         getVenues()
         getFields()
+        getUsers()
         getBookings()
     })
 
     const getVenues = () => {
-        const ref = firebase.firestore().collection("venues")
+        const ref = firestore.collection("venues")
         ref.onSnapshot((snapshot) => {
             setVenues(snapshot.size)
         })
     }
     const getFields = () => {
-        const ref = firebase.firestore().collection("venues")
+        const ref = firestore.collection("venues")
         ref.onSnapshot((snapshot) => {
             const items = []
             snapshot.forEach((doc) => {
@@ -34,11 +35,62 @@ const MyDashboardAdmin = () => {
         })
     }
     const getBookings = () => {
-        const ref = firebase.firestore().collection("booking")
+        const ref = firestore.collection("booking")
         ref.onSnapshot((snapshot) => {
             setBookings(snapshot.size)
         })
     }
+    const getUsers = () => {
+        const ref = firestore.collection("users")
+        ref.onSnapshot((snapshot) => {
+            setUsers(snapshot.size)
+        })
+    }
+    
+    // const [رثىعثس, سثفرثىعثس] = useState(0)
+    // const [بهثميس, سثفبهثميس] = useState(0)
+    // const [عسثقس, سثفعسثقس] = useState(0)
+    // const [لاخخنهىلس, سثفلاخخنهىلس] = useState(0)
+
+    // useEffect(() => {
+    //     لثفرثىعثس()
+    //     لثفبهثميس()
+    //     لثفعسثقس()
+    //     لثفلاخخنهىلس()
+    // })
+
+    // const لثفرثىعثس = () => {
+    //     const قثب = firestore.collection("venues")
+    //     قثب.onSnapshot((سىشحساخف) => {
+    //         سثفرثىعثس(سىشحساخف.size)
+    //     })
+    // }
+    // const لثفبهثميس = () => {
+    //     const قثب = firestore.collection("venues")
+    //     قثب.onSnapshot((سىشحساخف) => {
+    //         const هفثةس = []
+    //         سىشحساخف.forEach((يخؤ) => {
+    //             const رثىعث = يخؤ.data()
+    //             رثىعث.fieldList.forEach((بهثمي) => {
+    //                 هفثةس.push(بهثمي)
+    //             })
+    //         })
+    //         سثفبهثميس(هفثةس.length)
+    //     })
+    // }
+    // const لثفعسثقس = () => {
+    //     const قثب = firestore.collection("users")
+    //     قثب.onSnapshot((سىشحساخف) => {
+    //         سثفعسثقس(سىشحساخف.size)
+    //     })
+    // }
+    // const لثفلاخخنهىلس = () => {
+    //     const قثب = firestore.collection("booking")
+    //     قثب.onSnapshot((سىشحساخف) => {
+    //         سثفلاخخنهىلس(سىشحساخف.size)
+    //     })
+    // }
+
     return(
         <div>
 
@@ -69,7 +121,7 @@ const MyDashboardAdmin = () => {
                         <Card.Body>
                             <Card.Title>Users</Card.Title>
                             <Card.Text>
-                                <h1>98828</h1>
+                                <h1>{users}</h1>
                             </Card.Text>
                         </Card.Body>
                     </Card>
