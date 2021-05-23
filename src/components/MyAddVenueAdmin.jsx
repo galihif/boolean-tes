@@ -8,9 +8,7 @@ const MyAddVenueAdmin = () => {
     const [showDialog, setShowDialog] = useState(false)
     const [venueId, setVenueId] = useState(new Date().getTime().toString())
     const [venueName, setVenueName] = useState("")
-    const [venueNameSearch, setVenueNameSearch] = useState([])
     const [venueAddress, setVenueAddress] = useState("")
-    const [venueAddressSearch, setVenueAddressSearch] = useState("")
     const [venueAddressURL, setVenueAddressURL] = useState("")
     const [venueRating, setVenueRating] = useState(0)
     const [venuePhone, setVenuePhone] = useState("")
@@ -93,9 +91,7 @@ const MyAddVenueAdmin = () => {
         let bundle = {
             venueId: venueId,
             venueName: venueName,
-            venueNameSearch: venueName.split(" "),
             venueAddress: venueAddress,
-            venueAddressSearch: venueAddress.split(" "),
             venueAddressURL: venueAddressURL,
             venuePhone: venuePhone,
             venueSportType: venueSportType,
