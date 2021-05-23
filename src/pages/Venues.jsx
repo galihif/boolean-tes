@@ -12,12 +12,15 @@ import MyVenueCard from '../components/MyVenueCard';
 const Venues = (props) => {
     const [venues, setVenues] = useState([])
     const [isLoading, setLoading] = useState(false)
+    const [showResult, setShowResult] = useState(false)
     const [sportFilter, setSportFilter] = useState([])
     const [floorFilter, setFloorFilter] = useState([])
     const [searchKeyword, setSearchKeyword] = useState(props.match.params.keyword)
 
     useEffect(() => {
-        console.log(props.match.params.keyword)
+        console.log(searchKeyword !== "")
+        console.log(searchKeyword !== undefined)
+        console.log(searchKeyword !== "" || searchKeyword !== undefined)
         getVenues()
     }, [])
 
@@ -55,6 +58,7 @@ const Venues = (props) => {
         setLoading(true)
         const ref = firebase.firestore().collection("venues")
         if (searchKeyword !== "" && typeof searchKeyword !== "undefined"){
+            setShowResult(true)
             ref.onSnapshot((snapshot) => {
                 snapshot.forEach((doc) => {
                     const venueName = doc.data().venueName
@@ -173,6 +177,11 @@ const Venues = (props) => {
                     </Col>
                     <Col lg={10}>
                         <Container className="list-venue-container">
+                            {
+                                showResult ? (
+                                    <h4 className="mb-3">Showing results of '{searchKeyword}'</h4>
+                                ) : null
+                            }
                             {
                                 isLoading ? (
                                     <Row className="d-flex justify-content-center align-items-center">
