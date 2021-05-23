@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Col, Container, Form, Button } from 'react-bootstrap'
-import { useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
 import './Login.scss'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -52,12 +52,11 @@ const Login = () => {
                                 <Form.Label>Password</Form.Label>
                                 <Form.Control type="password" placeholder="Password" onChange={handleChange}/>
                             </Form.Group>
-                            <Form.Group controlId="formBasicCheckbox">
-                                <Form.Check type="checkbox" label="Check me out" />
-                            </Form.Group>
                             <Button variant="primary" type="" className="btn-block" onClick={handleSubmit}>
-                                Submit
+                                Login
                             </Button>
+                            <br/>
+                            <p>Doesn't have an account?  <Link to="/register">Register</Link></p>
                         </Form>
                     </div>
                 </Col>
