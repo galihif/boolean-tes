@@ -36,9 +36,12 @@ const Venues = () => {
         }
         getVenues()
     }
+    const capitalizeFirstLetter = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
 
     const handleChangeSearch = (e) => {
-        setSearchKeyword(e.target.value)
+        setSearchKeyword(capitalizeFirstLetter(e.target.value))
     }
 
     const handleSearch = () => {
