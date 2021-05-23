@@ -72,7 +72,7 @@ const MyNavbar = () => {
                     <Nav>
                         {
                             logged ?
-                                <Button onClick={pushProfile} className="btn-my-primary" variant="outline-primary" >{userName}</Button>
+                                <Button onClick={pushProfile} className="btn-my-primary" variant="outline-primary" >Profile</Button>
                                 : 
                             <div>
                                 <Button onClick={pushLogin} className="btn-my-secondary" variant="outline-primary" >Login</Button>
