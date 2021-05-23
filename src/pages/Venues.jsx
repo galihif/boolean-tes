@@ -9,14 +9,15 @@ import MyFindField from '../components/MyFindField';
 import MyFilter from '../components/MyFilter';
 import MyVenueCard from '../components/MyVenueCard';
 
-const Venues = () => {
+const Venues = (props) => {
     const [venues, setVenues] = useState([])
     const [isLoading, setLoading] = useState(false)
     const [sportFilter, setSportFilter] = useState([])
     const [floorFilter, setFloorFilter] = useState([])
-    const [searchKeyword, setSearchKeyword] = useState("")
+    const [searchKeyword, setSearchKeyword] = useState(props.match.params.keyword)
 
     useEffect(() => {
+        console.log(props.match.params.keyword)
         getVenues()
     }, [])
 
@@ -53,7 +54,7 @@ const Venues = () => {
         const items = []
         setLoading(true)
         const ref = firebase.firestore().collection("venues")
-        if (searchKeyword !== ""){
+        if (searchKeyword !== "" && typeof searchKeyword !== "undefined"){
             ref.onSnapshot((snapshot) => {
                 snapshot.forEach((doc) => {
                     const venueName = doc.data().venueName
@@ -70,11 +71,9 @@ const Venues = () => {
                 snapshot.forEach((doc) => {
                     items.push(doc.data())
                     const venueName = doc.data().venueName
-                    console.log(venueName.includes("Futsal"))
                 })
                 setLoading(false)
             })
-            console.log(items)
         } else if (sportFilter.length !== 0 && floorFilter.length === 0) {
             ref
                 .where("venueSportType", "in", sportFilter)

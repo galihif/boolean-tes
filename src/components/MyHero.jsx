@@ -1,9 +1,23 @@
-import React, { } from 'react'
+import React, {useState } from 'react'
+import {useHistory} from 'react-router-dom'
 import { Button, Jumbotron, Form, Col, Container, Row } from 'react-bootstrap';
-import MyButton from '../atom/MyButton';
 import './MyHero.scss'
 
 const MyHero = (props) => {
+    const [searchKeyword, setSearchKeyword] = useState("")
+    let history = useHistory()
+
+    const capitalizeFirstLetter = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+    const handleChangeSearch = (e) => {
+        setSearchKeyword(capitalizeFirstLetter(e.target.value))
+    }
+
+    const handleSearch = () => {
+        history.push(`/venues/search/${searchKeyword}`)
+    }
     return (
         <Jumbotron className="hero-container">
             <br/>
@@ -19,10 +33,10 @@ const MyHero = (props) => {
                 </Row>
                 <Row className="my-3">
                     <Col>
-                       <Form.Row className="search-venues">
-                            <Form.Control type="email" placeholder="Where do you want to play?" className="search-form" />
-                            <MyButton title="Search" type="btn-my-primary"/>
-                        </Form.Row> 
+                        <Form.Row className="search-venues">
+                            <Form.Control onChange={handleChangeSearch} type="text" id="searchKeyword" placeholder="Where do you want to play?" className="search-form" />
+                            <Button onClick={handleSearch} className="btn-my-primary align-self-center" variant="primary" >Search</Button>
+                        </Form.Row>
                     </Col>
                 </Row>
             </Container>
