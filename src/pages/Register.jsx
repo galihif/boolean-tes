@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { Col, Container, Form, Button } from 'react-bootstrap'
-import {useHistory} from 'react-router-dom'
+import {useHistory,Link} from 'react-router-dom'
 
 import './Register.scss'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import firebase from '../config/firebase'
+import firebase, {firestore} from '../config/firebase'
 
 const Register = () => {
     const [email, setEmail] = useState("");
@@ -35,15 +35,25 @@ const Register = () => {
                 var user = userCredential.user
                 user.updateProfile({
                     displayName: name,
-                    photoURL: "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTRvKfd48HnQncLYr5SLoflrL62djuidMzF5aempsJqWuQPiWHm"
+                    photoURL: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
                 })
                 history.push(`/profile/user/${user.uid}`)
+                pushUser(user)
             })
             .catch((error) => {
                 var errorCode = error.code
                 var errorMessage = error.message
                 console.log(errorCode, errorMessage)
             })
+    }
+
+    const pushUser = (user) => {
+        firestore.collection("users").doc(user.uid).set({
+            email: user.email,
+            name: name,
+        }).catch((err) => {
+            console.log(err)
+        })
     }
     return(
         <Container className="justify-content-center d-flex py-5">
@@ -64,12 +74,11 @@ const Register = () => {
                             <Form.Label>Password</Form.Label>
                             <Form.Control onChange={handleChange} type="password" placeholder="Password" />
                         </Form.Group>
-                        <Form.Group controlId="formBasicCheckbox">
-                            <Form.Check type="checkbox" label="Check me out" />
-                        </Form.Group>
                         <Button onClick={handleSubmit} variant="primary" type="" className="btn-block">
-                            Submit
+                            Register
                         </Button>
+                        <br />
+                        <p>Alreaady have an account?  <Link to="/login">Login</Link></p>
                     </Form>
                 </div>
             </Col>
