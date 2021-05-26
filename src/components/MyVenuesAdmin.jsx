@@ -1,10 +1,12 @@
 import React,{useState,useEffect} from 'react'
-import { Col, Container, Tab, Row, Nav, Image, Card, Table, Button } from 'react-bootstrap'
+import { Modal, Container, Tab, Row, Nav, Image, Card, Table, Button } from 'react-bootstrap'
 import { useHistory, useRouteMatch } from 'react-router-dom'
 import firebase,{firestore} from '../config/firebase'
 
 const MyVenuesAdmin = () => {
     const [venues, setVenues] = useState([])
+    const [venueId, setVenueId] = useState("")
+    const [showDialog, setShowDialog] = useState(false)
     let history = useHistory()
     let { path, url } = useRouteMatch()
 
@@ -26,8 +28,25 @@ const MyVenuesAdmin = () => {
     const handleAddVenue = () => {
         history.push(`${url}/add-venue`)
     }
+
     const handleEditVenue = (id) => {
         history.push(`${url}/edit-venue/${id}`)
+    }
+
+    const handleDeleteVenue = () => {
+        firestore.collection("venues").doc(venueId).delete()
+        .then(() => {
+            console.log("Success")
+            setShowDialog(!showDialog)
+        }).catch((error) => {
+            console.log(error)
+            setShowDialog(!showDialog)
+        })
+    }
+    
+    const toggleDialog = (id) => {
+        setShowDialog(!showDialog)
+        setVenueId(id)
     }
     return(
         <div>
@@ -58,7 +77,7 @@ const MyVenuesAdmin = () => {
                                             <td>{venue.joinedAt}</td>
                                             <td>
                                                 <Button onClick={() => handleEditVenue(venue.venueId)} variant="primary" type="">Edit</Button>{' '}
-                                                <Button variant="danger">Delete</Button>
+                                                <Button onClick={() => toggleDialog(venue.venueId)} variant="danger">Delete</Button>
                                             </td>
                                         </tr>
                                     )
@@ -67,6 +86,24 @@ const MyVenuesAdmin = () => {
                         }
                     </tbody>
                 </Table>
+
+                <Modal show={showDialog} onHide={toggleDialog}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Add a Field</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <p>Serius Mau Dihapus?</p>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={toggleDialog}>
+                            Cancel
+                    </Button>
+                        <Button variant="primary" onClick={handleDeleteVenue}>
+                            Yes
+                    </Button>
+                    </Modal.Footer>
+                </Modal>
+
             </div>
             <br />
             <br />
