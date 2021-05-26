@@ -26,6 +26,9 @@ const MyVenuesAdmin = () => {
     const handleAddVenue = () => {
         history.push(`${url}/add-venue`)
     }
+    const handleEditVenue = (id) => {
+        history.push(`${url}/edit-venue/${id}`)
+    }
     return(
         <div>
             <h1 className="mb-3">Venues</h1>
@@ -54,7 +57,7 @@ const MyVenuesAdmin = () => {
                                             <td>{venue.numberOfFields}</td>
                                             <td>{venue.joinedAt}</td>
                                             <td>
-                                                <Button variant="primary" type="">Edit</Button>{' '}
+                                                <Button onClick={() => handleEditVenue(venue.venueId)} variant="primary" type="">Edit</Button>{' '}
                                                 <Button variant="danger">Delete</Button>
                                             </td>
                                         </tr>

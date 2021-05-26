@@ -1,33 +1,61 @@
 import React, { useEffect, useState} from 'react'
 import { Col, Form, Modal, Row, Nav, Image, Card, Table, Button, FormGroup, FormControl } from 'react-bootstrap'
-import { useHistory, useRouteMatch } from 'react-router-dom'
+import { useHistory, useRouteMatch, useParams } from 'react-router-dom'
 import firebase,{storage,firestore} from '../config/firebase'
 import MyFieldCard from './MyFieldCard'
+import MyFieldCardAdmin from './MyFieldCardAdmin'
 
-const MyAddVenueAdmin = () => {
+const MyEditVenueAdmin = (props) => {
+    let { id } = useParams()
     const [showDialog, setShowDialog] = useState(false)
-    const [venueId, setVenueId] = useState(new Date().getTime().toString())
+    const [venueId, setVenueId] = useState(id)
     const [venueName, setVenueName] = useState("")
     const [venueAddress, setVenueAddress] = useState("")
     const [venueAddressURL, setVenueAddressURL] = useState("")
-    const [venueRating, setVenueRating] = useState(0)
+    const [venueRating, setVenueRating] = useState(0.0)
     const [venuePhone, setVenuePhone] = useState("")
     const [venueSportType, setVenueSportType] = useState("")
     const [venueImageURL, setVenueImageURL] = useState()
-    const [dayOpenTime, setDayOpenTime] = useState({})
-    const [facilities, setFacilities] = useState([])
+    const [venueOpenTime, setVenueOpenTime] = useState({})
+    const [venueFacilities, setFacilities] = useState([])
     const [fieldList, setFieldList] = useState([])
     const [fieldFloorTypeSearch, setFieldFloorTypeSearch] = useState([])
     const [field, setField] = useState({})
     const [fieldImageURL, setFieldImageURL] = useState()
-    const [bundle, setBundle] = useState()
+    const [venue, setVenue] = useState()
+    const [, updateState] = React.useState();
+    const forceUpdate = React.useCallback(() => updateState({}), []);
 
     let history = useHistory()
-    let { path, url } = useRouteMatch()
-
 
     useEffect(() => {
-    }, [venueName, venueAddress, venueAddressURL, venuePhone, bundle, venueSportType])
+    }, [venueName, venueAddress, venueAddressURL, venueOpenTime, venueSportType])
+
+    const getVenues = () => {
+        const ref = firestore.collection("venues")
+        ref.onSnapshot((snapshot) => {
+            snapshot.forEach((doc) => {
+                const venue = doc.data()
+                if (venue.venueId === id){
+                    setVenue(venue)
+                    setVenueName(venue.venueName)
+                    setVenueAddress(venue.venueAddress)
+                    setVenueAddressURL(venue.venueAddressURL)
+                    setVenueRating(venue.venueRating)
+                    setVenuePhone(venue.venuePhone)
+                    setVenueSportType(venue.venueSportType)
+                    setVenueOpenTime(venue.venueOpenTime)
+                    setFacilities(venue.venueFacilities)
+                    setFieldList(venue.fieldList)
+                    setVenueImageURL(venue.venueImage)
+                }
+            })
+        })
+    }
+
+    const handleAdd = () => {
+        getVenues()
+    }
 
     const handleChange = (e) => {
         switch (e.target.id) {
@@ -55,15 +83,17 @@ const MyAddVenueAdmin = () => {
     }
 
     const handelOpenTimeChange = (e) => {
-        dayOpenTime[e.target.id] = e.target.value
+        venueOpenTime[e.target.id] = e.target.value
+        forceUpdate()
     }
 
     const handleChangeFacilities = (e) => {
         if (e.target.checked){
-            facilities.push(e.target.id)
+            venueFacilities.push(e.target.id)
         } else {
-            facilities.splice(facilities.indexOf(e.target.id),1)
+            venueFacilities.splice(venueFacilities.indexOf(e.target.id),1)
         }
+        forceUpdate()
     }
 
     const handleChangeVenueImage = (e) => {
@@ -87,29 +117,24 @@ const MyAddVenueAdmin = () => {
     }
 
     const handleSubmitVenue = () => {
-        const time = new Date()
-        let bundle = {
-            venueId: venueId,
-            venueName: venueName,
-            venueAddress: venueAddress,
-            venueAddressURL: venueAddressURL,
-            venueRating: venueRating,
-            venuePhone: venuePhone,
-            venueSportType: venueSportType,
-            venueOpenTime: dayOpenTime,
-            venueFacilities: facilities,
-            fieldList: fieldList,
-            fieldFloorTypeSearch: fieldFloorTypeSearch,
-            venueImage: venueImageURL,
-            numberOfFields: fieldList.length,
-            joinedAt: `${time.getDate()}/${time.getMonth()+1}/${time.getFullYear()}`
-        }
-        pushVenue(bundle)
+        venue.venueName = venueName
+        venue.venueAddress = venueAddress
+        venue.venueAddressURL = venueAddressURL
+        venue.venueRating = venueRating
+        venue.venuePhone = venuePhone
+        venue.venueSportType = venueSportType
+        venue.venueOpenTime = venueOpenTime
+        venue.venueFacilities = venueFacilities
+        venue.fieldList = fieldList
+        venue.fieldFloorTypeSearch = fieldFloorTypeSearch
+        venue.venueImage = venueImageURL
+
+        pushVenue(venue)
         history.push('/admin')
     }
 
-    const pushVenue = (bundle) => {
-        firebase.firestore().collection("venues").doc(venueId).set(bundle)
+    const pushVenue = (venue) => {
+        firebase.firestore().collection("venues").doc(venue.venueId).set(venue)
     }
 
     const handleChangeField = (e) => {
@@ -145,6 +170,10 @@ const MyAddVenueAdmin = () => {
         )
     }
 
+    const handleDeleteImage = () => {
+        setVenueImageURL("")
+    }
+
     const handleAddField = () => {
         fieldList.push(field)
         console.log(field)
@@ -152,18 +181,24 @@ const MyAddVenueAdmin = () => {
         setField({})
     }
 
+    const handleDeleteField = (index) => {
+        fieldList.splice(index,1)
+        forceUpdate()
+    }
+
     const toggleDialog = () => {
         setShowDialog(!showDialog)
     }
     return(
         <div>
-            <h1 className="mb-3">Add venue</h1>
+            <h1 className="mb-3">Edit venue</h1>
+            <Button variant="primary" onClick={handleAdd}>Edit</Button>
             <Row className="my-3">
                 <Col lg={3}>
                     <p>Name</p>
                 </Col>
                 <Col lg={6}>
-                    <Form.Control onChange={handleChange} id="venueName" type="text" placeholder="Enter Name" />
+                    <Form.Control onChange={handleChange} value={venueName} id="venueName" type="text" placeholder="Enter Name" />
                 </Col>
             </Row>
             <Row className="my-3">
@@ -171,7 +206,7 @@ const MyAddVenueAdmin = () => {
                     <p>Address</p>
                 </Col>
                 <Col lg={6}>
-                    <Form.Control onChange={handleChange} id="venueAddress" as="textarea" placeholder="Enter Name" rows="3" />
+                    <Form.Control onChange={handleChange} value={venueAddress} id="venueAddress" as="textarea" placeholder="Enter Name" rows="3" />
                 </Col>
             </Row>
             <Row className="my-3">
@@ -179,7 +214,7 @@ const MyAddVenueAdmin = () => {
                     <p>Google Map URL</p>
                 </Col>
                 <Col lg={6}>
-                    <Form.Control onChange={handleChange} id="venueURL" type="text" placeholder="Enter URL" />
+                    <Form.Control onChange={handleChange} value={venueAddressURL} id="venueURL" type="text" placeholder="Enter URL" />
                 </Col>
             </Row>
             <Row className="my-3">
@@ -187,7 +222,7 @@ const MyAddVenueAdmin = () => {
                     <p>Rating</p>
                 </Col>
                 <Col lg={6}>
-                    <Form.Control onChange={handleChange} id="venueRating" type="number" step="0.5" placeholder="Enter Rating" />
+                    <Form.Control onChange={handleChange} value={venueRating} id="venueRating" type="number" step="0.5" placeholder="Enter Rating" />
                 </Col>
             </Row>
             <Row className="my-3">
@@ -195,7 +230,7 @@ const MyAddVenueAdmin = () => {
                     <p>Phone number</p>
                 </Col>
                 <Col lg={6}>
-                    <Form.Control onChange={handleChange} id="venuePhone" type="number" placeholder="Enter Phone" />
+                    <Form.Control onChange={handleChange} value={venuePhone} id="venuePhone" type="number" placeholder="Enter Phone" />
                 </Col>
             </Row>
             <Row className="my-3">
@@ -205,12 +240,42 @@ const MyAddVenueAdmin = () => {
                 <Col lg={6}>
                     <Form.Group>
                         <Form.Control onChange={handleChange} id="sportType" as="select">
-                            <option>Futsal</option>
-                            <option>Basket</option>
-                            <option>Volley</option>
-                            <option>Tennis</option>
-                            <option>Badminton</option>
-                            <option>Mix</option>
+                            <option  hidden>Choose here</option>
+                            {
+                                venueSportType==="Futsal"? (
+                                    <option selected >Futsal</option>
+                                ) : (
+                                     <option>Futsal</option>
+                                )
+                            }
+                            {
+                                venueSportType ==="Basket"? (
+                                    <option selected >Basket</option>
+                                ) : (
+                                     <option>Basket</option>
+                                )
+                            }
+                            {
+                                venueSportType ==="Volley"? (
+                                    <option selected >Volley</option>
+                                ) : (
+                                     <option>Volley</option>
+                                )
+                            }
+                            {
+                                venueSportType ==="Badminton"? (
+                                    <option selected >Badminton</option>
+                                ) : (
+                                     <option>Badminton</option>
+                                )
+                            }
+                            {
+                                venueSportType ==="Tennis"? (
+                                    <option selected >Tennis</option>
+                                ) : (
+                                     <option>Tennis</option>
+                                )
+                            }
                         </Form.Control>
                     </Form.Group>  
                 </Col>
@@ -225,10 +290,10 @@ const MyAddVenueAdmin = () => {
                             <p>Monday</p>
                         </Col>
                         <Col lg>
-                            <Form.Control type="time" id="time1Monday" onChange={handelOpenTimeChange}/>
+                            <Form.Control type="time" id="time1Monday" value={venueOpenTime.time1Monday} onChange={handelOpenTimeChange}/>
                         </Col>
                         <Col lg>
-                            <Form.Control type="time" id="time2Monday" onChange={handelOpenTimeChange}/>
+                            <Form.Control type="time" id="time2Monday" value={venueOpenTime.time2Monday} onChange={handelOpenTimeChange}/>
                         </Col>
                     </Row>
                     <Row className="my-1">
@@ -236,10 +301,10 @@ const MyAddVenueAdmin = () => {
                             <p>Tuesday</p>
                         </Col>
                         <Col lg>
-                            <Form.Control type="time" id="time1Tuesday" onChange={handelOpenTimeChange}/>
+                            <Form.Control type="time" id="time1Tuesday" value={venueOpenTime.time1Tuesday} onChange={handelOpenTimeChange}/>
                         </Col>
                         <Col lg>
-                            <Form.Control type="time" id="time2Tuesday" onChange={handelOpenTimeChange}/>
+                            <Form.Control type="time" id="time2Tuesday" value={venueOpenTime.time2Tuesday} onChange={handelOpenTimeChange}/>
                         </Col>
                     </Row>
                     <Row className="my-1">
@@ -247,10 +312,10 @@ const MyAddVenueAdmin = () => {
                             <p>Wednesday</p>
                         </Col>
                         <Col lg>
-                            <Form.Control type="time" id="time1Wednesday" onChange={handelOpenTimeChange}/>
+                            <Form.Control type="time" id="time1Wednesday" value={venueOpenTime.time1Wednesday} onChange={handelOpenTimeChange}/>
                         </Col>
                         <Col lg>
-                            <Form.Control type="time" id="time2Wednesday" onChange={handelOpenTimeChange}/>
+                            <Form.Control type="time" id="time2Wednesday" value={venueOpenTime.time2Wednesday} onChange={handelOpenTimeChange}/>
                         </Col>
                     </Row>
                     <Row className="my-1">
@@ -258,10 +323,10 @@ const MyAddVenueAdmin = () => {
                             <p>Thursday</p>
                         </Col>
                         <Col lg>
-                            <Form.Control type="time" id="time1Thursday" onChange={handelOpenTimeChange}/>
+                            <Form.Control type="time" id="time1Thursday" value={venueOpenTime.time1Thursday} onChange={handelOpenTimeChange}/>
                         </Col>
                         <Col lg>
-                            <Form.Control type="time" id="time2Thursday" onChange={handelOpenTimeChange}/>
+                            <Form.Control type="time" id="time2Thursday" value={venueOpenTime.time2Thursday} onChange={handelOpenTimeChange}/>
                         </Col>
                     </Row>
                     <Row className="my-1">
@@ -269,10 +334,10 @@ const MyAddVenueAdmin = () => {
                             <p>Friday</p>
                         </Col>
                         <Col lg>
-                            <Form.Control type="time" id="time1Friday" onChange={handelOpenTimeChange}/>
+                            <Form.Control type="time" id="time1Friday" value={venueOpenTime.time1Friday} onChange={handelOpenTimeChange}/>
                         </Col>
                         <Col lg>
-                            <Form.Control type="time" id="time2Friday" onChange={handelOpenTimeChange}/>
+                            <Form.Control type="time" id="time2Friday" value={venueOpenTime.time2Friday} onChange={handelOpenTimeChange}/>
                         </Col>
                     </Row>
                     <Row className="my-1">
@@ -280,10 +345,10 @@ const MyAddVenueAdmin = () => {
                             <p>Saturday</p>
                         </Col>
                         <Col lg>
-                            <Form.Control type="time" id="time1Saturday" onChange={handelOpenTimeChange}/>
+                            <Form.Control type="time" id="time1Saturday" value={venueOpenTime.time1Saturday} onChange={handelOpenTimeChange}/>
                         </Col>
                         <Col lg>
-                            <Form.Control type="time" id="time2Saturday" onChange={handelOpenTimeChange}/>
+                            <Form.Control type="time" id="time2Saturday" value={venueOpenTime.time2Saturday} onChange={handelOpenTimeChange}/>
                         </Col>
                     </Row>
                     <Row className="my-1">
@@ -291,10 +356,10 @@ const MyAddVenueAdmin = () => {
                             <p>Sunday</p>
                         </Col>
                         <Col lg>
-                            <Form.Control type="time" id="time1Sunday" onChange={handelOpenTimeChange}/>
+                            <Form.Control type="time" id="time1Sunday" value={venueOpenTime.time1Sunday} onChange={handelOpenTimeChange}/>
                         </Col>
                         <Col lg>
-                            <Form.Control type="time" id="time2Sunday" onChange={handelOpenTimeChange}/>
+                            <Form.Control type="time" id="time2Sunday" value={venueOpenTime.time2Sunday} onChange={handelOpenTimeChange}/>
                         </Col>
                     </Row>
                 </Col>
@@ -306,22 +371,22 @@ const MyAddVenueAdmin = () => {
                 <Col lg={6}>
                     <Row className="my-1">
                         <Col lg={6}>
-                            <Form.Check onChange={handleChangeFacilities} id="wifi" type="checkbox" label="Wi-Fi" />
+                            <Form.Check checked={venueFacilities.includes("wifi") ? true : false } onChange={handleChangeFacilities} id="wifi" type="checkbox" label="Wi-Fi" />
                         </Col>
                         <Col lg={6}>
-                            <Form.Check onChange={handleChangeFacilities} id="toilets" type="checkbox" label="Toilets" />
+                            <Form.Check checked={venueFacilities.includes("toilets") ? true : false} onChange={handleChangeFacilities} id="toilets" type="checkbox" label="Toilets" />
                         </Col>
                         <Col lg={6}>
-                            <Form.Check onChange={handleChangeFacilities} id="parking" type="checkbox" label="Parking" />
+                            <Form.Check checked={venueFacilities.includes("parking") ? true : false} onChange={handleChangeFacilities} id="parking" type="checkbox" label="Parking" />
                         </Col>
                         <Col lg={6}>
-                            <Form.Check onChange={handleChangeFacilities} id="bathroom" type="checkbox" label="Bathroom" />
+                            <Form.Check checked={venueFacilities.includes("bathroom") ? true : false} onChange={handleChangeFacilities} id="bathroom" type="checkbox" label="Bathroom" />
                         </Col>
                         <Col lg={6}>
-                            <Form.Check onChange={handleChangeFacilities} id="charging" type="checkbox" label="Charging Station" />
+                            <Form.Check checked={venueFacilities.includes("charging") ? true : false} onChange={handleChangeFacilities} id="charging" type="checkbox" label="Charging Station" />
                         </Col>
                         <Col lg={6}>
-                            <Form.Check onChange={handleChangeFacilities} id="shoesRent" type="checkbox" label="Shoes Rent" />
+                            <Form.Check checked={venueFacilities.includes("shoesRent") ? true : false} onChange={handleChangeFacilities} id="shoesRent" type="checkbox" label="Shoes Rent" />
                         </Col>
                     </Row>
                 </Col>
@@ -334,16 +399,19 @@ const MyAddVenueAdmin = () => {
                     <Button variant="primary" onClick={toggleDialog}>Add Field</Button>
                     {
                         fieldList.length > 0 ? (
-                            fieldList.map((field) => {
+                            fieldList.map((field,key) => {
                                 return(
-                                    <MyFieldCard
-                                        fieldImage={fieldImageURL}
-                                        fieldName={field.fieldName}
-                                        sportType={field.sportType}
-                                        fieldType={field.fieldType}
-                                        floorType={field.floorType}
-                                        fieldPrice={field.fieldPrice}
-                                    />
+                                    <div>
+                                        <MyFieldCardAdmin
+                                            fieldImage={field.fieldImage}
+                                            fieldName={field.fieldName}
+                                            sportType={field.sportType}
+                                            fieldType={field.fieldType}
+                                            floorType={field.floorType}
+                                            fieldPrice={field.fieldPrice}
+                                        />
+                                        <Button variant="primary" onClick={() => handleDeleteField(key)}>Delete</Button>
+                                    </div>
                                 )
                             })
                         ) : null
@@ -356,11 +424,17 @@ const MyAddVenueAdmin = () => {
                 </Col>
                 <Col lg={6}>
                     <Form.File label="Upload Image" type="file" onChange={handleChangeVenueImage} />
+                    <Image src={venueImageURL} rounded />
+                    {
+                        venueImageURL !== "" ? (
+                            <Button variant="primary" onClick={handleDeleteImage}>Delete</Button>
+                        ) : null
+                    }
                 </Col>
             </Row>
             <Row className="my-3">
                 <Col lg={6}>
-                    <Button variant="primary" onClick={handleSubmitVenue}>Add Venue</Button>
+                    <Button variant="primary" onClick={handleSubmitVenue}>Update Venue</Button>
                 </Col>
             </Row>
             <Modal show={showDialog} onHide={toggleDialog}>
@@ -432,4 +506,4 @@ const MyAddVenueAdmin = () => {
     )
 }
 
-export default MyAddVenueAdmin
+export default MyEditVenueAdmin
