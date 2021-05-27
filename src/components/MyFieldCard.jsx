@@ -1,6 +1,10 @@
 import React, { useEffect,useState } from 'react'
-import { Button, Card, Row, Col, Modal, Form } from 'react-bootstrap';
-import firebase from '../config/firebase'
+import { Button, Card, Row, Col, Modal, Form, Container } from 'react-bootstrap';
+import firebase, {auth} from '../config/firebase'
+import {
+    useHistory,
+    Link
+} from "react-router-dom";
 
 import './MyFieldCard.scss'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -11,9 +15,9 @@ const MyFieldCard = (props) => {
     const [time2, setTime2] = useState(0)
     const [hours, setHours] = useState(0)
     const [date, setDate] = useState(0)
-    const [userId, setUserId] = useState("")
+    const [userId, setUserId] = useState(0)
     const [timeNow, setTimeNow] = useState("")
-
+    let history = useHistory()
     useEffect(() => {
         getDateTime()
         getUser()
@@ -89,10 +93,14 @@ const MyFieldCard = (props) => {
             if (user) {
                 setUserId(user.uid)
             } else {
-                // No user is signed in.
+                setUserId(0)
             }
 
         })
+    }
+
+    const toLogin = () => {
+        history.push('/login')
     }
 
     return (
@@ -130,37 +138,56 @@ const MyFieldCard = (props) => {
             </Card>
 
             <Modal show={showDialog} onHide={toggleDialog}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Book a Field</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Row>
-                        <Col lg={4}><p>Field</p></Col>
-                        <Col><p>{props.fieldName}</p></Col>
-                    </Row>
-                    <Row>
-                        <Col lg={4}><p>Date</p></Col>
-                        <Col><Form.Control onChange={handleChange} id="date" type="date" placeholder="Enter Date" /></Col>
-                    </Row>
-                    <Row>
-                        <Col lg={4}><p>Time</p></Col>
-                        <Col lg={3}><Form.Control onChange={handleChange} id="time1" type="time" placeholder="Enter Time" /></Col>
-                        <Col lg={2}>To</Col>
-                        <Col lg={3}><Form.Control onChange={handleChange} id="time2" type="time" placeholder="Enter Time" /></Col>
-                    </Row>
-                    <Row>
-                        <Col lg={4}><p>Price</p></Col>
-                        <Col><h4>Rp {hours*(props.fieldPrice)}</h4></Col>
-                    </Row>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={toggleDialog}>
-                        Cancel
-                    </Button>
-                    <Button variant="primary" onClick={handleSubmit}>
-                        Book
-                    </Button>
-                </Modal.Footer>
+                {
+                    userId !== 0 ? (
+                        <div>
+                            <Modal.Header closeButton>
+                                <Modal.Title>Book a Field</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <Row>
+                                    <Col lg={4}><p>Field</p></Col>
+                                    <Col><p>{props.fieldName}</p></Col>
+                                </Row>
+                                <Row>
+                                    <Col lg={4}><p>Date</p></Col>
+                                    <Col><Form.Control onChange={handleChange} id="date" type="date" placeholder="Enter Date" /></Col>
+                                </Row>
+                                <Row>
+                                    <Col lg={4}><p>Time</p></Col>
+                                    <Col lg={3}><Form.Control onChange={handleChange} id="time1" type="time" placeholder="Enter Time" /></Col>
+                                    <Col lg={2}>To</Col>
+                                    <Col lg={3}><Form.Control onChange={handleChange} id="time2" type="time" placeholder="Enter Time" /></Col>
+                                </Row>
+                                <Row>
+                                    <Col lg={4}><p>Price</p></Col>
+                                    <Col><h4>Rp {hours * (props.fieldPrice)}</h4></Col>
+                                </Row>
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button variant="secondary" onClick={toggleDialog}>
+                                    Cancel
+                                </Button>
+                                <Button variant="primary" onClick={handleSubmit}>
+                                    Book
+                                </Button>
+                            </Modal.Footer>
+                        </div>
+                    ) : (
+                        <Container className="">
+                            <Modal.Header closeButton>
+                                    <Modal.Title>
+                                        You have to login to book a field
+                                    </Modal.Title>
+                            </Modal.Header>
+                            <Row className="d-flex justify-content-center py-3">
+                            </Row>
+                            <Row className="d-flex justify-content-center py-3">
+                                <Button onClick={toLogin} className="btn-my-primary" variant="outline-primary" >Login</Button>
+                            </Row>
+                        </Container>
+                    )
+                }
             </Modal>
 
         </div>

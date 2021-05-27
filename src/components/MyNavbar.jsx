@@ -19,7 +19,7 @@ const MyNavbar = () => {
 
     useEffect(() => {
         getUser()
-    })
+    }, [logged])
 
     const getUser = () => {
         firebase.auth().onAuthStateChanged((user) => {
