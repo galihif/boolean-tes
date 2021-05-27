@@ -1,6 +1,6 @@
 import React, { useEffect,useState } from 'react'
 import { Button, Card, Row, Col, Modal, Form, Container } from 'react-bootstrap';
-import firebase, {auth} from '../config/firebase'
+import firebase, {firestore} from '../config/firebase'
 import {
     useHistory,
     Link
@@ -17,19 +17,20 @@ const MyFieldCard = (props) => {
     const [date, setDate] = useState(0)
     const [userId, setUserId] = useState(0)
     const [timeNow, setTimeNow] = useState("")
+    const [time, setTime] = useState(Array.from(Array(24).keys()))
     let history = useHistory()
     useEffect(() => {
         getDateTime()
         getUser()
         if (time1 !== 0 && time2 !== 0){
-            var array1 = time1.split(":");
-            var seconds1 = (parseInt(array1[0], 10) * 60 * 60) + (parseInt(array1[1], 10) * 60)
+            // var array1 = time1.split(":");
+            // var seconds1 = (parseInt(array1[0], 10) * 60 * 60) + (parseInt(array1[1], 10) * 60)
 
 
-            var array2 = time2.split(":");
-            var seconds2 = (parseInt(array2[0], 10) * 60 * 60) + (parseInt(array2[1], 10) * 60)
+            // var array2 = time2.split(":");
+            // var seconds2 = (parseInt(array2[0], 10) * 60 * 60) + (parseInt(array2[1], 10) * 60)
 
-            setHours(Math.ceil((seconds2 - seconds1) / 3600))
+            setHours(time2-time1)
         }
     }, [time1,time2,hours,date])
 
@@ -58,6 +59,10 @@ const MyFieldCard = (props) => {
         pushBooking()
     }
 
+    const getVenueOpenTime = () => {
+
+    }
+
     const pushBooking = () => {
         let ref = firebase.firestore().collection("booking").doc()
         let bookId = ref.id
@@ -66,8 +71,9 @@ const MyFieldCard = (props) => {
             date: date,
             fieldName: props.fieldName,
             isCompleted: false,
-            fieldPrice: props.fieldPrice,
-            time: `${time1} - ${time2}`,
+            fieldPrice: props.fieldPrice*hours,
+            time1: time1,
+            time2: time2,
             userId: userId,
             venueId: props.venueData.venueId,
             venueName: props.venueData.venueName,
@@ -155,9 +161,35 @@ const MyFieldCard = (props) => {
                                 </Row>
                                 <Row>
                                     <Col lg={4}><p>Time</p></Col>
-                                    <Col lg={3}><Form.Control onChange={handleChange} id="time1" type="time" placeholder="Enter Time" /></Col>
+                                    {/* <Col lg={3}><Form.Control onChange={handleChange} id="time1" type="time" placeholder="Enter Time" /></Col> */}
+                                    <Col lg={3}>
+                                        <Form.Group>
+                                            <Form.Control onChange={handleChange} id="time1" as="select">
+                                                {
+                                                    time.map((hour) => {
+                                                        return (
+                                                            <option value={hour}>{hour}:00</option>
+                                                        )
+                                                    })
+                                                }
+                                            </Form.Control>
+                                        </Form.Group>
+                                    </Col>
                                     <Col lg={2}>To</Col>
-                                    <Col lg={3}><Form.Control onChange={handleChange} id="time2" type="time" placeholder="Enter Time" /></Col>
+                                    {/* <Col lg={3}><Form.Control onChange={handleChange} id="time2" type="time" placeholder="Enter Time" /></Col> */}
+                                    <Col lg={3}>
+                                        <Form.Group>
+                                            <Form.Control onChange={handleChange} id="time2" as="select">
+                                                {
+                                                    time.map((hour) => {
+                                                        return (
+                                                            <option value={hour}>{hour}:00</option>
+                                                        )
+                                                    })
+                                                }
+                                            </Form.Control>
+                                        </Form.Group>
+                                    </Col>
                                 </Row>
                                 <Row>
                                     <Col lg={4}><p>Price</p></Col>

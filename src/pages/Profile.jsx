@@ -130,7 +130,7 @@ const Profile = (props) => {
                                                         <tr>
                                                             <td>{booking.venueName} - {booking.fieldName}</td>
                                                             <td>{booking.date}</td>
-                                                            <td>{booking.time}</td>
+                                                            <td>{booking.time1}:00 - {booking.time2}:00</td>
                                                             <td>Rp. {booking.fieldPrice}</td>
                                                             <td>{booking.bookTime}</td>
                                                         </tr>
