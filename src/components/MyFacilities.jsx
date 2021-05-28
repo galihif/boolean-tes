@@ -19,20 +19,20 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const MyFacilities = (props) => {
     const [fac, setFac] = useState(["toilets","bathroom"])
     const [time, setTime] = useState({
-        time1Friday: "nn:nn",
-        time1Monday: "07:00",
-        time1Saturday: "07:00",
-        time1Sunday: "07:00",
-        time1Thursday: "07:00",
-        time1Tuesday: "07:00",
-        time1Wednesday: "07:00",
-        time2Friday: "22:00",
-        time2Monday: "22:00",
-        time2Saturday: "22:00",
-        time2Sunday: "22:00",
-        time2Thursday: "22:00",
-        time2Tuesday: "22:00",
-        time2Wednesday: "22:00"
+        time1Friday: "n",
+        time1Monday: "07",
+        time1Saturday: "07",
+        time1Sunday: "07",
+        time1Thursday: "07",
+        time1Tuesday: "07",
+        time1Wednesday: "07",
+        time2Friday: "22",
+        time2Monday: "22",
+        time2Saturday: "22",
+        time2Sunday: "22",
+        time2Thursday: "22",
+        time2Tuesday: "22",
+        time2Wednesday: "22"
     })
     useEffect(() => {
         setTime(props.venueOpenTime)
@@ -87,7 +87,6 @@ const MyFacilities = (props) => {
                 break
         }
     }
-    console.log(fac)
     return (
         <div className="facilities-container px-5 mb-3">
             <Row>
@@ -102,7 +101,7 @@ const MyFacilities = (props) => {
                             </Col>
                             <Col>
                                 <p>
-                                    {`${time.time1Monday} - ${time.time2Monday}`}
+                                    {`${time.time1Monday}:00 - ${time.time2Monday}:00`}
                                 </p>
                             </Col>
                         </Row>
@@ -114,7 +113,7 @@ const MyFacilities = (props) => {
                             </Col>
                             <Col>
                                 <p>
-                                    {`${time.time1Tuesday} - ${time.time2Tuesday}`}
+                                    {`${time.time1Tuesday}:00 - ${time.time2Tuesday}:00`}
                                 </p>
                             </Col>
                         </Row>
@@ -126,7 +125,7 @@ const MyFacilities = (props) => {
                             </Col>
                             <Col>
                                 <p>
-                                    {`${time.time1Wednesday} - ${time.time2Wednesday}`}
+                                    {`${time.time1Wednesday}:00 - ${time.time2Wednesday}:00`}
                                 </p>
                             </Col>
                         </Row>
@@ -138,7 +137,7 @@ const MyFacilities = (props) => {
                             </Col>
                             <Col>
                                 <p>
-                                    {`${time.time1Thursday} - ${time.time2Thursday}`}
+                                    {`${time.time1Thursday}:00 - ${time.time2Thursday}:00`}
                                 </p>
                             </Col>
                         </Row>
@@ -150,7 +149,7 @@ const MyFacilities = (props) => {
                             </Col>
                             <Col>
                                 <p>
-                                    {`${time.time1Friday} - ${time.time2Friday}`}
+                                    {`${time.time1Friday}:00 - ${time.time2Friday}:00`}
                                 </p>
                             </Col>
                         </Row>
@@ -162,7 +161,7 @@ const MyFacilities = (props) => {
                             </Col>
                             <Col>
                                 <p>
-                                    {`${time.time1Saturday} - ${time.time2Saturday}`}
+                                    {`${time.time1Saturday}:00 - ${time.time2Saturday}:00`}
                                 </p>
                             </Col>
                         </Row>
@@ -174,7 +173,7 @@ const MyFacilities = (props) => {
                             </Col>
                             <Col>
                                 <p>
-                                    {`${time.time1Sunday} - ${time.time2Sunday}`}
+                                    {`${time.time1Sunday}:00 - ${time.time2Sunday}:00`}
                                 </p>
                             </Col>
                         </Row>

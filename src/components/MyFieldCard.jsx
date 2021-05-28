@@ -1,5 +1,5 @@
 import React, { useEffect,useState } from 'react'
-import { Button, Card, Row, Col, Modal, Form, Container } from 'react-bootstrap';
+import { Button, Card, Row, Col, Modal, Form, Container, Spinner, Alert } from 'react-bootstrap';
 import firebase, {firestore} from '../config/firebase'
 import {
     useHistory,
@@ -11,28 +11,27 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const MyFieldCard = (props) => {
     const [showDialog, setShowDialog] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const [success, setSuccess] = useState()
+    const [venue, setVenue] = useState(props.venueData)
+    const [fail, setFail] = useState()
     const [time1, setTime1] = useState(0)
     const [time2, setTime2] = useState(0)
     const [hours, setHours] = useState(0)
     const [date, setDate] = useState(0)
     const [userId, setUserId] = useState(0)
     const [timeNow, setTimeNow] = useState("")
+    const [timeRange, setTimeRange] = useState([])
     const [time, setTime] = useState(Array.from(Array(24).keys()))
     let history = useHistory()
+
     useEffect(() => {
         getDateTime()
         getUser()
         if (time1 !== 0 && time2 !== 0){
-            // var array1 = time1.split(":");
-            // var seconds1 = (parseInt(array1[0], 10) * 60 * 60) + (parseInt(array1[1], 10) * 60)
-
-
-            // var array2 = time2.split(":");
-            // var seconds2 = (parseInt(array2[0], 10) * 60 * 60) + (parseInt(array2[1], 10) * 60)
-
             setHours(time2-time1)
         }
-    }, [time1,time2,hours,date])
+    }, [time1,time2,hours,date,timeRange])
 
     const toggleDialog = () => {
         setShowDialog(!showDialog)
@@ -56,16 +55,41 @@ const MyFieldCard = (props) => {
 
     const handleSubmit = () => {
         getDateTime()
-        pushBooking()
+        checkAvaibility()
+        // pushBooking()
     }
 
-    const getVenueOpenTime = () => {
-
+    const checkAvaibility = () => {
+        setTimeRange([])
+        setLoading(true)
+        for (let i = parseInt(time1); i < parseInt(time2); i++) {
+            timeRange.push(`${i}-${i + 1}`)
+        }
+        firestore.collection("booking")
+            .where("venueId", "==", venue.venueId)
+            .where("fieldName", "==", props.fieldName)
+            .where("date", "==", date)
+            .where("timeRange", "array-contains-any", timeRange)
+            .onSnapshot((snapshot) => {
+                const items = []
+                console.log(1)
+                snapshot.forEach((doc) => {
+                    const venue = doc.data()
+                    items.push(venue)
+                })
+                if (items.length === 0) {
+                    pushBooking()
+                } else {
+                    setFail(true)
+                    setLoading(false)
+                }
+            })
     }
 
     const pushBooking = () => {
         let ref = firebase.firestore().collection("booking").doc()
         let bookId = ref.id
+        
         firebase.firestore().collection("booking").doc(bookId).set({
             bookTime: timeNow,
             date: date,
@@ -74,15 +98,19 @@ const MyFieldCard = (props) => {
             fieldPrice: props.fieldPrice*hours,
             time1: time1,
             time2: time2,
+            timeRange: timeRange,
             userId: userId,
-            venueId: props.venueData.venueId,
-            venueName: props.venueData.venueName,
+            venueId: venue.venueId,
+            venueName: venue.venueName,
             id: bookId
 
         }).then(() => {
             console.log('success')
+            setLoading(false)
+            alert("Booking Success")
             toggleDialog()
         }).catch((err) => {
+            setLoading(false)
             console.log(err)
         })
     }
@@ -151,6 +179,13 @@ const MyFieldCard = (props) => {
                                 <Modal.Title>Book a Field</Modal.Title>
                             </Modal.Header>
                             <Modal.Body>
+                                {
+                                    fail ? (
+                                        <Alert variant="danger">
+                                            Booking failed. Please choose another time
+                                        </Alert>
+                                    ) : null
+                                }
                                 <Row>
                                     <Col lg={4}><p>Field</p></Col>
                                     <Col><p>{props.fieldName}</p></Col>
@@ -201,7 +236,13 @@ const MyFieldCard = (props) => {
                                     Cancel
                                 </Button>
                                 <Button variant="primary" onClick={handleSubmit}>
-                                    Book
+                                    {
+                                        loading ? (
+                                            <div>Loading</div>
+                                        ) : (
+                                            <div>Book</div>
+                                        )
+                                    }
                                 </Button>
                             </Modal.Footer>
                         </div>
