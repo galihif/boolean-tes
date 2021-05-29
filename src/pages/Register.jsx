@@ -56,6 +56,7 @@ const Register = () => {
         firestore.collection("users").doc(user.uid).set({
             email: user.email,
             name: name,
+            userId: user.uid,
         }).catch((err) => {
             console.log(err)
         })

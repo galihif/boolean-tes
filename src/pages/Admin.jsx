@@ -12,6 +12,8 @@ import MyAddVenueAdmin from '../components/MyAddVenueAdmin';
 import MyEditVenueAdmin from '../components/MyEditVenueAdmin';
 
 import stop_admin from '../assets/stop_admin.jpg'
+import MyUserAdmin from '../components/MyUserAdmin';
+import MyBookingAdmin from '../components/MyBookingAdmin';
 
 const Admin = () => {
     const [adminStatus, setAdminStatus] = useState(false)
@@ -83,9 +85,11 @@ const Admin = () => {
                                             </Tab.Pane>
                                             <Tab.Pane eventKey="third">
                                                 <h1>Users</h1>
+                                                <MyUserAdmin/>
                                             </Tab.Pane>
                                             <Tab.Pane eventKey="fourth">
                                                 <h1>Bookings</h1>
+                                                <MyBookingAdmin/>
                                             </Tab.Pane>
                                         </Tab.Content>
                                     </Col>

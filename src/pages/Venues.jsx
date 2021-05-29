@@ -18,9 +18,6 @@ const Venues = (props) => {
     const [searchKeyword, setSearchKeyword] = useState(props.match.params.keyword)
 
     useEffect(() => {
-        console.log(searchKeyword !== "")
-        console.log(searchKeyword !== undefined)
-        console.log(searchKeyword !== "" || searchKeyword !== undefined)
         getVenues()
     }, [])
 

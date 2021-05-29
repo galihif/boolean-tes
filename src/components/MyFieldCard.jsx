@@ -35,6 +35,8 @@ const MyFieldCard = (props) => {
 
     const toggleDialog = () => {
         setShowDialog(!showDialog)
+        setSuccess(false)
+        setFail(false)
     }
 
     const handleChange = (e) => {
@@ -59,58 +61,63 @@ const MyFieldCard = (props) => {
         // pushBooking()
     }
 
-    const checkAvaibility = () => {
-        setTimeRange([])
-        setLoading(true)
-        for (let i = parseInt(time1); i < parseInt(time2); i++) {
-            timeRange.push(`${i}-${i + 1}`)
-        }
-        firestore.collection("booking")
-            .where("venueId", "==", venue.venueId)
-            .where("fieldName", "==", props.fieldName)
-            .where("date", "==", date)
-            .where("timeRange", "array-contains-any", timeRange)
-            .onSnapshot((snapshot) => {
-                const items = []
-                snapshot.forEach((doc) => {
-                    const venue = doc.data()
-                    items.push(venue)
-                })
-                if (items.length === 0) {
-                    pushBooking()
-                } else {
-                    setFail(true)
-                    setLoading(false)
-                }
-            })
-    }
-
-    // const checkAvaibility = async () => {    
+    // const checkAvaibility = () => {
     //     setTimeRange([])
-    //     // setLoading(true)
+    //     setLoading(true)
     //     for (let i = parseInt(time1); i < parseInt(time2); i++) {
     //         timeRange.push(`${i}-${i + 1}`)
     //     }
-    //     const items = await checkTime();
-    //     console.log(items);
-    // }
-
-    // const checkTime = async () => {
-    //     const items = []
-    //     const data = await firestore.collection("booking")
+    //     firestore.collection("booking")
     //         .where("venueId", "==", venue.venueId)
     //         .where("fieldName", "==", props.fieldName)
     //         .where("date", "==", date)
     //         .where("timeRange", "array-contains-any", timeRange)
     //         .onSnapshot((snapshot) => {
+    //             const items = []
     //             snapshot.forEach((doc) => {
     //                 const venue = doc.data()
     //                 items.push(venue)
-    //                 return items
     //             })
-    //         });
-    //     return data
+    //             if (items.length === 0) {
+    //                 pushBooking()
+    //             } else {
+    //                 setFail(true)
+    //                 setLoading(false)
+    //             }
+    //         })
     // }
+
+    const checkAvaibility = async () => {    
+        setTimeRange([])
+        setLoading(true)
+        for (let i = parseInt(time1); i < parseInt(time2); i++) {
+            timeRange.push(`${i}-${i + 1}`)
+        }
+        const items = await checkTime();
+        if(items.length === 0){
+            pushBooking()
+        } else{
+            setFail(true)
+            setLoading(false)
+        }
+    }
+
+    const checkTime = async () => {
+        const data = await firestore.collection("booking")
+            .where("venueId", "==", venue.venueId)
+            .where("fieldName", "==", props.fieldName)
+            .where("date", "==", date)
+            .where("timeRange", "array-contains-any", timeRange)
+            .get().then((snapshot) => {
+                const items = []
+                snapshot.forEach((doc) => {
+                    const venue = doc.data()
+                    items.push(venue)
+                })
+                return items
+            });
+        return data;
+    }
 
     const pushBooking = () => {
         let ref = firebase.firestore().collection("booking").doc()
@@ -131,8 +138,10 @@ const MyFieldCard = (props) => {
             id: bookId
 
         }).then(() => {
-            console.log('success')
+            setSuccess(true)
             alert("Booking Success")
+            setFail(false)
+            setLoading(false)
             toggleDialog()
         }).catch((err) => {
             setLoading(false)
@@ -208,6 +217,13 @@ const MyFieldCard = (props) => {
                                     fail ? (
                                         <Alert variant="danger">
                                             Booking failed. Please choose another time
+                                        </Alert>
+                                    ) : null
+                                }
+                                {
+                                    success ? (
+                                        <Alert variant="success">
+                                            Booking Success
                                         </Alert>
                                     ) : null
                                 }
