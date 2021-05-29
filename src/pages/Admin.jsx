@@ -11,6 +11,8 @@ import MyDashboardAdmin from '../components/MyDashboardAdmin';
 import MyAddVenueAdmin from '../components/MyAddVenueAdmin';
 import MyEditVenueAdmin from '../components/MyEditVenueAdmin';
 
+import stop_admin from '../assets/stop_admin.jpg'
+
 const Admin = () => {
     const [adminStatus, setAdminStatus] = useState(false)
     let history = useHistory()
@@ -92,7 +94,17 @@ const Admin = () => {
                         </Container>
                     </div>
                 ) : (
-                    <h1>Restricted Area</h1>
+                    <Container>
+                        <Row className="d-flex justify-content-center">
+                            <h1>Stop! Restricted Area</h1>
+                        </Row>
+                        <Row className="d-flex justify-content-center">
+                            <Image src={stop_admin} rounded />
+                        </Row>
+                        <Row className="d-flex justify-content-center">
+                            <h3>This area only can be accessed by admin</h3>
+                        </Row>
+                    </Container>
                 )
             }
         </div>
