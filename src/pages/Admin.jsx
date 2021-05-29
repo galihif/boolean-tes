@@ -76,8 +76,6 @@ const Admin = () => {
                                                     </Route>
                                                     <Route path={path}>
                                                         <MyVenuesAdmin />
-                                                        <br />
-                                                        <br />
                                                     </Route>
                                                 </Switch>
                                             </Tab.Pane>
@@ -91,11 +89,6 @@ const Admin = () => {
                                     </Col>
                                 </Row>
                             </Tab.Container>
-                            <br />
-                            <br />
-                            <br />
-                            <br />
-                            <br />
                         </Container>
                     </div>
                 ) : (

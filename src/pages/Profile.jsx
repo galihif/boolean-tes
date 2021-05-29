@@ -13,7 +13,8 @@ import {
     Button, 
     Image,
     Tab,
-    Nav
+    Nav,
+    Tabs
 } from 'react-bootstrap'
 
 const Profile = (props) => {
@@ -161,8 +162,6 @@ const Profile = (props) => {
                     </Col>
                 </Row>
             </Tab.Container>
-            <br/>
-            <br/>
         </Container>
     )
 

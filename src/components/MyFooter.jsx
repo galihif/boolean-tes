@@ -13,9 +13,9 @@ const MyFooter = (props) => {
                 </Col>
                 <Col md={2}>
                     <h5 className="">Features</h5>
-                    <a href="#"><p>Home</p></a>
-                    <a href="#"><p>Venues</p></a>
-                    <a href="#"><p>About Us</p></a>
+                    <a href="/"><p>Home</p></a>
+                    <a href="/venues"><p>Venues</p></a>
+                    <a href="/about"><p>About Us</p></a>
                 </Col>
                 <Col md={3}>
                     <h5>Contact</h5>
