@@ -72,7 +72,6 @@ const MyFieldCard = (props) => {
             .where("timeRange", "array-contains-any", timeRange)
             .onSnapshot((snapshot) => {
                 const items = []
-                console.log(1)
                 snapshot.forEach((doc) => {
                     const venue = doc.data()
                     items.push(venue)
@@ -85,6 +84,33 @@ const MyFieldCard = (props) => {
                 }
             })
     }
+
+    // const checkAvaibility = async () => {    
+    //     setTimeRange([])
+    //     // setLoading(true)
+    //     for (let i = parseInt(time1); i < parseInt(time2); i++) {
+    //         timeRange.push(`${i}-${i + 1}`)
+    //     }
+    //     const items = await checkTime();
+    //     console.log(items);
+    // }
+
+    // const checkTime = async () => {
+    //     const items = []
+    //     const data = await firestore.collection("booking")
+    //         .where("venueId", "==", venue.venueId)
+    //         .where("fieldName", "==", props.fieldName)
+    //         .where("date", "==", date)
+    //         .where("timeRange", "array-contains-any", timeRange)
+    //         .onSnapshot((snapshot) => {
+    //             snapshot.forEach((doc) => {
+    //                 const venue = doc.data()
+    //                 items.push(venue)
+    //                 return items
+    //             })
+    //         });
+    //     return data
+    // }
 
     const pushBooking = () => {
         let ref = firebase.firestore().collection("booking").doc()
@@ -106,7 +132,6 @@ const MyFieldCard = (props) => {
 
         }).then(() => {
             console.log('success')
-            setLoading(false)
             alert("Booking Success")
             toggleDialog()
         }).catch((err) => {

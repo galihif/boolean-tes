@@ -14,16 +14,18 @@ import {
     Image,
     Tab,
     Nav,
-    Tabs
+    Modal
 } from 'react-bootstrap'
 
 const Profile = (props) => {
+    const [showDialog, setShowDialog] = useState(false)
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("")
     const [userName, setUserName] = useState("")
     const [userPhoto, setUserPhoto] = useState("")
     const [isLoading, setLoading] = useState(false)
     const [booking_data, setBookingData] = useState([])
+    const [booking, setBooking] = useState({})
     const userId = props.match.params.id
     let history = useHistory()
  
@@ -31,6 +33,11 @@ const Profile = (props) => {
         getProfile()
         getBooking()
     });
+
+    const toggleDialog = () => {
+        setShowDialog(!showDialog)
+    }
+
 
     const getProfile = () => {
         firebase.auth().onAuthStateChanged((user) => {
@@ -84,6 +91,11 @@ const Profile = (props) => {
         });
     }
 
+    const handleDetail = (booking) => {
+        setShowDialog(!showDialog)
+        setBooking(booking)
+    }
+
     
     return (
         <Container className="py-5">
@@ -121,7 +133,8 @@ const Profile = (props) => {
                                                 <th>Date</th>
                                                 <th>Time</th>
                                                 <th>Price</th>
-                                                <th>Booked at</th>
+                                                {/* <th>Booked at</th> */}
+                                                <th>#</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -133,13 +146,56 @@ const Profile = (props) => {
                                                             <td>{booking.date}</td>
                                                             <td>{booking.time1}:00 - {booking.time2}:00</td>
                                                             <td>Rp. {booking.fieldPrice}</td>
-                                                            <td>{booking.bookTime}</td>
+                                                            {/* <td>{booking.bookTime}</td> */}
+                                                            <td>
+                                                                <Button variant="primary" className="btn-detail" onClick={() => handleDetail(booking)}>Detail</Button>
+                                                            </td>
                                                         </tr>
                                                     )
                                                 })
                                             }
                                         </tbody>
                                     </Table>
+                                    <Modal show={showDialog} onHide={toggleDialog}>
+                                        <Modal.Header closeButton>
+                                            <Modal.Title>Booking Details</Modal.Title>
+                                        </Modal.Header>
+                                        <Modal.Body>
+                                            <Row>
+                                                <Col lg={4}><p>Booking ID</p></Col>
+                                                <Col><p>{booking.id}</p></Col>
+                                            </Row>
+                                            <Row>
+                                                <Col lg={4}><p>Booked at</p></Col>
+                                                <Col><p>{booking.bookTime}</p></Col>
+                                            </Row>
+                                            <Row>
+                                                <Col lg={4}><p>Venue</p></Col>
+                                                <Col><p>{booking.venueName}</p></Col>
+                                            </Row>
+                                            <Row>
+                                                <Col lg={4}><p>Field</p></Col>
+                                                <Col><p>{booking.fieldName}</p></Col>
+                                            </Row>
+                                            <Row>
+                                                <Col lg={4}><p>Date</p></Col>
+                                                <Col><p>{booking.date}</p></Col>
+                                            </Row>
+                                            <Row>
+                                                <Col lg={4}><p>Time</p></Col>
+                                                <Col><p>{booking.time1}:00 - {booking.time2}:00</p></Col>
+                                            </Row>
+                                            <Row>
+                                                <Col lg={4}><p>Total Price</p></Col>
+                                                <Col><p>{booking.fieldPrice}</p></Col>
+                                            </Row>
+                                        </Modal.Body>
+                                        <Modal.Footer>
+                                            <Button variant="secondary" onClick={toggleDialog}>
+                                                Cancel Booking
+                                            </Button>
+                                        </Modal.Footer>
+                                    </Modal>
                                 </div>
                             </Tab.Pane>
                             <Tab.Pane eventKey="second">
