@@ -152,8 +152,8 @@ const MyFieldCard = (props) => {
                         <Card.Img variant="top" src={props.fieldImage} />
                     </div>
                     <Card.Body className="p-4">
-                        <Row className="d-flex justify-content-lg-between">
-                            <Col lg={4}>
+                        <Row className="d-flex justify-content-around">
+                            <Col lg>
                                 <Card.Title>
                                     {props.fieldName}
                                             </Card.Title>
@@ -167,7 +167,7 @@ const MyFieldCard = (props) => {
                                     Floor : {props.floorType}
                                             </Card.Subtitle>
                             </Col>
-                            <Col lg={4}>
+                            <Col lg>
                                 <Card.Title className="align-self-start">
                                     Rp. {props.fieldPrice}/hour
                                             </Card.Title>

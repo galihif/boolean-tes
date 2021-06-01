@@ -12,6 +12,7 @@ const MyEditVenueAdmin = (props) => {
     const [venueName, setVenueName] = useState("")
     const [venueAddress, setVenueAddress] = useState("")
     const [venueAddressURL, setVenueAddressURL] = useState("")
+    const [venueEmbedURL, setVenueEmbedURL] = useState("")
     const [venueRating, setVenueRating] = useState(0.0)
     const [venuePhone, setVenuePhone] = useState("")
     const [venueSportType, setVenueSportType] = useState("")
@@ -42,6 +43,7 @@ const MyEditVenueAdmin = (props) => {
                     setVenueName(venue.venueName)
                     setVenueAddress(venue.venueAddress)
                     setVenueAddressURL(venue.venueAddressURL)
+                    setVenueEmbedURL(venue.venueEmbedURL)
                     setVenueRating(venue.venueRating)
                     setVenuePhone(venue.venuePhone)
                     setVenueSportType(venue.venueSportType)
@@ -68,6 +70,9 @@ const MyEditVenueAdmin = (props) => {
                 break
             case "venueURL":
                 setVenueAddressURL(e.target.value)
+                break
+            case "venueEmbedURL":
+                setVenueEmbedURL(e.target.value)
                 break
             case "venueRating":
                 setVenueRating(e.target.value)
@@ -121,6 +126,7 @@ const MyEditVenueAdmin = (props) => {
         venue.venueName = venueName
         venue.venueAddress = venueAddress
         venue.venueAddressURL = venueAddressURL
+        venue.venueEmbedURL = venueEmbedURL
         venue.venueRating = venueRating
         venue.venuePhone = venuePhone
         venue.venueSportType = venueSportType
@@ -216,6 +222,14 @@ const MyEditVenueAdmin = (props) => {
                 </Col>
                 <Col lg={6}>
                     <Form.Control onChange={handleChange} value={venueAddressURL} id="venueURL" type="text" placeholder="Enter URL" />
+                </Col>
+            </Row>
+            <Row className="my-3">
+                <Col lg={3}>
+                    <p>Embed Map URL</p>
+                </Col>
+                <Col lg={6}>
+                    <Form.Control onChange={handleChange} value={venueEmbedURL} id="venueEmbedURL" type="text" placeholder="Enter URL" />
                 </Col>
             </Row>
             <Row className="my-3">
@@ -478,7 +492,7 @@ const MyEditVenueAdmin = (props) => {
                         </Col>
                         <Col lg>
                             <Form.Group>
-                                <Form.Control onChange={handelOpenTimeChange} id="time1Sunday" as="select" value={venueOpenTime.time1Sunday}>
+                                <Form.Control onChange={handelOpenTimeChange} id="time1Monday" as="select" value={venueOpenTime.time1Monday}>
                                     {
                                         time.map((hour) => {
                                             return (
@@ -491,7 +505,7 @@ const MyEditVenueAdmin = (props) => {
                         </Col>
                         <Col lg>
                             <Form.Group>
-                                <Form.Control onChange={handelOpenTimeChange} id="time2Sunday" as="select" value={venueOpenTime.time2Sunday}>
+                                <Form.Control onChange={handelOpenTimeChange} id="time1Monday" as="select" value={venueOpenTime.time1Monday}>
                                     {
                                         time.map((hour) => {
                                             return (

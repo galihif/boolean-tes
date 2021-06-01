@@ -34,9 +34,11 @@ const MyFacilities = (props) => {
         time2Tuesday: "22",
         time2Wednesday: "22"
     })
+    const [venueEmbedURL, setVenueEmbedURL] = useState("")
     useEffect(() => {
         setTime(props.venueOpenTime)
         setFac(props.venueFacilities)
+        setVenueEmbedURL(props.venueEmbedURL)
     })
 
     const getIcon = (id) => {
@@ -194,6 +196,10 @@ const MyFacilities = (props) => {
                                 )
                             })
                         }
+                    </Row>
+                    <h2>Location</h2>
+                    <Row>
+                        <iframe src={venueEmbedURL} width="600" height="200" style={{ border: 0,borderRadius: 16 }} allowfullscreen="" loading="lazy"></iframe>
                     </Row>
                 </Col>
             </Row>

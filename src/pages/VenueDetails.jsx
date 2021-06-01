@@ -68,7 +68,8 @@ class VenueDetails extends Component{
                                 />
                                 <MyFacilities 
                                     venueOpenTime={venueData.venueOpenTime}
-                                    venueFacilities={venueData.venueFacilities}/>
+                                    venueFacilities={venueData.venueFacilities}
+                                    venueEmbedURL={venueData.venueEmbedURL}/>
                                 <MyFieldList fieldList={fieldList} venueData={venueData}/>
                             </div>
                     )

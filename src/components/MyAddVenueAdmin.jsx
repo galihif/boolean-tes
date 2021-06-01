@@ -1,8 +1,8 @@
 import React, { useEffect, useState} from 'react'
 import { Col, Form, Modal, Row, Nav, Image, Card, Table, Button, FormGroup, FormControl } from 'react-bootstrap'
 import { useHistory, useRouteMatch } from 'react-router-dom'
-import firebase,{storage,firestore} from '../config/firebase'
-import MyFieldCard from './MyFieldCard'
+import firebase, { storage, firestore } from '../config/firebase'
+import MyFieldCardAdmin from './MyFieldCardAdmin'
 
 const MyAddVenueAdmin = () => {
     const [showDialog, setShowDialog] = useState(false)
@@ -10,6 +10,7 @@ const MyAddVenueAdmin = () => {
     const [venueName, setVenueName] = useState("")
     const [venueAddress, setVenueAddress] = useState("")
     const [venueAddressURL, setVenueAddressURL] = useState("")
+    const [venueEmbedURL, setVenueEmbedURL] = useState("")
     const [venueRating, setVenueRating] = useState(0)
     const [venuePhone, setVenuePhone] = useState("")
     const [venueSportType, setVenueSportType] = useState("")
@@ -22,6 +23,8 @@ const MyAddVenueAdmin = () => {
     const [fieldImageURL, setFieldImageURL] = useState()
     const [bundle, setBundle] = useState()
     const [time, setTime] = useState(Array.from(Array(24).keys()))
+    const [, updateState] = React.useState();
+    const forceUpdate = React.useCallback(() => updateState({}), []);
 
     let history = useHistory()
     let { path, url } = useRouteMatch()
@@ -40,6 +43,9 @@ const MyAddVenueAdmin = () => {
                 break
             case "venueURL":
                 setVenueAddressURL(e.target.value)
+                break
+            case "venueEmbedURL":
+                setVenueEmbedURL(e.target.value)
                 break
             case "venueRating":
                 setVenueRating(e.target.value)
@@ -94,6 +100,7 @@ const MyAddVenueAdmin = () => {
             venueName: venueName,
             venueAddress: venueAddress,
             venueAddressURL: venueAddressURL,
+            venueEmbedURL: venueEmbedURL,
             venueRating: venueRating,
             venuePhone: venuePhone,
             venueSportType: venueSportType,
@@ -153,6 +160,11 @@ const MyAddVenueAdmin = () => {
         setField({})
     }
 
+    const handleDeleteField = (index) => {
+        fieldList.splice(index, 1)
+        forceUpdate()
+    }
+
     const toggleDialog = () => {
         setShowDialog(!showDialog)
     }
@@ -181,6 +193,14 @@ const MyAddVenueAdmin = () => {
                 </Col>
                 <Col lg={6}>
                     <Form.Control onChange={handleChange} id="venueURL" type="text" placeholder="Enter URL" />
+                </Col>
+            </Row>
+            <Row className="my-3">
+                <Col lg={3}>
+                    <p>Embed Map URL</p>
+                </Col>
+                <Col lg={6}>
+                    <Form.Control onChange={handleChange} id="venueEmbedURL" type="text" placeholder="Enter URL" />
                 </Col>
             </Row>
             <Row className="my-3">
@@ -475,16 +495,19 @@ const MyAddVenueAdmin = () => {
                     <Button variant="primary" onClick={toggleDialog}>Add Field</Button>
                     {
                         fieldList.length > 0 ? (
-                            fieldList.map((field) => {
+                            fieldList.map((field, key) => {
                                 return(
-                                    <MyFieldCard
-                                        fieldImage={fieldImageURL}
-                                        fieldName={field.fieldName}
-                                        sportType={field.sportType}
-                                        fieldType={field.fieldType}
-                                        floorType={field.floorType}
-                                        fieldPrice={field.fieldPrice}
-                                    />
+                                    <div>
+                                        <MyFieldCardAdmin
+                                            fieldImage={fieldImageURL}
+                                            fieldName={field.fieldName}
+                                            sportType={field.sportType}
+                                            fieldType={field.fieldType}
+                                            floorType={field.floorType}
+                                            fieldPrice={field.fieldPrice}
+                                        />
+                                        <Button variant="primary" onClick={() => handleDeleteField(key)}>Delete</Button>
+                                    </div>
                                 )
                             })
                         ) : null

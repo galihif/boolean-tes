@@ -13,26 +13,25 @@ const MyFieldList = (props) => {
     return (
         <div className="field-list px-5">
             <h2>Field List</h2>
-            <Row className="mr-1">
                 {
                     fieldList.map((field) => {
                         return (
-                            <Col lg={8} className="my-2">
-                                <MyFieldCard
-                                    fieldName={field.fieldName}
-                                    sportType={field.sportType}
-                                    fieldType={field.fieldType}
-                                    floorType={field.floorType}
-                                    fieldPrice={field.fieldPrice}
-                                    fieldImage={field.fieldImage}
-                                    venueData={props.venueData}
-                                />
-                            </Col>
+                            <Row className="mr-1">
+                                <Col lg={6} className="my-2">
+                                    <MyFieldCard
+                                        fieldName={field.fieldName}
+                                        sportType={field.sportType}
+                                        fieldType={field.fieldType}
+                                        floorType={field.floorType}
+                                        fieldPrice={field.fieldPrice}
+                                        fieldImage={field.fieldImage}
+                                        venueData={props.venueData}
+                                    />
+                                </Col>
+                            </Row>
                         )
                     })
                 }
-            </Row>
-
         </div>
     )
 }

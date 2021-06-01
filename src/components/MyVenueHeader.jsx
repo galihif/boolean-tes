@@ -54,7 +54,7 @@ const MyVenueHeader = (props) => {
         <div className="venue-header">
             <Card className="mx-0 mb-5">
                 <Card.Img src={props.image} className="header-image"/>
-                <Card.ImgOverlay className="p-5">
+                <Card.ImgOverlay className="px-5">
                     <Col lg={4}>
                         <h1>{props.name}</h1>
                         <p>
