@@ -23,6 +23,7 @@ const MyEditVenueAdmin = (props) => {
     const [field, setField] = useState({})
     const [fieldImageURL, setFieldImageURL] = useState()
     const [venue, setVenue] = useState()
+    const [time, setTime] = useState(Array.from(Array(24).keys()))
     const [, updateState] = React.useState();
     const forceUpdate = React.useCallback(() => updateState({}), []);
 
@@ -290,10 +291,30 @@ const MyEditVenueAdmin = (props) => {
                             <p>Monday</p>
                         </Col>
                         <Col lg>
-                            <Form.Control type="time" id="time1Monday" value={venueOpenTime.time1Monday} onChange={handelOpenTimeChange}/>
+                            <Form.Group>
+                                <Form.Control onChange={handelOpenTimeChange} id="time1Monday" as="select" value={venueOpenTime.time1Monday}>
+                                    {
+                                        time.map((hour) => {
+                                            return (
+                                                <option value={hour}>{hour}:00</option>
+                                            )
+                                        })
+                                    }
+                                </Form.Control>
+                            </Form.Group>
                         </Col>
                         <Col lg>
-                            <Form.Control type="time" id="time2Monday" value={venueOpenTime.time2Monday} onChange={handelOpenTimeChange}/>
+                            <Form.Group>
+                                <Form.Control onChange={handelOpenTimeChange} id="time2Monday" as="select" value={venueOpenTime.time2Monday}>
+                                    {
+                                        time.map((hour) => {
+                                            return (
+                                                <option value={hour}>{hour}:00</option>
+                                            )
+                                        })
+                                    }
+                                </Form.Control>
+                            </Form.Group>
                         </Col>
                     </Row>
                     <Row className="my-1">
@@ -301,10 +322,30 @@ const MyEditVenueAdmin = (props) => {
                             <p>Tuesday</p>
                         </Col>
                         <Col lg>
-                            <Form.Control type="time" id="time1Tuesday" value={venueOpenTime.time1Tuesday} onChange={handelOpenTimeChange}/>
+                            <Form.Group>
+                                <Form.Control onChange={handelOpenTimeChange} id="time1Tuesday" as="select" value={venueOpenTime.time1Tuesday}>
+                                    {
+                                        time.map((hour) => {
+                                            return (
+                                                <option value={hour}>{hour}:00</option>
+                                            )
+                                        })
+                                    }
+                                </Form.Control>
+                            </Form.Group>
                         </Col>
                         <Col lg>
-                            <Form.Control type="time" id="time2Tuesday" value={venueOpenTime.time2Tuesday} onChange={handelOpenTimeChange}/>
+                            <Form.Group>
+                                <Form.Control onChange={handelOpenTimeChange} id="time2Tuesday" as="select" value={venueOpenTime.time2Tuesday}>
+                                    {
+                                        time.map((hour) => {
+                                            return (
+                                                <option value={hour}>{hour}:00</option>
+                                            )
+                                        })
+                                    }
+                                </Form.Control>
+                            </Form.Group>
                         </Col>
                     </Row>
                     <Row className="my-1">
@@ -312,10 +353,30 @@ const MyEditVenueAdmin = (props) => {
                             <p>Wednesday</p>
                         </Col>
                         <Col lg>
-                            <Form.Control type="time" id="time1Wednesday" value={venueOpenTime.time1Wednesday} onChange={handelOpenTimeChange}/>
+                            <Form.Group>
+                                <Form.Control onChange={handelOpenTimeChange} id="time1Wednesday" as="select" value={venueOpenTime.time1Wednesday}>
+                                    {
+                                        time.map((hour) => {
+                                            return (
+                                                <option value={hour}>{hour}:00</option>
+                                            )
+                                        })
+                                    }
+                                </Form.Control>
+                            </Form.Group>
                         </Col>
                         <Col lg>
-                            <Form.Control type="time" id="time2Wednesday" value={venueOpenTime.time2Wednesday} onChange={handelOpenTimeChange}/>
+                            <Form.Group>
+                                <Form.Control onChange={handelOpenTimeChange} id="time2Wednesday" as="select" value={venueOpenTime.time2Wednesday}>
+                                    {
+                                        time.map((hour) => {
+                                            return (
+                                                <option value={hour}>{hour}:00</option>
+                                            )
+                                        })
+                                    }
+                                </Form.Control>
+                            </Form.Group>
                         </Col>
                     </Row>
                     <Row className="my-1">
@@ -323,10 +384,30 @@ const MyEditVenueAdmin = (props) => {
                             <p>Thursday</p>
                         </Col>
                         <Col lg>
-                            <Form.Control type="time" id="time1Thursday" value={venueOpenTime.time1Thursday} onChange={handelOpenTimeChange}/>
+                            <Form.Group>
+                                <Form.Control onChange={handelOpenTimeChange} id="time1Thursday" as="select" value={venueOpenTime.time1Thursday}>
+                                    {
+                                        time.map((hour) => {
+                                            return (
+                                                <option value={hour}>{hour}:00</option>
+                                            )
+                                        })
+                                    }
+                                </Form.Control>
+                            </Form.Group>
                         </Col>
                         <Col lg>
-                            <Form.Control type="time" id="time2Thursday" value={venueOpenTime.time2Thursday} onChange={handelOpenTimeChange}/>
+                            <Form.Group>
+                                <Form.Control onChange={handelOpenTimeChange} id="time2Thursday" as="select" value={venueOpenTime.time2Thursday}>
+                                    {
+                                        time.map((hour) => {
+                                            return (
+                                                <option value={hour}>{hour}:00</option>
+                                            )
+                                        })
+                                    }
+                                </Form.Control>
+                            </Form.Group>
                         </Col>
                     </Row>
                     <Row className="my-1">
@@ -334,10 +415,30 @@ const MyEditVenueAdmin = (props) => {
                             <p>Friday</p>
                         </Col>
                         <Col lg>
-                            <Form.Control type="time" id="time1Friday" value={venueOpenTime.time1Friday} onChange={handelOpenTimeChange}/>
+                            <Form.Group>
+                                <Form.Control onChange={handelOpenTimeChange} id="time1Friday" as="select" value={venueOpenTime.time1Friday}>
+                                    {
+                                        time.map((hour) => {
+                                            return (
+                                                <option value={hour}>{hour}:00</option>
+                                            )
+                                        })
+                                    }
+                                </Form.Control>
+                            </Form.Group>
                         </Col>
                         <Col lg>
-                            <Form.Control type="time" id="time2Friday" value={venueOpenTime.time2Friday} onChange={handelOpenTimeChange}/>
+                            <Form.Group>
+                                <Form.Control onChange={handelOpenTimeChange} id="time2Friday" as="select" value={venueOpenTime.time2Friday}>
+                                    {
+                                        time.map((hour) => {
+                                            return (
+                                                <option value={hour}>{hour}:00</option>
+                                            )
+                                        })
+                                    }
+                                </Form.Control>
+                            </Form.Group>
                         </Col>
                     </Row>
                     <Row className="my-1">
@@ -345,10 +446,30 @@ const MyEditVenueAdmin = (props) => {
                             <p>Saturday</p>
                         </Col>
                         <Col lg>
-                            <Form.Control type="time" id="time1Saturday" value={venueOpenTime.time1Saturday} onChange={handelOpenTimeChange}/>
+                            <Form.Group>
+                                <Form.Control onChange={handelOpenTimeChange} id="time1Saturday" as="select" value={venueOpenTime.time1Saturday}>
+                                    {
+                                        time.map((hour) => {
+                                            return (
+                                                <option value={hour}>{hour}:00</option>
+                                            )
+                                        })
+                                    }
+                                </Form.Control>
+                            </Form.Group>
                         </Col>
                         <Col lg>
-                            <Form.Control type="time" id="time2Saturday" value={venueOpenTime.time2Saturday} onChange={handelOpenTimeChange}/>
+                            <Form.Group>
+                                <Form.Control onChange={handelOpenTimeChange} id="time2Saturday" as="select" value={venueOpenTime.time2Saturday}>
+                                    {
+                                        time.map((hour) => {
+                                            return (
+                                                <option value={hour}>{hour}:00</option>
+                                            )
+                                        })
+                                    }
+                                </Form.Control>
+                            </Form.Group>
                         </Col>
                     </Row>
                     <Row className="my-1">
@@ -356,10 +477,30 @@ const MyEditVenueAdmin = (props) => {
                             <p>Sunday</p>
                         </Col>
                         <Col lg>
-                            <Form.Control type="time" id="time1Sunday" value={venueOpenTime.time1Sunday} onChange={handelOpenTimeChange}/>
+                            <Form.Group>
+                                <Form.Control onChange={handelOpenTimeChange} id="time1Sunday" as="select" value={venueOpenTime.time1Sunday}>
+                                    {
+                                        time.map((hour) => {
+                                            return (
+                                                <option value={hour}>{hour}:00</option>
+                                            )
+                                        })
+                                    }
+                                </Form.Control>
+                            </Form.Group>
                         </Col>
                         <Col lg>
-                            <Form.Control type="time" id="time2Sunday" value={venueOpenTime.time2Sunday} onChange={handelOpenTimeChange}/>
+                            <Form.Group>
+                                <Form.Control onChange={handelOpenTimeChange} id="time2Sunday" as="select" value={venueOpenTime.time2Sunday}>
+                                    {
+                                        time.map((hour) => {
+                                            return (
+                                                <option value={hour}>{hour}:00</option>
+                                            )
+                                        })
+                                    }
+                                </Form.Control>
+                            </Form.Group>
                         </Col>
                     </Row>
                 </Col>
