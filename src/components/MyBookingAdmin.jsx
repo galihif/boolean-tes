@@ -8,6 +8,7 @@ const MyBookingAdmin = () => {
     const [booking, setBooking] = useState({})
     const [bookId, setBookId] = useState("")
     const [showDialog, setShowDialog] = useState(false)
+    const [isLoading, setLoading] = useState(false)
     let history = useHistory()
     let { path, url } = useRouteMatch()
 
@@ -40,6 +41,21 @@ const MyBookingAdmin = () => {
         setShowDialog(!showDialog)
         setBooking(booking)
     }
+
+    const cancelBooking = () => {
+        setLoading(true)
+        firestore.collection("booking").doc(booking.id)
+            .delete()
+            .then(() => {
+                alert("Booking Canceled")
+                setShowDialog(!showDialog)
+                setLoading(false)
+            }).catch((error) => {
+                console.error("Error removing document: ", error);
+                setLoading(false)
+            })
+    }
+    
     return(
         <div>
             <div className="venues-table">
@@ -117,8 +133,12 @@ const MyBookingAdmin = () => {
                         </Row>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="secondary" onClick={toggleDialog}>
-                            Cancel Booking
+                        <Button variant="secondary" onClick={cancelBooking}>
+                            {
+                                isLoading ? (
+                                    <div>Loading</div>
+                                ) : <div>Cancel Booking</div>
+                            }
                         </Button>
                     </Modal.Footer>
                 </Modal>
