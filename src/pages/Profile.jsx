@@ -19,7 +19,6 @@ import {
 
 const Profile = (props) => {
     const [showDialog, setShowDialog] = useState(false)
-    const [showCancelDialog, setShowCancelDialog] = useState(false)
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("")
     const [userName, setUserName] = useState("")
@@ -39,9 +38,6 @@ const Profile = (props) => {
 
     const toggleDialog = () => {
         setShowDialog(!showDialog)
-    }
-    const toggleCancelDialog = () => {
-        setShowCancelDialog(!showCancelDialog)
     }
 
 
@@ -218,20 +214,6 @@ const Profile = (props) => {
                                                     ) : <div>Cancel Booking</div>
                                                 }
                                             </Button>
-                                        </Modal.Footer>
-                                    </Modal>
-                                    <Modal show={showCancelDialog} onHide={toggleCancelDialog}>
-                                        <Modal.Header closeButton>
-                                            <Modal.Title>Are you sure to cancel this booking?</Modal.Title>
-                                        </Modal.Header>
-
-                                        <Modal.Body>
-                                            <p>Modal body text goes here.</p>
-                                        </Modal.Body>
-
-                                        <Modal.Footer>
-                                            <Button variant="secondary">No</Button>
-                                            <Button variant="primary" onClick={cancelBooking}>Yes</Button>
                                         </Modal.Footer>
                                     </Modal>
                                 </div>
