@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import firebase from '../config/firebase'
+import firebase,{firestore} from '../config/firebase'
 import {useHistory} from 'react-router-dom'
 
 import './Profile.scss'
@@ -19,6 +19,7 @@ import {
 
 const Profile = (props) => {
     const [showDialog, setShowDialog] = useState(false)
+    const [showCancelDialog, setShowCancelDialog] = useState(false)
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("")
     const [userName, setUserName] = useState("")
@@ -27,6 +28,8 @@ const Profile = (props) => {
     const [booking_data, setBookingData] = useState([])
     const [booking, setBooking] = useState({})
     const userId = props.match.params.id
+    const [, updateState] = React.useState();
+    const forceUpdate = React.useCallback(() => updateState({}), []);
     let history = useHistory()
  
     useEffect(() => {
@@ -36,6 +39,9 @@ const Profile = (props) => {
 
     const toggleDialog = () => {
         setShowDialog(!showDialog)
+    }
+    const toggleCancelDialog = () => {
+        setShowCancelDialog(!showCancelDialog)
     }
 
 
@@ -94,6 +100,20 @@ const Profile = (props) => {
     const handleDetail = (booking) => {
         setShowDialog(!showDialog)
         setBooking(booking)
+    }
+
+    const cancelBooking = () => {
+        setLoading(true)
+        firestore.collection("booking").doc(booking.id)
+            .delete()
+            .then(() => {
+                alert("Booking Canceled")
+                setShowDialog(!showDialog)
+                setLoading(false)
+            }).catch((error) => {
+                console.error("Error removing document: ", error);
+                setLoading(false)
+            })
     }
 
     
@@ -191,9 +211,27 @@ const Profile = (props) => {
                                             </Row>
                                         </Modal.Body>
                                         <Modal.Footer>
-                                            <Button variant="secondary" onClick={toggleDialog}>
-                                                Cancel Booking
+                                            <Button variant="secondary" onClick={cancelBooking}>
+                                                {
+                                                    isLoading ? (
+                                                        <div>Loading</div>
+                                                    ) : <div>Cancel Booking</div>
+                                                }
                                             </Button>
+                                        </Modal.Footer>
+                                    </Modal>
+                                    <Modal show={showCancelDialog} onHide={toggleCancelDialog}>
+                                        <Modal.Header closeButton>
+                                            <Modal.Title>Are you sure to cancel this booking?</Modal.Title>
+                                        </Modal.Header>
+
+                                        <Modal.Body>
+                                            <p>Modal body text goes here.</p>
+                                        </Modal.Body>
+
+                                        <Modal.Footer>
+                                            <Button variant="secondary">No</Button>
+                                            <Button variant="primary" onClick={cancelBooking}>Yes</Button>
                                         </Modal.Footer>
                                     </Modal>
                                 </div>

@@ -58,34 +58,7 @@ const MyFieldCard = (props) => {
     const handleSubmit = () => {
         getDateTime()
         checkAvaibility()
-        // pushBooking()
     }
-
-    // const checkAvaibility = () => {
-    //     setTimeRange([])
-    //     setLoading(true)
-    //     for (let i = parseInt(time1); i < parseInt(time2); i++) {
-    //         timeRange.push(`${i}-${i + 1}`)
-    //     }
-    //     firestore.collection("booking")
-    //         .where("venueId", "==", venue.venueId)
-    //         .where("fieldName", "==", props.fieldName)
-    //         .where("date", "==", date)
-    //         .where("timeRange", "array-contains-any", timeRange)
-    //         .onSnapshot((snapshot) => {
-    //             const items = []
-    //             snapshot.forEach((doc) => {
-    //                 const venue = doc.data()
-    //                 items.push(venue)
-    //             })
-    //             if (items.length === 0) {
-    //                 pushBooking()
-    //             } else {
-    //                 setFail(true)
-    //                 setLoading(false)
-    //             }
-    //         })
-    // }
 
     const checkAvaibility = async () => {    
         setTimeRange([])
