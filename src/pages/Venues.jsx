@@ -22,7 +22,6 @@ const Venues = (props) => {
 
     useEffect(() => {
         getVenues()
-        console.log(catSearch)
     }, [])
 
     const handleChangeSport = (e) => {
@@ -56,6 +55,11 @@ const Venues = (props) => {
 
     const getVenues = () => {
         const items = []
+        console.log(typeof catSearch)
+        if(typeof catSearch !== 'undefined'){
+            sportFilter.push(catSearch)
+            setShowResult(true)
+        }
         setLoading(true)
         const ref = firebase.firestore().collection("venues")
         if (searchKeyword !== "" && typeof searchKeyword !== "undefined"){
@@ -88,7 +92,6 @@ const Venues = (props) => {
                     })
                     setLoading(false)
                 })
-            console.log(items)
         } else if (sportFilter.length === 0 && floorFilter.length !== 0) {
             ref
                 .where("fieldFloorTypeSearch", "array-contains-any", floorFilter)
@@ -98,11 +101,8 @@ const Venues = (props) => {
                     })
                     setLoading(false)
                 })
-            console.log(items)
         } else if (sportFilter.length !== 0 && floorFilter.length !== 0) {
             ref
-                // .where("venueSportType", "in", sportFilter)
-                // .where("fieldFloorTypeSearch", "array-contains-any", floorFilter)
                 .onSnapshot((snapshot) => {
                     snapshot.forEach((doc) => {
                         const venue = doc.data()
@@ -157,11 +157,11 @@ const Venues = (props) => {
                                 </Row>
                                 <Row className="pl-3 pr-3">
                                     <Form.Group controlId="sport">
-                                        <Form.Check type="checkbox" label="Futsal" id="Futsal" onChange={handleChangeSport} />
-                                        <Form.Check type="checkbox" label="Basket" id="Basket" onChange={handleChangeSport} />
-                                        <Form.Check type="checkbox" label="Volley" id="Volley" onChange={handleChangeSport} />
-                                        <Form.Check type="checkbox" label="Tennis" id="Tennis" onChange={handleChangeSport} />
-                                        <Form.Check type="checkbox" label="Badminton" id="Badminton" onChange={handleChangeSport} />
+                                        <Form.Check type="checkbox" label="Futsal" id="Futsal" onChange={handleChangeSport}/>
+                                        <Form.Check type="checkbox" label="Basket" id="Basket" onChange={handleChangeSport}/>
+                                        <Form.Check type="checkbox" label="Volley" id="Volley" onChange={handleChangeSport}/>
+                                        <Form.Check type="checkbox" label="Tennis" id="Tennis" onChange={handleChangeSport}/>
+                                        <Form.Check type="checkbox" label="Badminton" id="Badminton" onChange={handleChangeSport}/>
                                     </Form.Group>
                                 </Row>
                                 <Row className="pl-3 pr-3">
@@ -183,7 +183,7 @@ const Venues = (props) => {
                         <Container className="list-venue-container">
                             {
                                 showResult ? (
-                                    <h4 className="mb-3">Showing results of '{searchKeyword}'</h4>
+                                    <h4 className="mb-3">Showing results of '{searchKeyword || catSearch}'</h4>
                                 ) : null
                             }
                             {
