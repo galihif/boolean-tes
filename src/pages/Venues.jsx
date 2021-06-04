@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Container, Row, Col, Spinner, Form, Jumbotron, Button } from 'react-bootstrap';
 import firebase from '../config/firebase'
+import { useHistory, useParams } from 'react-router-dom'
 
 import './Venues.scss'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -10,15 +11,18 @@ import MyFilter from '../components/MyFilter';
 import MyVenueCard from '../components/MyVenueCard';
 
 const Venues = (props) => {
+    let{keyword,cat} = useParams()
     const [venues, setVenues] = useState([])
     const [isLoading, setLoading] = useState(false)
     const [showResult, setShowResult] = useState(false)
     const [sportFilter, setSportFilter] = useState([])
     const [floorFilter, setFloorFilter] = useState([])
-    const [searchKeyword, setSearchKeyword] = useState(props.match.params.keyword)
+    const [searchKeyword, setSearchKeyword] = useState(keyword)
+    const [catSearch, setCatSearch] = useState(cat)
 
     useEffect(() => {
         getVenues()
+        console.log(catSearch)
     }, [])
 
     const handleChangeSport = (e) => {
@@ -97,11 +101,14 @@ const Venues = (props) => {
             console.log(items)
         } else if (sportFilter.length !== 0 && floorFilter.length !== 0) {
             ref
-                .where("venueSportType", "in", sportFilter)
-                .where("fieldFloorTypeSearch", "array-contains-any", floorFilter)
+                // .where("venueSportType", "in", sportFilter)
+                // .where("fieldFloorTypeSearch", "array-contains-any", floorFilter)
                 .onSnapshot((snapshot) => {
                     snapshot.forEach((doc) => {
-                        items.push(doc.data())
+                        const venue = doc.data()
+                        if (sportFilter.includes(venue.venueSportType) && floorFilter.some(floor => venue.fieldFloorTypeSearch.includes(floor))){
+                            items.push(venue)
+                        }
                     })
                     setLoading(false)
                 })
@@ -113,8 +120,8 @@ const Venues = (props) => {
                     })
                     setLoading(false)
                 })
-            console.log(items)
         }
+        
         setVenues(items)
     }
     return (
