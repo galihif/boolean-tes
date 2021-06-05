@@ -5,10 +5,10 @@ const initialState = {
 
 const rootReducer = (state = initialState, action) => {
     switch(action.type){
-        case "INCREMENT":
+        case "CHANGECOUNT":
             return {
                 ...state,
-                counter: state.counter+1
+                counter: action.data
             }
         case "LOGIN":
             return {
