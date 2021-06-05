@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import firebase,{firestore} from '../config/firebase'
-import {useHistory} from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
 
 import './Profile.scss'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -18,6 +19,9 @@ import {
 } from 'react-bootstrap'
 
 const Profile = (props) => {
+    let history = useHistory()
+    const dispatch = useDispatch()
+    const state = useSelector((state) => state)
     const [showDialog, setShowDialog] = useState(false)
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("")
@@ -29,7 +33,6 @@ const Profile = (props) => {
     const userId = props.match.params.id
     const [, updateState] = React.useState();
     const forceUpdate = React.useCallback(() => updateState({}), []);
-    let history = useHistory()
  
     useEffect(() => {
         getProfile()
@@ -88,6 +91,7 @@ const Profile = (props) => {
     const handleLogout = () => {
         firebase.auth().signOut().then(() => {
             history.push('/login')
+            dispatch({ type: "LOGOUT" })
         }).catch((error) => {
             // An error happened.
         });

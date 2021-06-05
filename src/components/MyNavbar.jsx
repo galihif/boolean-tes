@@ -7,15 +7,18 @@ import {
     Link
 } from "react-router-dom";
 import firebase from '../config/firebase'
+import {useSelector, useDispatch} from 'react-redux'
 
 import logo from '../assets/logo.png';
 import './MyNavbar.scss'
 
 const MyNavbar = () => {
+    let history = useHistory()
+    const dispatch = useDispatch()
+    const state = useSelector((state) => state)
     const [logged, setLogged] = useState(false)
     const [userId, setUserId] = useState("")
     const [userName, setUserName] = useState("")
-    let history = useHistory()
 
     useEffect(() => {
         getUser()
@@ -71,7 +74,7 @@ const MyNavbar = () => {
                     </Nav>
                     <Nav>
                         {
-                            logged ?
+                            state.isLogged ?
                                 <Button onClick={pushProfile} className="btn-my-primary" variant="outline-primary" >Profile</Button>
                                 : 
                             <div>

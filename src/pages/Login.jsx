@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Col, Container, Form, Button } from 'react-bootstrap'
 import { Link, useHistory } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
 
 import './Login.scss'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -8,6 +9,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import firebase from '../config/firebase'
 
 const Login = () => {
+    const dispatch = useDispatch()
+    const state = useSelector((state) => state)
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     let history = useHistory()
@@ -34,6 +37,7 @@ const Login = () => {
                 } else {
                     history.push(`/profile/user/${user.uid}`)
                 }
+                dispatch({type:"LOGIN"})
             })
             .catch((error) => {
                 var errorCode = error.code
