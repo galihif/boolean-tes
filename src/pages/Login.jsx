@@ -37,7 +37,7 @@ const Login = () => {
                 } else {
                     history.push(`/profile/user/${user.uid}`)
                 }
-                dispatch({type:"LOGIN"})
+                dispatch({type:"LOGIN", data: user.uid})
             })
             .catch((error) => {
                 var errorCode = error.code
@@ -65,6 +65,7 @@ const Login = () => {
                             </Button>
                             <br/>
                             <p>Doesn't have an account?  <Link to="/register">Register</Link></p>
+                            <p>Login as venue owner  <Link to="/venuelogin">here</Link></p>
                         </Form>
                     </div>
                 </Col>

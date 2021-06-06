@@ -47,7 +47,7 @@ const Register = () => {
                     history.push(`/profile/user/${user.uid}`)
                 }
                 pushUser(user)
-                dispatch({ type: "LOGIN" })
+                dispatch({ type: "LOGIN", data: user.uid })
             })
             .catch((error) => {
                 var errorCode = error.code
@@ -89,6 +89,7 @@ const Register = () => {
                         </Button>
                         <br />
                         <p>Alreaady have an account?  <Link to="/login">Login</Link></p>
+                        <p>Register as venue owner  <Link to="/venueregister">here</Link></p>
                     </Form>
                 </div>
             </Col>
