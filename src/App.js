@@ -18,6 +18,10 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
 import Admin from './pages/Admin';
+import VenueOwner from './pages/VenueOwner';
+import VenueLogin from './pages/VenueLogin';
+import VenueRegister from './pages/VenueRegister';
+import VenueForm from './pages/VenueForm';
 
 
 function App() {
@@ -34,10 +38,14 @@ function App() {
               <Route path="/venues" component={Venues} />
               <Route path="/about" component={MyAboutUs} />
               <Route path="/login" component={Login} />
+              <Route path="/venuelogin" component={VenueLogin} />
               <Route path="/admin" component={Admin} />
               <Route path="/register" component={Register} />
+              <Route path="/venueregister" component={VenueRegister} />
+              <Route path="/venueform" component={VenueForm} />
               <Route path="/venuedetails/:id" exact component={VenueDetails} />
               <Route path="/profile/user/:id" exact component={Profile} />
+              <Route path="/venueowner/:id" exact component={VenueOwner} />
             </Switch>
             <MyFooter />
           </div>
