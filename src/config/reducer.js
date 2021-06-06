@@ -1,24 +1,21 @@
 const initialState = {
-    counter: 100,
-    isLogged: false
+    isLogged: false,
+    userId: "",
 }
 
 const rootReducer = (state = initialState, action) => {
     switch(action.type){
-        case "CHANGECOUNT":
-            return {
-                ...state,
-                counter: action.data
-            }
         case "LOGIN":
             return {
                 ...state,
-                isLogged: true
+                isLogged: true,
+                userId: action.data,
             }
         case "LOGOUT":
             return {
                 ...state,
-                isLogged: false
+                isLogged: false,
+                userId: ""
             }
         default: 
         return state
