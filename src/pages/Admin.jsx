@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { Switch, useHistory, useRouteMatch, Route } from 'react-router-dom'
-import firebase, {auth} from '../config/firebase'
+import { Switch, useHistory, useRouteMatch, Route, Link } from 'react-router-dom'
+import firebase, { auth } from '../config/firebase'
+import { useSelector, useDispatch } from 'react-redux'
 
 import './Admin.scss'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -18,6 +19,8 @@ import MyBookingAdmin from '../components/MyBookingAdmin';
 const Admin = () => {
     const [adminStatus, setAdminStatus] = useState(false)
     let history = useHistory()
+    const dispatch = useDispatch()
+    const state = useSelector((state) => state)
     let {path, url} = useRouteMatch()
 
     useEffect(() => {
@@ -36,6 +39,15 @@ const Admin = () => {
         })
     }
 
+    const handleLogout = () => {
+        firebase.auth().signOut().then(() => {
+            history.push('/login')
+            dispatch({ type: "LOGOUT" })
+        }).catch((error) => {
+            // An error happened.
+        });
+    }
+
     return (
         <div>
             {
@@ -46,10 +58,11 @@ const Admin = () => {
                                 <Row>
                                     <Col sm={2} className="profile-card">
                                         <Nav variant="pills" className="flex-column">
-                                            <Row className="px-4 mb-3">
+                                            <Row className="px-4 mb-3 d-flex justify-content-center">
                                                 <Col lg className="p-0 d-flex align-items-center justify-content-center">
                                                     <Image roundedCircle src="https://spesialis1.orthopaedi.fk.unair.ac.id/wp-content/uploads/2021/02/depositphotos_39258143-stock-illustration-businessman-avatar-profile-picture.jpg" />
                                                 </Col>
+                                                <Button variant="danger" onClick={handleLogout}>Log Out</Button>
                                             </Row>
                                             <Nav.Item>
                                                 <Nav.Link eventKey="first" className="text-center">Dashboard</Nav.Link>
