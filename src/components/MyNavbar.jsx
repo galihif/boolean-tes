@@ -44,8 +44,28 @@ const MyNavbar = () => {
     const pushRegister = () => {
         history.push('/register')
     }
-    const pushProfile = () => {
+    const pushProfileUser = () => {
         history.push(`/profile/user/${userId}`)
+    }
+    const pushDashboardAdmin = () => {
+        history.push(`/admin`)
+    }
+    const pushDashboardVenue = () => {
+        history.push(`/venueowner/${userId}`)
+    }
+
+    var button
+    if (state.userRole === "user") {
+        button = <Button onClick={pushProfileUser} className="btn-my-primary" variant="outline-primary" >Profile</Button>
+    } else if (state.userRole === "admin") {
+        button = <Button onClick={pushDashboardAdmin} className="btn-my-primary" variant="outline-primary" >Admin</Button>
+    } else if (state.userRole === "venueOwner") {
+        button = <Button onClick={pushDashboardVenue} className="btn-my-primary" variant="outline-primary" >Dashboard Venue</Button>
+    } else {
+        button = <div>
+            <Button onClick={pushLogin} className="btn-my-secondary" variant="outline-primary" >Login</Button>
+            <Button onClick={pushRegister} className="btn-my-primary" variant="outline-primary" >Register</Button>
+        </div>
     }
     return(
         <div>
@@ -74,13 +94,7 @@ const MyNavbar = () => {
                     </Nav>
                     <Nav>
                         {
-                            state.isLogged ?
-                                <Button onClick={pushProfile} className="btn-my-primary" variant="outline-primary" >Profile</Button>
-                                : 
-                            <div>
-                                <Button onClick={pushLogin} className="btn-my-secondary" variant="outline-primary" >Login</Button>
-                                <Button onClick={pushRegister} className="btn-my-primary" variant="outline-primary" >Register</Button>
-                            </div>
+                            button
                         }
                     </Nav>
                 </Navbar.Collapse>
