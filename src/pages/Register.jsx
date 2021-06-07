@@ -47,7 +47,7 @@ const Register = () => {
                     history.push(`/profile/user/${user.uid}`)
                 }
                 pushUser(user)
-                dispatch({ type: "LOGIN", data: user.uid })
+                dispatch({ type: "LOGIN", userId: user.uid, userRole: "user" })
             })
             .catch((error) => {
                 var errorCode = error.code

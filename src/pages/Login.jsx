@@ -34,10 +34,11 @@ const Login = () => {
                 var user = userCredential.user
                 if(user.email === 'admin@boolean.com'){
                     history.push(`/admin`)
+                    dispatch({ type: "LOGIN", userId: user.uid, userRole: "admin" })
                 } else {
                     history.push(`/profile/user/${user.uid}`)
+                    dispatch({ type: "LOGIN", userId: user.uid, userRole: "user" })
                 }
-                dispatch({type:"LOGIN", data: user.uid})
             })
             .catch((error) => {
                 var errorCode = error.code

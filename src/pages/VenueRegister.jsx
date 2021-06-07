@@ -42,7 +42,7 @@ const VenueRegister = () => {
                     displayName: name,
                 })
                 pushUser(user)
-                dispatch({ type: "LOGIN", data: user.uid})
+                dispatch({ type: "LOGIN", userId: user.uid, userRole: "venueOwner" })
                 history.push(`/venueform`)
             })
             .catch((error) => {

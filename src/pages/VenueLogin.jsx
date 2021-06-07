@@ -34,7 +34,7 @@ const VenueLogin = () => {
             .then((userCredential) => {
                 var user = userCredential.user
                 history.push(`/venueowner/${user.uid}`)
-                dispatch({ type: "LOGIN", data: user.uid })
+                dispatch({ type: "LOGIN", userId: user.uid, userRole:"venueOwner" })
             })
             .catch((error) => {
                 var errorCode = error.code
