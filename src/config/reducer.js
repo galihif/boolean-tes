@@ -2,6 +2,7 @@ const initialState = {
     isLogged: false,
     userId: "",
     userRole: "",
+    venueData: {},
 }
 
 const rootReducer = (state = initialState, action) => {
@@ -19,6 +20,11 @@ const rootReducer = (state = initialState, action) => {
                 isLogged: false,
                 userId: "",
                 userRole:""
+            }
+        case "setVenueData":
+            return {
+                ...state,
+                venueData: action.venueData
             }
         default: 
         return state
