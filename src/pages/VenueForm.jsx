@@ -121,11 +121,12 @@ const VenueForm = () => {
             joinedAt: `${time.getDate()}/${time.getMonth() + 1}/${time.getFullYear()}`
         }
         pushVenue(bundle)
-        history.push(`/venueowner/${venueId}`)
+        history.push(`/venuedashboard/${venueId}`)
     }
 
     const pushVenue = (bundle) => {
         firebase.firestore().collection("venues").doc(venueId).set(bundle)
+        dispatch({type:"setVenueData", venueData:bundle})
     }
 
     const handleChangeField = (e) => {

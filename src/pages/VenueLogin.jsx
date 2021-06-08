@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import './Login.scss'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import firebase from '../config/firebase'
+import firebase,{firestore, auth} from '../config/firebase'
 
 const VenueLogin = () => {
     const dispatch = useDispatch()
@@ -30,11 +30,19 @@ const VenueLogin = () => {
     }
 
     const handleSubmit = () => {
-        firebase.auth().signInWithEmailAndPassword(email, password)
+        auth.signInWithEmailAndPassword(email, password)
             .then((userCredential) => {
                 var user = userCredential.user
-                history.push(`/venueowner/${user.uid}`)
+                history.push(`/venuedashboard/${user.uid}`)
                 dispatch({ type: "LOGIN", userId: user.uid, userRole:"venueOwner" })
+                
+                const ref = firestore.collection("venues").where("venueId","==",user.uid)
+                ref.onSnapshot((snapshot) => {
+                    snapshot.forEach((doc) => {
+                        const venue = doc.data()
+                        dispatch({type: "setVenueData", venueData:venue})
+                    })
+                })
             })
             .catch((error) => {
                 var errorCode = error.code

@@ -51,7 +51,7 @@ const MyNavbar = () => {
         history.push(`/admin`)
     }
     const pushDashboardVenue = () => {
-        history.push(`/venueowner/${userId}`)
+        history.push(`/venuedashboard/${userId}`)
     }
 
     var button
