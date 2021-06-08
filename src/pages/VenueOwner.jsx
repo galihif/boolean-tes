@@ -17,6 +17,8 @@ import {
     Nav,
     Modal
 } from 'react-bootstrap'
+import BookingVenueDashboard from '../components/BookingVenueDashboard'
+import VenueInfo from '../components/VenueInfo'
 
 const VenueOwner = (props) => {
     let history = useHistory()
@@ -28,7 +30,7 @@ const VenueOwner = (props) => {
     const [password, setPassword] = useState("")
     const [userName, setUserName] = useState("")
     const [userId, setUserId] = useState(id)
-    const [userPhoto, setUserPhoto] = useState("")
+    const [userPhoto, setUserPhoto] = useState("https://www.pngfind.com/pngs/m/3-37689_basketball-orange-rubber-sphere-ball-sport-game-basketball.png")
     const [isLoading, setLoading] = useState(false)
     const [booking_data, setBookingData] = useState([])
     const [booking, setBooking] = useState({})
@@ -50,7 +52,6 @@ const VenueOwner = (props) => {
             // setLoading(true)
             if (user) {
                 setUserName(user.displayName)
-                setUserPhoto(user.photoURL)
             } else {
                 // No user is signed in.
             }
@@ -135,10 +136,13 @@ const VenueOwner = (props) => {
                                 </Col>
                             </Row>
                             <Nav.Item>
-                                <Nav.Link eventKey="first" className="text-center">Booking History</Nav.Link>
+                                <Nav.Link eventKey="first" className="text-center">Venue</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                                <Nav.Link eventKey="second" className="text-center">Account Settings</Nav.Link>
+                                <Nav.Link eventKey="second" className="text-center">Booking List</Nav.Link>
+                            </Nav.Item>
+                            <Nav.Item>
+                                <Nav.Link eventKey="third" className="text-center">Account Settings</Nav.Link>
                             </Nav.Item>
 
                         </Nav>
@@ -146,84 +150,12 @@ const VenueOwner = (props) => {
                     <Col sm={10}>
                         <Tab.Content>
                             <Tab.Pane eventKey="first">
-                                <div className="booking-history">
-                                    <Table striped bordered hover>
-                                        <thead>
-                                            <tr>
-                                                <th>Venue - Field</th>
-                                                <th>Date</th>
-                                                <th>Time</th>
-                                                <th>Price</th>
-                                                {/* <th>Booked at</th> */}
-                                                <th>#</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {
-                                                booking_data.map((booking) => {
-                                                    return(
-                                                        <tr>
-                                                            <td>{booking.venueName} - {booking.fieldName}</td>
-                                                            <td>{booking.date}</td>
-                                                            <td>{booking.time1}:00 - {booking.time2}:00</td>
-                                                            <td>Rp. {booking.fieldPrice}</td>
-                                                            {/* <td>{booking.bookTime}</td> */}
-                                                            <td>
-                                                                <Button variant="primary" className="btn-detail" onClick={() => handleDetail(booking)}>Detail</Button>
-                                                            </td>
-                                                        </tr>
-                                                    )
-                                                })
-                                            }
-                                        </tbody>
-                                    </Table>
-                                    <Modal show={showDialog} onHide={toggleDialog}>
-                                        <Modal.Header closeButton>
-                                            <Modal.Title>Booking Details</Modal.Title>
-                                        </Modal.Header>
-                                        <Modal.Body>
-                                            <Row>
-                                                <Col lg={4}><p>Booking ID</p></Col>
-                                                <Col><p>{booking.id}</p></Col>
-                                            </Row>
-                                            <Row>
-                                                <Col lg={4}><p>Booked at</p></Col>
-                                                <Col><p>{booking.bookTime}</p></Col>
-                                            </Row>
-                                            <Row>
-                                                <Col lg={4}><p>Venue</p></Col>
-                                                <Col><p>{booking.venueName}</p></Col>
-                                            </Row>
-                                            <Row>
-                                                <Col lg={4}><p>Field</p></Col>
-                                                <Col><p>{booking.fieldName}</p></Col>
-                                            </Row>
-                                            <Row>
-                                                <Col lg={4}><p>Date</p></Col>
-                                                <Col><p>{booking.date}</p></Col>
-                                            </Row>
-                                            <Row>
-                                                <Col lg={4}><p>Time</p></Col>
-                                                <Col><p>{booking.time1}:00 - {booking.time2}:00</p></Col>
-                                            </Row>
-                                            <Row>
-                                                <Col lg={4}><p>Total Price</p></Col>
-                                                <Col><p>{booking.fieldPrice}</p></Col>
-                                            </Row>
-                                        </Modal.Body>
-                                        <Modal.Footer>
-                                            <Button variant="secondary" onClick={cancelBooking}>
-                                                {
-                                                    isLoading ? (
-                                                        <div>Loading</div>
-                                                    ) : <div>Cancel Booking</div>
-                                                }
-                                            </Button>
-                                        </Modal.Footer>
-                                    </Modal>
-                                </div>
+                                <VenueInfo userId={userId}/>
                             </Tab.Pane>
                             <Tab.Pane eventKey="second">
+                                <BookingVenueDashboard userId={userId}/>
+                            </Tab.Pane>
+                            <Tab.Pane eventKey="third">
                                 <div className="account-settings">
                                     <Form>
                                         <Form.Group controlId="image">
