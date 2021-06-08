@@ -45,7 +45,7 @@ function App() {
               <Route path="/venueform" component={VenueForm} />
               <Route path="/venuedetails/:id" exact component={VenueDetails} />
               <Route path="/profile/user/:id" exact component={Profile} />
-              <Route path="/venueowner/:id" exact component={VenueOwner} />
+              <Route path="/venuedashboard/:id" exact component={VenueOwner} />
             </Switch>
             <MyFooter />
           </div>
