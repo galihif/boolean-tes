@@ -2,7 +2,6 @@ import React, { useEffect, useState} from 'react'
 import { Col, Form, Modal, Row, Nav, Image, Card, Table, Button, FormGroup, FormControl } from 'react-bootstrap'
 import { useHistory, useRouteMatch, useParams } from 'react-router-dom'
 import firebase,{storage,firestore} from '../config/firebase'
-import MyFieldCard from './MyFieldCard'
 import MyFieldCardAdmin from './MyFieldCardAdmin'
 
 const MyEditVenueAdmin = (props) => {
