@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Col, Container, Form, Button } from 'react-bootstrap'
+import { Col, Container, Form, Button, Row } from 'react-bootstrap'
 import { useHistory, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -88,8 +88,12 @@ const Register = () => {
                             Register
                         </Button>
                         <br />
-                        <p>Alreaady have an account?  <Link to="/login">Login</Link></p>
-                        <p>Register as venue owner  <Link to="/venueregister">here</Link></p>
+                        <Row className="d-flex justify-content-center">
+                            <p>Already have an account?  <Link to="/login">Login</Link></p>
+                        </Row>
+                        <Row className="d-flex justify-content-center">
+                            <p>Register as venue owner  <Link to="/venueregister">here</Link></p>
+                        </Row>
                     </Form>
                 </div>
             </Col>
