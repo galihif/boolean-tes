@@ -37,7 +37,7 @@ const VenueInfo = (props) => {
     const [time, setTime] = useState(Array.from(Array(24).keys()))
 
     useEffect(() => {
-        console.log(venueImageURL)
+        
     });
 
     const getVenues = () => {
@@ -65,11 +65,6 @@ const VenueInfo = (props) => {
 
     const handlePreview = () => {
         history.push(`/venuedetails/${venueId}`)
-    }
-
-    const handleEdit = () => {
-        getVenues()
-        setEdit(true)
     }
 
     const handleChange = (e) => {
@@ -148,11 +143,13 @@ const VenueInfo = (props) => {
         venue.fieldFloorTypeSearch = fieldFloorTypeSearch
         venue.venueImage = venueImageURL
         pushVenue(venue)
-        history.push('/admin')
     }
 
     const pushVenue = (venue) => {
         firebase.firestore().collection("venues").doc(venue.venueId).set(venue)
+        .then(() => {
+            alert('Venue berhasil di update')
+        })
     }
 
     const handleChangeField = (e) => {
@@ -507,7 +504,7 @@ const VenueInfo = (props) => {
                         </Col>
                         <Col lg>
                             <Form.Group>
-                                <Form.Control onChange={handelOpenTimeChange} id="time1Monday" as="select" value={venueOpenTime.time1Monday}>
+                                <Form.Control onChange={handelOpenTimeChange} id="time1Sunday" as="select" value={venueOpenTime.time1Sunday}>
                                     {
                                         time.map((hour) => {
                                             return (
@@ -520,7 +517,7 @@ const VenueInfo = (props) => {
                         </Col>
                         <Col lg>
                             <Form.Group>
-                                <Form.Control onChange={handelOpenTimeChange} id="time1Monday" as="select" value={venueOpenTime.time1Monday}>
+                                <Form.Control onChange={handelOpenTimeChange} id="time2Sunday" as="select" value={venueOpenTime.time2Sunday}>
                                     {
                                         time.map((hour) => {
                                             return (
