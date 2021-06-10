@@ -238,6 +238,7 @@ const VenueForm = () => {
                             <Col lg={8}>
                                 <Form.Group>
                                     <Form.Control onChange={handleChange} id="sportType" as="select">
+                                        <option hidden>Select sport</option>
                                         <option>Futsal</option>
                                         <option>Basket</option>
                                         <option>Volley</option>
@@ -260,6 +261,7 @@ const VenueForm = () => {
                                     <Col lg>
                                         <Form.Group>
                                             <Form.Control onChange={handelOpenTimeChange} id="time1Monday" as="select">
+                                                <option hidden>Open time</option>
                                                 {
                                                     time.map((hour) => {
                                                         return (
@@ -273,6 +275,7 @@ const VenueForm = () => {
                                     <Col lg>
                                         <Form.Group>
                                             <Form.Control onChange={handelOpenTimeChange} id="time2Monday" as="select">
+                                                <option hidden>Close time</option>
                                                 {
                                                     time.map((hour) => {
                                                         return (
@@ -291,6 +294,7 @@ const VenueForm = () => {
                                     <Col lg>
                                         <Form.Group>
                                             <Form.Control onChange={handelOpenTimeChange} id="time1Tuesday" as="select">
+                                                <option hidden>Open time</option>
                                                 {
                                                     time.map((hour) => {
                                                         return (
@@ -304,6 +308,7 @@ const VenueForm = () => {
                                     <Col lg>
                                         <Form.Group>
                                             <Form.Control onChange={handelOpenTimeChange} id="time2Tuesday" as="select">
+                                                <option hidden>Close time</option>
                                                 {
                                                     time.map((hour) => {
                                                         return (
@@ -322,6 +327,7 @@ const VenueForm = () => {
                                     <Col lg>
                                         <Form.Group>
                                             <Form.Control onChange={handelOpenTimeChange} id="time1Wednesday" as="select">
+                                                <option hidden>Open time</option>
                                                 {
                                                     time.map((hour) => {
                                                         return (
@@ -335,6 +341,7 @@ const VenueForm = () => {
                                     <Col lg>
                                         <Form.Group>
                                             <Form.Control onChange={handelOpenTimeChange} id="time2Wednesday" as="select">
+                                                <option hidden>Close time</option>
                                                 {
                                                     time.map((hour) => {
                                                         return (
@@ -353,6 +360,7 @@ const VenueForm = () => {
                                     <Col lg>
                                         <Form.Group>
                                             <Form.Control onChange={handelOpenTimeChange} id="time1Thursday" as="select">
+                                                <option hidden>Open time</option>
                                                 {
                                                     time.map((hour) => {
                                                         return (
@@ -366,6 +374,7 @@ const VenueForm = () => {
                                     <Col lg>
                                         <Form.Group>
                                             <Form.Control onChange={handelOpenTimeChange} id="time2Thursday" as="select">
+                                                <option hidden>Close time</option>
                                                 {
                                                     time.map((hour) => {
                                                         return (
@@ -384,6 +393,7 @@ const VenueForm = () => {
                                     <Col lg>
                                         <Form.Group>
                                             <Form.Control onChange={handelOpenTimeChange} id="time1Friday" as="select">
+                                                <option hidden>Open time</option>
                                                 {
                                                     time.map((hour) => {
                                                         return (
@@ -397,6 +407,7 @@ const VenueForm = () => {
                                     <Col lg>
                                         <Form.Group>
                                             <Form.Control onChange={handelOpenTimeChange} id="time2Friday" as="select">
+                                                <option hidden>Close time</option>
                                                 {
                                                     time.map((hour) => {
                                                         return (
@@ -415,6 +426,7 @@ const VenueForm = () => {
                                     <Col lg>
                                         <Form.Group>
                                             <Form.Control onChange={handelOpenTimeChange} id="time1Saturday" as="select">
+                                                <option hidden>Open time</option>
                                                 {
                                                     time.map((hour) => {
                                                         return (
@@ -428,6 +440,7 @@ const VenueForm = () => {
                                     <Col lg>
                                         <Form.Group>
                                             <Form.Control onChange={handelOpenTimeChange} id="time2Saturday" as="select">
+                                                <option hidden>Close time</option>
                                                 {
                                                     time.map((hour) => {
                                                         return (
@@ -446,6 +459,7 @@ const VenueForm = () => {
                                     <Col lg>
                                         <Form.Group>
                                             <Form.Control onChange={handelOpenTimeChange} id="time1Sunday" as="select">
+                                                <option hidden>Open time</option>
                                                 {
                                                     time.map((hour) => {
                                                         return (
@@ -459,6 +473,7 @@ const VenueForm = () => {
                                     <Col lg>
                                         <Form.Group>
                                             <Form.Control onChange={handelOpenTimeChange} id="time2Sunday" as="select">
+                                                <option hidden>Close time</option>
                                                 {
                                                     time.map((hour) => {
                                                         return (
@@ -562,6 +577,7 @@ const VenueForm = () => {
                                     <Col>
                                         <Form.Group>
                                             <Form.Control onChange={handleChangeField} id="sportType" as="select">
+                                                <option hidden>Select sport type</option>
                                                 <option>Futsal</option>
                                                 <option>Basket</option>
                                                 <option>Volley</option>
@@ -576,6 +592,7 @@ const VenueForm = () => {
                                     <Col>
                                         <Form.Group>
                                             <Form.Control onChange={handleChangeField} id="floorType" as="select">
+                                                <option hidden>Select floor type</option>
                                                 <option>Vinyl</option>
                                                 <option>Synthetic Grass</option>
                                                 <option>Cement</option>
