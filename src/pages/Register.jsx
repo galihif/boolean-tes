@@ -56,6 +56,10 @@ const Register = () => {
             })
     }
 
+    const handleSignGoogle = () => {
+
+    }
+
     const pushUser = (user) => {
         firestore.collection("users").doc(user.uid).set({
             email: user.email,
@@ -87,6 +91,7 @@ const Register = () => {
                         <Button onClick={handleSubmit} variant="primary" type="" className="btn-block">
                             Register
                         </Button>
+                        <Button onClick={handleSignGoogle} className="btn-sign-google btn-block" variant="outline-primary" >Login</Button>
                         <br />
                         <Row className="d-flex justify-content-center">
                             <p>Already have an account?  <Link to="/login">Login</Link></p>

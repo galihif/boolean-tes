@@ -7,14 +7,17 @@
         h3{
                 color: $color-primary-orange;
         }
-        button {
-                background-color: $color-primary-orange;
-                border-color: $color-primary-orange;
-                &:hover{
-                        background-color: $color-primary-orange;
-                }
-                &:active{
-                        background-color: $color-primary-orange;
-                }
+        .btn-sign-google{
+        border-color: gray !important;
+        color: $color-primary-orange !important;
+        padding: 8px 45px 8px 45px !important;
+        border-radius: 12px !important;
+        &:hover{
+        background-color: $color-primary-white  !important;   
         }
+        &:focus {
+                outline: none;
+                box-shadow: none;
+        }
+} 
 }
