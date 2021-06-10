@@ -14,6 +14,8 @@ const BookingVenueDashboard = (props) => {
     const [, updateState] = React.useState();
     const forceUpdate = React.useCallback(() => updateState({}), []);
     const [userId, setUserId] = useState(props.userId)
+    const [venueData, setVenueData] = useState(state.venueData)
+    const [fieldList, setFieldList] = useState(venueData.fieldList)
     const [isLoading, setLoading] = useState(false)
     const [booking_data, setBookingData] = useState([])
     const [booking, setBooking] = useState({})
@@ -61,36 +63,39 @@ const BookingVenueDashboard = (props) => {
     return(
         <div>
             <div className="booking-history">
-                <Table striped bordered hover>
-                    <thead>
-                        <tr>
-                            <th>Venue - Field</th>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Price</th>
-                            {/* <th>Booked at</th> */}
-                            <th>#</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            booking_data.map((booking) => {
-                                return (
-                                    <tr>
-                                        <td>{booking.venueName} - {booking.fieldName}</td>
-                                        <td>{booking.date}</td>
-                                        <td>{booking.time1}:00 - {booking.time2}:00</td>
-                                        <td>Rp. {booking.fieldPrice}</td>
-                                        {/* <td>{booking.bookTime}</td> */}
-                                        <td>
-                                            <Button variant="primary" className="btn-detail" onClick={() => handleDetail(booking)}>Detail</Button>
-                                        </td>
-                                    </tr>
-                                )
-                            })
-                        }
-                    </tbody>
-                </Table>
+                <div>
+                    
+                    <Table striped bordered hover>
+                        <thead>
+                            <tr>
+                                <th>Venue - Field</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Price</th>
+                                {/* <th>Booked at</th> */}
+                                <th>#</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                booking_data.map((booking) => {
+                                    return(
+                                        <tr>
+                                            <td>{booking.venueName} - {booking.fieldName}</td>
+                                            <td>{booking.date}</td>
+                                            <td>{booking.time1}:00 - {booking.time2}:00</td>
+                                            <td>Rp. {booking.fieldPrice}</td>
+                                            {/* <td>{booking.bookTime}</td> */}
+                                            <td>
+                                                <Button variant="primary" className="btn-detail" onClick={() => handleDetail(booking)}>Detail</Button>
+                                            </td>
+                                        </tr>
+                                    )
+                                })
+                            }
+                        </tbody>
+                    </Table>
+                </div>
                 <Modal show={showDialog} onHide={toggleDialog}>
                     <Modal.Header closeButton>
                         <Modal.Title>Booking Details</Modal.Title>
@@ -103,6 +108,10 @@ const BookingVenueDashboard = (props) => {
                         <Row>
                             <Col lg={4}><p>Booked at</p></Col>
                             <Col><p>{booking.bookTime}</p></Col>
+                        </Row>
+                        <Row>
+                            <Col lg={4}><p>Customer Name</p></Col>
+                            <Col><p>{booking.customerName}</p></Col>
                         </Row>
                         <Row>
                             <Col lg={4}><p>Venue</p></Col>
