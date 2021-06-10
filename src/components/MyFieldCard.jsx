@@ -20,6 +20,7 @@ const MyFieldCard = (props) => {
     const [hours, setHours] = useState(0)
     const [date, setDate] = useState(0)
     const [userId, setUserId] = useState(0)
+    const [userName, setUserName] = useState("")
     const [timeNow, setTimeNow] = useState("")
     const [timeRange, setTimeRange] = useState([])
     const [time, setTime] = useState(Array.from(Array(24).keys()))
@@ -106,6 +107,7 @@ const MyFieldCard = (props) => {
             time2: time2,
             timeRange: timeRange,
             userId: userId,
+            customerName: userName,
             venueId: venue.venueId,
             venueName: venue.venueName,
             id: bookId
@@ -133,6 +135,7 @@ const MyFieldCard = (props) => {
             // setLoading(true)
             if (user) {
                 setUserId(user.uid)
+                setUserName(user.displayName)
             } else {
                 setUserId(0)
             }
