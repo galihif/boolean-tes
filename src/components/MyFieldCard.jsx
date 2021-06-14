@@ -102,6 +102,7 @@ const MyFieldCard = (props) => {
             date: date,
             fieldName: props.fieldName,
             isCompleted: false,
+            isCancelled: false,
             fieldPrice: props.fieldPrice*hours,
             time1: time1,
             time2: time2,
