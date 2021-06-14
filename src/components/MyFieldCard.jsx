@@ -85,8 +85,10 @@ const MyFieldCard = (props) => {
             .get().then((snapshot) => {
                 const items = []
                 snapshot.forEach((doc) => {
-                    const venue = doc.data()
-                    items.push(venue)
+                    const booking = doc.data()
+                    if (booking.isCancelled !== true) {
+                        items.push(booking)
+                    }
                 })
                 return items
             });

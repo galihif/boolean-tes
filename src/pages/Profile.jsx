@@ -104,18 +104,18 @@ const Profile = (props) => {
 
     const cancelBooking = () => {
         setLoading(true)
+        booking.isCancelled = true
         firestore.collection("booking").doc(booking.id)
-            .delete()
+            .set(booking)
             .then(() => {
                 alert("Booking Canceled")
-                setShowDialog(!showDialog)
+                toggleDialog()
                 setLoading(false)
             }).catch((error) => {
                 console.error("Error removing document: ", error);
                 setLoading(false)
             })
     }
-
     
     return (
         <Container className="py-5">
@@ -153,6 +153,7 @@ const Profile = (props) => {
                                                 <th>Date</th>
                                                 <th>Time</th>
                                                 <th>Price</th>
+                                                <th>Status</th>
                                                 {/* <th>Booked at</th> */}
                                                 <th>#</th>
                                             </tr>
@@ -166,7 +167,15 @@ const Profile = (props) => {
                                                             <td>{booking.date}</td>
                                                             <td>{booking.time1}:00 - {booking.time2}:00</td>
                                                             <td>Rp. {booking.fieldPrice}</td>
-                                                            {/* <td>{booking.bookTime}</td> */}
+                                                            <td>
+                                                                { 
+                                                                    booking.isCancelled ? (
+                                                                        <p className="text-danger"><b>Cancelled</b></p>
+                                                                    ) : booking.isCompleted ? (
+                                                                        <p className="text-info"><b>Completed</b></p>
+                                                                    ) : <p className="text-dark">Not Completed</p>
+                                                                }
+                                                            </td>
                                                             <td>
                                                                 <Button variant="primary" className="btn-detail" onClick={() => handleDetail(booking)}>Detail</Button>
                                                             </td>

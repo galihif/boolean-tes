@@ -58,11 +58,27 @@ const BookingVenueDashboard = (props) => {
 
     const cancelBooking = () => {
         setLoading(true)
+        booking.isCancelled = true
         firestore.collection("booking").doc(booking.id)
-            .delete()
+            .set(booking)
             .then(() => {
                 alert("Booking Canceled")
                 setShowDialog(!showDialog)
+                setLoading(false)
+            }).catch((error) => {
+                console.error("Error removing document: ", error);
+                setLoading(false)
+            })
+    }
+
+    const completeBooking = () => {
+        setLoading(true)
+        booking.isCompleted = true
+        firestore.collection("booking").doc(booking.id)
+            .set(booking)
+            .then(() => {
+                alert("Booking Completed")
+                toggleDialog()
                 setLoading(false)
             }).catch((error) => {
                 console.error("Error removing document: ", error);
@@ -95,7 +111,7 @@ const BookingVenueDashboard = (props) => {
                                 <th>Date</th>
                                 <th>Time</th>
                                 <th>Price</th>
-                                {/* <th>Booked at</th> */}
+                                <th>Status</th>
                                 <th>#</th>
                             </tr>
                         </thead>
@@ -108,7 +124,15 @@ const BookingVenueDashboard = (props) => {
                                             <td>{booking.date}</td>
                                             <td>{booking.time1}:00 - {booking.time2}:00</td>
                                             <td>Rp. {booking.fieldPrice}</td>
-                                            {/* <td>{booking.bookTime}</td> */}
+                                            <td>
+                                                {
+                                                    booking.isCancelled ? (
+                                                        <p className="text-danger"><b>Cancelled</b></p>
+                                                    ) : booking.isCompleted ? (
+                                                        <p className="text-info"><b>Completed</b></p>
+                                                    ) : <p className="text-dark">Not Completed</p>
+                                                }
+                                            </td>
                                             <td>
                                                 <Button variant="primary" className="btn-detail" onClick={() => handleDetail(booking)}>Detail</Button>
                                             </td>
@@ -163,6 +187,13 @@ const BookingVenueDashboard = (props) => {
                                 isLoading ? (
                                     <div>Loading</div>
                                 ) : <div>Cancel Booking</div>
+                            }
+                        </Button>
+                        <Button variant="primary" onClick={completeBooking}>
+                            {
+                                isLoading ? (
+                                    <div>Loading</div>
+                                ) : <div>Complete Booking</div>
                             }
                         </Button>
                     </Modal.Footer>
