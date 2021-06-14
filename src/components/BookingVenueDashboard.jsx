@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react'
-import { Modal, Container, Tab, Row, Nav, Image, Col, Table, Button } from 'react-bootstrap'
+import { Modal, Container, Tab, Row, Nav, Form, Col, Table, Button } from 'react-bootstrap'
 import firebase, { firestore } from '../config/firebase'
 import { useHistory, useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
@@ -16,6 +16,7 @@ const BookingVenueDashboard = (props) => {
     const [userId, setUserId] = useState(props.userId)
     const [venueData, setVenueData] = useState(state.venueData)
     const [fieldList, setFieldList] = useState(venueData.fieldList)
+    const [fieldSelected, setFieldSelected] = useState("")
     const [isLoading, setLoading] = useState(false)
     const [booking_data, setBookingData] = useState([])
     const [booking, setBooking] = useState({})
@@ -29,7 +30,10 @@ const BookingVenueDashboard = (props) => {
     }
 
     const getBooking = () => {
-        const ref = firebase.firestore().collection("booking").where("venueId", "==", userId)
+        let ref =  firebase.firestore().collection("booking").where("venueId", "==", userId)
+        if(fieldSelected !== ""){
+            ref = ref.where("fieldName","==", fieldSelected)
+        }
         ref.onSnapshot((snapshot) => {
             const items = []
             snapshot.forEach((doc) => {
@@ -42,6 +46,14 @@ const BookingVenueDashboard = (props) => {
     const handleDetail = (booking) => {
         setShowDialog(!showDialog)
         setBooking(booking)
+    }
+
+    const handleChange = (e) => {
+        if(e.target.value === "All Field"){
+            setFieldSelected("")
+        } else{
+            setFieldSelected(e.target.value)
+        }
     }
 
     const cancelBooking = () => {
@@ -57,14 +69,25 @@ const BookingVenueDashboard = (props) => {
                 setLoading(false)
             })
     }
-
-
     
     return(
         <div>
             <div className="booking-history">
                 <div>
-                    
+                    <Col lg={3} className="p-0">
+                        <Form.Group>
+                            <Form.Control onChange={handleChange} id="sportType" as="select">
+                                <option>All Field</option>
+                                {
+                                    fieldList.map((field) => {
+                                        return (
+                                            <option>{field.fieldName}</option>
+                                        )
+                                    })
+                                }
+                            </Form.Control>
+                        </Form.Group>
+                    </Col>
                     <Table striped bordered hover>
                         <thead>
                             <tr>
