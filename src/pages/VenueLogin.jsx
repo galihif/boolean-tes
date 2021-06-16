@@ -34,15 +34,18 @@ const VenueLogin = () => {
             .then((userCredential) => {
                 var user = userCredential.user
                 // history.push(`/venuedashboard/${user.uid}`)
-                dispatch({ type: "LOGIN", userId: user.uid, userRole:"venueOwner" })
+                dispatch({ type: "LOGIN", userId: user.uid, userRole: "venueOwner" })
+                console.log("state",state.userId)
+                console.log("direct",user.uid)
                 
                 const ref = firestore.collection("venues").where("venueId","==",user.uid)
                 ref.onSnapshot((snapshot) => {
                     snapshot.forEach((doc) => {
                         const venue = doc.data()
-                        dispatch({type: "setVenueData", venueData:venue})
+                        dispatch({ type: "setVenueData", venueData: venue })
+                        console.log("state",state.venueData)
+                        console.log("direct",venue)
                     })
-                    console.log(state.userId)
                 })
             })
             .catch((error) => {
