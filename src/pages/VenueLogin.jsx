@@ -33,7 +33,7 @@ const VenueLogin = () => {
         auth.signInWithEmailAndPassword(email, password)
             .then((userCredential) => {
                 var user = userCredential.user
-                // history.push(`/venuedashboard/${user.uid}`)
+                history.push(`/venuedashboard/${user.uid}`)
                 dispatch({ type: "LOGIN", userId: user.uid, userRole: "venueOwner" })
                 console.log("state",state.userId)
                 console.log("direct",user.uid)
