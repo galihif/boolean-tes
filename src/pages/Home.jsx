@@ -8,6 +8,9 @@ import MyCat from '../components/MyCat';
 import MyAboutUs from '../components/MyAboutUs';
 
 class Home extends Component{
+    componentDidMount(){
+        document.title = "Boolean - Home"
+    }
     render(){
         return(
             <div>
