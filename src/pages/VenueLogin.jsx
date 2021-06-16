@@ -33,7 +33,7 @@ const VenueLogin = () => {
         auth.signInWithEmailAndPassword(email, password)
             .then((userCredential) => {
                 var user = userCredential.user
-                history.push(`/venuedashboard/${user.uid}`)
+                // history.push(`/venuedashboard/${user.uid}`)
                 dispatch({ type: "LOGIN", userId: user.uid, userRole:"venueOwner" })
                 
                 const ref = firestore.collection("venues").where("venueId","==",user.uid)
@@ -42,6 +42,7 @@ const VenueLogin = () => {
                         const venue = doc.data()
                         dispatch({type: "setVenueData", venueData:venue})
                     })
+                    console.log(state.venueData)
                 })
             })
             .catch((error) => {
