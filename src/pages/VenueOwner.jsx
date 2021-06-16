@@ -147,7 +147,7 @@ const VenueOwner = (props) => {
 
                         </Nav>
                     </Col>
-                    <Col sm={10}>
+                    <Col sm={10} className="px-2">
                         <Tab.Content>
                             <Tab.Pane eventKey="first">
                                 <VenueInfo userId={userId}/>

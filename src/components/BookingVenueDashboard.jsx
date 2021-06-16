@@ -17,6 +17,7 @@ const BookingVenueDashboard = (props) => {
     const [venueData, setVenueData] = useState(state.venueData)
     const [fieldList, setFieldList] = useState(venueData.fieldList)
     const [fieldSelected, setFieldSelected] = useState("")
+    const [searchId, setSearchId] = useState("")
     const [isLoading, setLoading] = useState(false)
     const [booking_data, setBookingData] = useState([])
     const [booking, setBooking] = useState({})
@@ -33,6 +34,8 @@ const BookingVenueDashboard = (props) => {
         let ref =  firebase.firestore().collection("booking").where("venueId", "==", userId)
         if(fieldSelected !== ""){
             ref = ref.where("fieldName","==", fieldSelected)
+        } else if(searchId !== ""){
+            ref = ref.where("id", "==", searchId)
         }
         ref.onSnapshot((snapshot) => {
             const items = []
@@ -54,6 +57,14 @@ const BookingVenueDashboard = (props) => {
         } else{
             setFieldSelected(e.target.value)
         }
+    }
+
+    const handleChangeId = (e) => {
+        setSearchId(e.target.value)
+    }
+
+    const handleSearchId = () => {
+        getBooking()
     }
 
     const cancelBooking = () => {
@@ -90,21 +101,33 @@ const BookingVenueDashboard = (props) => {
         <div>
             <div className="booking-history">
                 <div>
-                    <Col lg={3} className="p-0">
-                        <Form.Group>
-                            <Form.Control onChange={handleChange} id="sportType" as="select">
-                                <option>All Field</option>
-                                {
-                                    fieldList.map((field) => {
-                                        return (
-                                            <option>{field.fieldName}</option>
-                                        )
-                                    })
-                                }
-                            </Form.Control>
-                        </Form.Group>
-                    </Col>
-                    <Table striped bordered hover>
+                    <Row className="p-0 justify-content-lg-between m-0">
+                        <Col lg={6}>
+                            <Row className="p-0">
+                                <Col lg={6} className="p-0">
+                                    <Form.Control onChange={handleChangeId} type="text" id="searchKeyword" placeholder="Search Booking ID" className="search-form" />
+                                </Col>
+                                <Col lg={4} className="p-0 mx-2">
+                                    <Button onClick={handleSearchId} className="align-self-center" variant="primary" >Search</Button>
+                                </Col>
+                            </Row>
+                        </Col>
+                        <Col lg={3} className="p-0">
+                            <Form.Group>
+                                <Form.Control onChange={handleChange} id="sportType" as="select">
+                                    <option>All Field</option>
+                                    {
+                                        fieldList.map((field) => {
+                                            return (
+                                                <option>{field.fieldName}</option>
+                                            )
+                                        })
+                                    }
+                                </Form.Control>
+                            </Form.Group>
+                        </Col>
+                    </Row>
+                    <Table striped bordered hover className="p-0">
                         <thead>
                             <tr>
                                 <th>Venue - Field</th>
