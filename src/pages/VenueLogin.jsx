@@ -42,7 +42,7 @@ const VenueLogin = () => {
                         const venue = doc.data()
                         dispatch({type: "setVenueData", venueData:venue})
                     })
-                    console.log(state.venueData)
+                    console.log(state.userId)
                 })
             })
             .catch((error) => {
