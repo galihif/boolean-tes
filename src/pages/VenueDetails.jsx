@@ -31,6 +31,7 @@ class VenueDetails extends Component{
                     fieldList: doc.data().fieldList,
                     isLoading: false
                 })
+                document.title = doc.data().venueName
             }
         }).catch((error) => {
             console.log("Error", error)
