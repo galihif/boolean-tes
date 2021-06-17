@@ -50,6 +50,7 @@ const Profile = (props) => {
             if (user) {
                 setUserName(user.displayName)
                 setUserPhoto(user.photoURL)
+                document.title = `Profile - ${user.displayName}`
             } else {
                 // No user is signed in.
             }
