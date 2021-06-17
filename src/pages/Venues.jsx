@@ -22,6 +22,7 @@ const Venues = (props) => {
 
     useEffect(() => {
         getVenues()
+        document.title = "Venues"
     }, [])
 
     const handleChangeSport = (e) => {
