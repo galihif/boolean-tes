@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Col, Container, Form, Button } from 'react-bootstrap'
 import { useHistory, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
@@ -17,6 +17,11 @@ const VenueRegister = () => {
     const [error, setError] = useState("");
     const [venueId, setVenueId] = useState(new Date().getTime().toString());
     let history = useHistory()
+
+    useEffect(() => {
+        document.title = "Venue Register"
+    })
+
 
     const handleChange = (e) => {
         switch (e.target.id) {
