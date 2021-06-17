@@ -40,6 +40,7 @@ const VenueOwner = (props) => {
     useEffect(() => {
         getProfile()
         getBooking()
+        document.title = "Venue Dashboard"
     });
 
     const toggleDialog = () => {
