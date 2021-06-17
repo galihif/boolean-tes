@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Col, Container, Form, Button, Row } from 'react-bootstrap'
 import { useHistory, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
@@ -15,6 +15,10 @@ const Register = () => {
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
     let history = useHistory()
+
+    useEffect(() => {
+        document.title = "Register"
+    });
 
     const handleChange = (e) => {
         switch (e.target.id) {
@@ -91,7 +95,7 @@ const Register = () => {
                         <Button onClick={handleSubmit} variant="primary" type="" className="btn-block">
                             Register
                         </Button>
-                        <Button onClick={handleSignGoogle} className="btn-sign-google btn-block" variant="outline-primary" >Login</Button>
+                        {/* <Button onClick={handleSignGoogle} className="btn-sign-google btn-block" variant="outline-primary" >Login</Button> */}
                         <br />
                         <Row className="d-flex justify-content-center">
                             <p>Already have an account?  <Link to="/login">Login</Link></p>
