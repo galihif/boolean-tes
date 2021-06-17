@@ -25,6 +25,7 @@ const Admin = () => {
 
     useEffect(() => {
         getUser()
+        document.title = "Admin Dashboard"
     })
 
     const getUser = () => {
