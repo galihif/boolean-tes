@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Col, Container, Form, Button, Row } from 'react-bootstrap'
 import { Link, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
@@ -14,6 +14,10 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     let history = useHistory()
+
+    useEffect(() => {
+        document.title = "Login"
+    });
 
     const handleChange = (e) => {
         switch(e.target.id){
