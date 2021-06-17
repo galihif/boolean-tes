@@ -38,8 +38,8 @@ const VenueForm = () => {
 
 
     useEffect(() => {
-        
-    }, [venueName, venueAddress, venueAddressURL, venuePhone, bundle, venueSportType])
+        document.title = "Fill Venue Data"   
+    })
 
     const handleChange = (e) => {
         switch (e.target.id) {
