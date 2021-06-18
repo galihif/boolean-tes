@@ -102,7 +102,7 @@ const Register = () => {
                             <Form.Label>Password</Form.Label>
                             <Form.Control onChange={handleChange} type="password" placeholder="Password" />
                         </Form.Group>
-                        <Button onClick={handleSubmit} variant="primary" type="" className="btn-block">
+                        <Button onClick={handleSubmit} variant="primary" type="" className="btn-block btn-my-primary">
                             Register
                         </Button>
                         <Row className="d-flex justify-content-center my-3">
