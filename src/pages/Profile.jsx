@@ -186,6 +186,22 @@ const Profile = (props) => {
                                             }
                                         </tbody>
                                     </Table>
+                                    {
+                                        booking_data.length === 0 ? (
+                                            <div>
+                                                <Row className="d-flex justify-content-center">
+                                                    <h4 className="text-center">
+                                                        You have no booking activity
+                                                    </h4>
+                                                </Row>
+                                                <Row className="d-flex justify-content-center">
+                                                    <h5 className="text-center">
+                                                        Go to venues to book a field
+                                                    </h5>
+                                                </Row>
+                                            </div>
+                                        ) : null
+                                    }
                                     <Modal show={showDialog} onHide={toggleDialog}>
                                         <Modal.Header closeButton>
                                             <Modal.Title>Booking Details</Modal.Title>
