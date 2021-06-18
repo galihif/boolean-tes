@@ -89,7 +89,7 @@ const Login = () => {
                                 <Form.Label>Password</Form.Label>
                                 <Form.Control type="password" placeholder="Password" onChange={handleChange}/>
                             </Form.Group>
-                            <Button variant="primary" type="" className="btn-block btn-login" onClick={handleSubmit}>
+                            <Button variant="primary" type="" className="btn-block btn-login btn-my-primary" onClick={handleSubmit}>
                                 Login
                             </Button>
                             <Row className="d-flex justify-content-center my-3">
@@ -98,9 +98,6 @@ const Login = () => {
                             <Row className="d-flex justify-content-center">
                                 <p>Doesn't have an account?  <Link to="/register">Register</Link></p>
                             </Row>
-                            {/* <Row className="d-flex justify-content-center">
-                                <p>Login as venue owner  <Link to="/venuelogin">here</Link></p>
-                            </Row> */}
                         </Form>
                     </div>
                 </Col>
