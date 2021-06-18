@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Col, Container, Form, Button, Row } from 'react-bootstrap'
+import GoogleButton from 'react-google-button'
 import { Link, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -65,9 +66,12 @@ const Login = () => {
                                 <Form.Label>Password</Form.Label>
                                 <Form.Control type="password" placeholder="Password" onChange={handleChange}/>
                             </Form.Group>
-                            <Button variant="primary" type="" className="btn-block" onClick={handleSubmit}>
+                            <Button variant="primary" type="" className="btn-block btn-login" onClick={handleSubmit}>
                                 Login
                             </Button>
+                            <GoogleButton
+                                onClick={() => { console.log('Google button clicked') }}
+                            />
                             <br/>
                             <Row className="d-flex justify-content-center">
                                 <p>Doesn't have an account?  <Link to="/register">Register</Link></p>
