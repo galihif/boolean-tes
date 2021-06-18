@@ -1,0 +1,38 @@
+@import '../variables.scss';
+
+.join-container {
+    background-image: url('../assets/img_join.png');
+    background-color: transparent !important;
+    background-size: cover;
+    height: 700px !important;
+    position: relative;
+    margin: 0px;
+    // filter: brightness(41%);
+    // -webkit-filter: brightness(41%);
+    // -moz-filter: brightness(41%);
+}
+
+.join-tagline{
+    h1{
+        color: white;
+        font-size: 64px;
+    }
+    p{
+        color: white;
+        font-size: 24px;
+    }
+    .btn-join-secondary{
+        border-color: $color-primary-orange !important;
+        color: $color-primary-orange !important;
+        padding: 8px 45px 8px 45px !important;
+        margin: 0px 24px 0px 24px;
+        border-radius: 12px !important;
+        &:hover{
+            background-color: transparent !important;
+        }
+        &:focus {
+            outline: none;
+            box-shadow: none;
+        }
+} 
+}

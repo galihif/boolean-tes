@@ -82,14 +82,14 @@ const MyNavbar = () => {
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto">
-                        <Nav.Link className="nav-my-link">
-                            <Link to="/">Home</Link>
+                        <Nav.Link className="nav-my-link" href="/">
+                            Home
                         </Nav.Link>
-                        <Nav.Link className="nav-my-link">
-                            <Link to="/venues">Venues</Link>
+                        <Nav.Link className="nav-my-link" href="/venues">
+                            Venues
                         </Nav.Link>
-                        <Nav.Link className="nav-my-link">
-                            <Link to="/about" href="">About Us</Link>
+                        <Nav.Link className="nav-my-link" href="/joinus">
+                            Join Us
                         </Nav.Link>
                     </Nav>
                     <Nav>

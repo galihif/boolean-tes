@@ -22,6 +22,7 @@ import VenueOwner from './pages/VenueOwner';
 import VenueLogin from './pages/VenueLogin';
 import VenueRegister from './pages/VenueRegister';
 import VenueForm from './pages/VenueForm';
+import JoinUs from './pages/JoinUs';
 
 
 function App() {
@@ -36,7 +37,7 @@ function App() {
               <Route path="/venues/search/:keyword" exact component={Venues} />
               <Route path="/venues/cat/:cat" exact component={Venues} />
               <Route path="/venues" component={Venues} />
-              <Route path="/about" component={MyAboutUs} />
+              <Route path="/joinus" component={JoinUs} />
               <Route path="/login" component={Login} />
               <Route path="/venuelogin" component={VenueLogin} />
               <Route path="/admin" component={Admin} />
