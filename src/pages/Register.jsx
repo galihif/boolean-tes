@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Col, Container, Form, Button, Row } from 'react-bootstrap'
+import GoogleButton from 'react-google-button'
 import { useHistory, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
 import './Register.scss'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import firebase, {firestore} from '../config/firebase'
+import firebase, { auth, provider, firestore } from '../config/firebase'
 
 const Register = () => {
     const dispatch = useDispatch()
@@ -60,15 +61,24 @@ const Register = () => {
             })
     }
 
-    const handleSignGoogle = () => {
-
+    const googleSignIn = () => {
+        auth.signInWithPopup(provider)
+            .then((res) => {
+                let credential = res.credential
+                let user = res.user
+                history.push(`/profile/user/${user.uid}`)
+                dispatch({ type: "LOGIN", userId: user.uid, userRole: "user" })
+                pushUser(user)
+            })
     }
 
     const pushUser = (user) => {
+        let date = new Date()
         firestore.collection("users").doc(user.uid).set({
             email: user.email,
             name: name,
             userId: user.uid,
+            joinedAt: `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`
         }).catch((err) => {
             console.log(err)
         })
@@ -95,14 +105,15 @@ const Register = () => {
                         <Button onClick={handleSubmit} variant="primary" type="" className="btn-block">
                             Register
                         </Button>
-                        {/* <Button onClick={handleSignGoogle} className="btn-sign-google btn-block" variant="outline-primary" >Login</Button> */}
-                        <br />
+                        <Row className="d-flex justify-content-center my-3">
+                            <GoogleButton  onClick={googleSignIn}/>
+                        </Row>
                         <Row className="d-flex justify-content-center">
                             <p>Already have an account?  <Link to="/login">Login</Link></p>
                         </Row>
-                        <Row className="d-flex justify-content-center">
+                        {/* <Row className="d-flex justify-content-center">
                             <p>Register as venue owner  <Link to="/venueregister">here</Link></p>
-                        </Row>
+                        </Row> */}
                     </Form>
                 </div>
             </Col>

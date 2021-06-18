@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import './Login.scss'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import firebase from '../config/firebase'
+import firebase,{auth, provider, firestore} from '../config/firebase'
 
 const Login = () => {
     const dispatch = useDispatch()
@@ -51,6 +51,29 @@ const Login = () => {
                 console.log(errorCode, errorMessage)
             })
     }
+
+    const pushUser = (user) => {
+        let date = new Date()
+        firestore.collection("users").doc(user.uid).set({
+            email: user.email,
+            name: user.displayName,
+            userId: user.uid,
+            joinedAt: `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
+
+    const googleSignIn = () => {
+        auth.signInWithPopup(provider)
+            .then((res) => {
+                let credential = res.credential
+                let user = res.user
+                history.push(`/profile/user/${user.uid}`)
+                dispatch({ type: "LOGIN", userId: user.uid, userRole: "user" })
+                pushUser(user)
+            })
+    }
     return (
             <Container className="justify-content-center d-flex py-5">
                 <Col lg={6}>
@@ -69,16 +92,15 @@ const Login = () => {
                             <Button variant="primary" type="" className="btn-block btn-login" onClick={handleSubmit}>
                                 Login
                             </Button>
-                            <GoogleButton
-                                onClick={() => { console.log('Google button clicked') }}
-                            />
-                            <br/>
+                            <Row className="d-flex justify-content-center my-3">
+                                <GoogleButton onClick={googleSignIn}/>
+                            </Row>
                             <Row className="d-flex justify-content-center">
                                 <p>Doesn't have an account?  <Link to="/register">Register</Link></p>
                             </Row>
-                            <Row className="d-flex justify-content-center">
+                            {/* <Row className="d-flex justify-content-center">
                                 <p>Login as venue owner  <Link to="/venuelogin">here</Link></p>
-                            </Row>
+                            </Row> */}
                         </Form>
                     </div>
                 </Col>
