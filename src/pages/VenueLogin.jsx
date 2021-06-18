@@ -74,7 +74,7 @@ const VenueLogin = () => {
                                 <Form.Label>Password</Form.Label>
                                 <Form.Control type="password" placeholder="Password" onChange={handleChange}/>
                             </Form.Group>
-                            <Button variant="primary" type="" className="btn-block" onClick={handleSubmit}>
+                            <Button variant="primary" type="" className="btn-block btn-my-primary" onClick={handleSubmit}>
                                 Login
                             </Button>
                             {
