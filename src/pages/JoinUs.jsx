@@ -9,6 +9,10 @@ import img_join from '../assets/img_join.png'
 const JoinUs = () => {
     const history = useHistory()
 
+    useEffect(() => {
+        document.title = "Join Us"
+    });
+
     const handleRegister= () => {
         history.push("/venueregister")
     }
