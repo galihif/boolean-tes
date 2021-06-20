@@ -1,0 +1,16 @@
+@import '../variables.scss';
+
+.field-card{
+    border: none !important;
+    .card-horizontal {
+        display: flex;
+        flex: 1 1 auto;
+        .card-img-top{
+            width: 240px !important;
+            height: 200px ;
+        }
+        .card-body{
+            border-radius: 16px;
+        }
+    }
+}

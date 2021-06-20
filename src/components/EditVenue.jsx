@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux'
 
 
 import MyFieldCardAdmin from './MyFieldCardAdmin'
+import './EditVenue.scss'
 
 const EditVenue = (props) => {
 
@@ -42,28 +43,6 @@ const EditVenue = (props) => {
 
     });
 
-    const getVenues = () => {
-        const ref = firestore.collection("venues")
-        ref.onSnapshot((snapshot) => {
-            snapshot.forEach((doc) => {
-                const venue = doc.data()
-                if (venue.venueId === userId) {
-                    setVenue(venue)
-                    setVenueName(venue.venueName)
-                    setVenueAddress(venue.venueAddress)
-                    setVenueAddressURL(venue.venueAddressURL)
-                    setVenueEmbedURL(venue.venueEmbedURL)
-                    setVenueRating(venue.venueRating)
-                    setVenuePhone(venue.venuePhone)
-                    setVenueSportType(venue.venueSportType)
-                    setVenueOpenTime(venue.venueOpenTime)
-                    setFacilities(venue.venueFacilities)
-                    setFieldList(venue.fieldList)
-                    setVenueImageURL(venue.venueImage)
-                }
-            })
-        })
-    }
 
     const handlePreview = () => {
         history.push(`/venuedetails/${venueId}`)
@@ -206,8 +185,6 @@ const EditVenue = (props) => {
     const toggleDialog = () => {
         setShowDialog(!showDialog)
     }
-
-
 
     return (
         <div>
@@ -564,22 +541,26 @@ const EditVenue = (props) => {
                     <p>Field List</p>
                 </Col>
                 <Col lg>
-                    <Button variant="primary" onClick={toggleDialog}>Add Field</Button>
+                    <Button variant="primary" className="mb-3" onClick={toggleDialog}>Add Field</Button>
                     {
                         fieldList.length > 0 ? (
                             fieldList.map((field, key) => {
                                 return (
-                                    <div>
-                                        <MyFieldCardAdmin
-                                            fieldImage={field.fieldImage}
-                                            fieldName={field.fieldName}
-                                            sportType={field.sportType}
-                                            fieldType={field.fieldType}
-                                            floorType={field.floorType}
-                                            fieldPrice={field.fieldPrice}
-                                        />
-                                        <Button variant="primary" onClick={() => handleDeleteField(key)}>Delete</Button>
-                                    </div>
+                                    <Row className="card-field my-2">
+                                        <Col lg={10}>
+                                            <MyFieldCardAdmin
+                                                fieldImage={field.fieldImage}
+                                                fieldName={field.fieldName}
+                                                sportType={field.sportType}
+                                                fieldType={field.fieldType}
+                                                floorType={field.floorType}
+                                                fieldPrice={field.fieldPrice}
+                                            />
+                                        </Col>
+                                        <Col>
+                                            <Button variant="primary" onClick={() => handleDeleteField(key)}>Delete</Button>
+                                        </Col>
+                                    </Row>
                                 )
                             })
                         ) : null

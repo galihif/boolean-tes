@@ -2,7 +2,7 @@ import React, { useEffect,useState } from 'react'
 import { Button, Card, Row, Col, Modal, Form } from 'react-bootstrap';
 import firebase from '../config/firebase'
 
-import './MyFieldCard.scss'
+import './MyFieldCardAdmin.scss'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const MyFieldCardAdmin = (props) => {
@@ -97,7 +97,7 @@ const MyFieldCardAdmin = (props) => {
 
     return (
         <div className="field-card">
-            <Card class="card">
+            <Card class="field-card">
                 <div class="card-horizontal">
                     <div class="img-square-wrapper">
                         <Card.Img variant="top" src={props.fieldImage} />
