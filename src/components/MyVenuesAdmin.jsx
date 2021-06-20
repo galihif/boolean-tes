@@ -1,14 +1,19 @@
 import React,{useState,useEffect} from 'react'
 import { Modal, Container, Tab, Row, Nav, Image, Card, Table, Button } from 'react-bootstrap'
 import { useHistory, useRouteMatch } from 'react-router-dom'
-import firebase,{firestore} from '../config/firebase'
+import firebase, { firestore } from '../config/firebase'
+import { useSelector, useDispatch } from 'react-redux'
+
+
 
 const MyVenuesAdmin = () => {
+    const dispatch = useDispatch()
+    const state = useSelector((state) => state)
+    let history = useHistory()
+    let { path, url } = useRouteMatch()
     const [venues, setVenues] = useState([])
     const [venueId, setVenueId] = useState("")
     const [showDialog, setShowDialog] = useState(false)
-    let history = useHistory()
-    let { path, url } = useRouteMatch()
 
     useEffect(() => {
         getVenues()
@@ -29,8 +34,9 @@ const MyVenuesAdmin = () => {
         history.push(`${url}/add-venue`)
     }
 
-    const handleEditVenue = (id) => {
-        history.push(`${url}/edit-venue/${id}`)
+    const handleEditVenue = (venue) => {
+        history.push(`${url}/edit-venue/${venue.venueId}`)
+        dispatch({ type: "setVenueData", venueData: venue })
     }
 
     const handleDeleteVenue = () => {
@@ -76,7 +82,7 @@ const MyVenuesAdmin = () => {
                                             <td>{venue.numberOfFields}</td>
                                             <td>{venue.joinedAt}</td>
                                             <td>
-                                                <Button onClick={() => handleEditVenue(venue.venueId)} variant="primary" type="">Edit</Button>{' '}
+                                                <Button onClick={() => handleEditVenue(venue)} variant="primary" type="">Edit</Button>{' '}
                                                 <Button onClick={() => toggleDialog(venue.venueId)} variant="danger">Delete</Button>
                                             </td>
                                         </tr>

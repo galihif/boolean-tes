@@ -18,7 +18,7 @@ import {
     Modal
 } from 'react-bootstrap'
 import BookingVenueDashboard from '../components/BookingVenueDashboard'
-import VenueInfo from '../components/VenueInfo'
+import EditVenue from '../components/EditVenue'
 
 const VenueOwner = (props) => {
     let history = useHistory()
@@ -151,7 +151,7 @@ const VenueOwner = (props) => {
                     <Col sm={10} className="px-2">
                         <Tab.Content>
                             <Tab.Pane eventKey="first">
-                                <VenueInfo userId={userId}/>
+                                <EditVenue userId={userId}/>
                             </Tab.Pane>
                             <Tab.Pane eventKey="second">
                                 <BookingVenueDashboard userId={userId}/>

@@ -10,11 +10,11 @@ import { Col, Container, Tab, Row, Nav, Image, Card, Table, Button } from 'react
 import MyVenuesAdmin from '../components/MyVenuesAdmin';
 import MyDashboardAdmin from '../components/MyDashboardAdmin';
 import MyAddVenueAdmin from '../components/MyAddVenueAdmin';
-import MyEditVenueAdmin from '../components/MyEditVenueAdmin';
 
 import stop_admin from '../assets/stop_admin.jpg'
 import MyUserAdmin from '../components/MyUserAdmin';
 import MyBookingAdmin from '../components/MyBookingAdmin';
+import EditVenue from '../components/EditVenue'
 
 const Admin = () => {
     const [adminStatus, setAdminStatus] = useState(false)
@@ -90,7 +90,7 @@ const Admin = () => {
                                                         <MyAddVenueAdmin />
                                                     </Route>
                                                     <Route path={`${path}/edit-venue/:id`}>
-                                                        <MyEditVenueAdmin/>
+                                                        <EditVenue/>
                                                     </Route>
                                                     <Route path={path}>
                                                         <MyVenuesAdmin />
