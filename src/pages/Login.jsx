@@ -39,10 +39,10 @@ const Login = () => {
                 var user = userCredential.user
                 if(user.email === 'admin@boolean.com'){
                     history.push(`/admin`)
-                    dispatch({ type: "LOGIN", userId: user.uid, userRole: "admin" })
+                    dispatch({ type: "LOGIN", userData: user, userRole: "admin" })
                 } else {
                     history.push(`/profile/user/${user.uid}`)
-                    dispatch({ type: "LOGIN", userId: user.uid, userRole: "user" })
+                    dispatch({ type: "LOGIN", userData: user, userRole: "user" })
                 }
             })
             .catch((error) => {
@@ -70,7 +70,7 @@ const Login = () => {
                 let credential = res.credential
                 let user = res.user
                 history.push(`/profile/user/${user.uid}`)
-                dispatch({ type: "LOGIN", userId: user.uid, userRole: "user" })
+                dispatch({ type: "LOGIN", userData: user, userRole: "user" })
                 pushUser(user)
             })
     }
