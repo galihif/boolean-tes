@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import firebase,{firestore} from '../config/firebase'
+import firebase,{firestore, auth} from '../config/firebase'
 import { useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 
@@ -25,8 +25,10 @@ const Profile = (props) => {
     const [showDialog, setShowDialog] = useState(false)
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("")
+    const [user, setUser] = useState()
     const [userName, setUserName] = useState("")
-    const [userPhoto, setUserPhoto] = useState("")
+    const [userEditName, setUserEditName] = useState(userName)
+    const [userPhoto, setUserPhoto] = useState()
     const [isLoading, setLoading] = useState(false)
     const [booking_data, setBookingData] = useState([])
     const [booking, setBooking] = useState({})
@@ -37,6 +39,7 @@ const Profile = (props) => {
     useEffect(() => {
         getProfile()
         getBooking()
+        // document.title = `Profile - ${userName}`
     });
 
     const toggleDialog = () => {
@@ -72,7 +75,7 @@ const Profile = (props) => {
     const handleChange = (e) => {
         switch (e.target.id) {
             case "name":
-                setUserName(e.target.value)
+                setUserEditName(e.target.value)
                 break
             case "password":
                 setPassword(e.target.value)
@@ -85,8 +88,14 @@ const Profile = (props) => {
         }
     }
 
-    const handleSubmit = () => {
-
+    const handleSave = () => {
+        auth.onAuthStateChanged((user) => {
+            user.updateProfile({
+                displayName: userEditName
+            })
+            console.log(user)
+            dispatch({ type: "changeUserName", userData: user})
+        })
     }
 
     const handleLogout = () => {
@@ -250,18 +259,20 @@ const Profile = (props) => {
                             </Tab.Pane>
                             <Tab.Pane eventKey="second">
                                 <div className="account-settings">
-                                    <Form>
-                                        <Form.Group controlId="image">
-                                            <Form.Label><b>Change Profile Picture</b></Form.Label>
-                                            <Form.File label="Upload Image" type="file" onChange={handleChange} />
-                                        </Form.Group>
-                                        <Form.Group controlId="name">
-                                            <Form.Label><b>Name</b></Form.Label>
-                                            <Form.Control type="name" placeholder="Change Name" onChange={handleChange} />
-                                        </Form.Group>
-                                        <Button variant="primary" type="">Save</Button>
-                                        <Button variant="danger" onClick={handleLogout}>Log Out</Button>
-                                    </Form>
+                                    <Col lg={6}>
+                                        <Form>
+                                            {/* <Form.Group controlId="image">
+                                                <Form.Label><b>Change Profile Picture</b></Form.Label>
+                                                <Form.File label="Upload Image" type="file" onChange={handleChange} />
+                                            </Form.Group> */}
+                                            <Form.Group controlId="name">
+                                                <Form.Label><b>Change Name</b></Form.Label>
+                                                <Form.Control type="name" placeholder="Change Name" onChange={handleChange} value={userEditName} />
+                                            </Form.Group>
+                                            <Button variant="primary" type="" className="mr-3" onClick={handleSave}>Save</Button>
+                                            <Button variant="danger" onClick={handleLogout}>Log Out</Button>
+                                        </Form>
+                                    </Col>
                                 </div>
                             </Tab.Pane>
                         </Tab.Content>
