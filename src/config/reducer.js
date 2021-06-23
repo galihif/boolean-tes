@@ -1,7 +1,7 @@
 const initialState = {
     isLogged: false,
-    userId: "",
     userRole: "",
+    userData: {},
     venueData: {},
 }
 
@@ -11,20 +11,25 @@ const rootReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isLogged: true,
-                userId: action.userId,
+                userData: action.userData,
                 userRole: action.userRole
             }
         case "LOGOUT":
             return {
                 ...state,
                 isLogged: false,
-                userId: "",
+                userData: {},
                 userRole:""
             }
         case "setVenueData":
             return {
                 ...state,
                 venueData: action.venueData
+            }
+        case "changeUserName":
+            return {
+                ...state,
+                userData: action.userData
             }
         default: 
         return state
