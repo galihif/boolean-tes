@@ -37,7 +37,6 @@ const EditVenue = (props) => {
     const [fieldImageURL, setFieldImageURL] = useState()
     const [time, setTime] = useState(Array.from(Array(24).keys()))
 
-    console.log(state.venueData)
 
     useEffect(() => {
 
