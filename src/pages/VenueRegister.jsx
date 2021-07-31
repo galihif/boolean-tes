@@ -48,7 +48,7 @@ const VenueRegister = () => {
                 })
                 pushUser(user)
                 dispatch({ type: "LOGIN", userId: user.uid, userRole: "venueOwner" })
-                history.push(`/venueform`)
+                history.push(`/venueform/${user.uid}`)
             })
             .catch((error) => {
                 var errorCode = error.code

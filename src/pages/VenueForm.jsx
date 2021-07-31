@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Col, Form, Modal, Row, Nav, Image, Card, Table, Button, FormGroup, FormControl, Container } from 'react-bootstrap'
-import { useHistory, useRouteMatch } from 'react-router-dom'
+import { useHistory, useRouteMatch, useParams } from 'react-router-dom'
 import firebase, { storage, firestore } from '../config/firebase'
 import { useSelector, useDispatch } from 'react-redux'
 import MyFieldCardAdmin from '../components/MyFieldCardAdmin'
@@ -11,9 +11,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const VenueForm = () => {
     const dispatch = useDispatch()
+    const {id} = useParams()
     const state = useSelector((state) => state)
     const [showDialog, setShowDialog] = useState(false)
-    const [venueId, setVenueId] = useState(state.userId)
+    const [venueId, setVenueId] = useState(id)
     const [venueName, setVenueName] = useState("")
     const [venueAddress, setVenueAddress] = useState("")
     const [venueAddressURL, setVenueAddressURL] = useState("")

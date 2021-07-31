@@ -35,6 +35,7 @@ const Profile = (props) => {
     const userId = props.match.params.id
     const [, updateState] = React.useState();
     const forceUpdate = React.useCallback(() => updateState({}), []);
+
  
     useEffect(() => {
         getProfile()

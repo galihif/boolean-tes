@@ -63,13 +63,13 @@ const MyNavbar = () => {
         button = <Button onClick={pushDashboardVenue} className="btn-my-primary" variant="outline-primary" >Dashboard Venue</Button>
     } else {
         button = <div>
-            <Button onClick={pushLogin} className="btn-my-secondary" variant="outline-primary" >Login</Button>
-            <Button onClick={pushRegister} className="btn-my-primary" variant="outline-primary" >Register</Button>
+            <Button onClick={pushLogin} className="btn-my-secondary mx-2 my-lg-0 my-2" variant="outline-primary" >Login</Button>
+            <Button onClick={pushRegister} className="btn-my-primary mx-2 my-lg-0 my-2" variant="outline-primary" >Register</Button>
         </div>
     }
     return(
         <div>
-            <Navbar collapseOnSelect expand="lg" bg="white" variant="light" className="my-navbar fixed-top">
+            <Navbar collapseOnSelect expand="lg" bg="white" variant="light" className="my-navbar fixed-top px-5">
                 <Navbar.Brand href="#home">
                     <Link to="/">
                         <img

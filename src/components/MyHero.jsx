@@ -32,9 +32,9 @@ const MyHero = (props) => {
                     </Col>
                 </Row>
                 <Row className="my-3">
-                    <Col>
+                    <Col lg={6}>
                         <Form.Row className="search-venues">
-                            <Form.Control onChange={handleChangeSearch} type="text" id="searchKeyword" placeholder="Where do you want to play?" className="search-form" />
+                            <Form.Control onChange={handleChangeSearch} type="text" id="searchKeyword" placeholder="Where do you want to play?" className="search-form my-lg-0 my-2 mr-2" />
                             <Button onClick={handleSearch} className="btn-my-primary align-self-center" variant="primary" >Search</Button>
                         </Form.Row>
                     </Col>

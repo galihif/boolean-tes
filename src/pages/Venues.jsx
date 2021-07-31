@@ -127,26 +127,26 @@ const Venues = (props) => {
     }
     return (
         <div>
-            <Jumbotron className="find-container pl-lg-5">
-                <Container className="">
-                    <Row>
+            <Jumbotron className="find-container pl-lg-5 pl-0">
+                <Container className="pl-0">
+                    <Row className="px-4">
                         <h1 className="">
                             Find Your Favourite Venues
                     </h1>
                     </Row>
-                    <Row className="search-venues justify-content-left justify-content-xs-center">
-                        <Col lg={3} className="p-0 mr-3">
+                    <Row className="search-venues justify-content-lg-left m-0">
+                        <Col lg={3} xs={12} className="p-lg-0 px-4 mr-0 mr-lg-3 mb-lg-0 mb-2">
                             <Form.Control onChange={handleChangeSearch} type="text" id="searchKeyword" placeholder="Where do you want to play?" className="search-form" />
                         </Col>
-                        <Col lg={3} className="p-0 align-items-center">
-                            <Button onClick={handleSearch} className="btn-my-primary mx-auto align-self-center" variant="primary" >Search</Button>
+                        <Col lg={3} xs={12} className="p-0 d-flex justify-content-xs-center justify-content-lg-left">
+                            <Button onClick={handleSearch} className="btn-my-primary align-self-center mx-lg-0 mx-auto" variant="primary" >Search</Button>
                         </Col>
                     </Row>
                 </Container>
             </Jumbotron>
                 
             <Container className="mt-5">
-                <Row className="justify-content-center d-flex">
+                <Row className="justify-content-center d-flex mx-auto">
                     <Col lg={2} xs={10} className="mx-xs-auto">
                         <Container className="filter-container d-flex justify-content-center p-0">
                             <Container className="filter-box p-4">

@@ -1,7 +1,7 @@
 .about-container{
-    margin: 0px !important;
     overflow: hidden;
     background-image: url('../assets//img_about.png');
+    object-fit: cover;
 
     h2{
         text-align: center;

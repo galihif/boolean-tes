@@ -10,7 +10,6 @@ const MyAboutUs = (props) => {
                     <h2>About Us</h2>
                 </Col>
             </Row>
-            <br/>
             <Row className="my-5">
                 <Col>
                     <p>

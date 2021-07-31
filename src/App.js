@@ -43,7 +43,7 @@ function App() {
               <Route path="/admin" component={Admin} />
               <Route path="/register" component={Register} />
               <Route path="/venueregister" component={VenueRegister} />
-              <Route path="/venueform" component={VenueForm} />
+              <Route path="/venueform/:id" component={VenueForm} />
               <Route path="/venuedetails/:id" exact component={VenueDetails} />
               <Route path="/profile/user/:id" exact component={Profile} />
               <Route path="/venuedashboard/:id" exact component={VenueOwner} />
